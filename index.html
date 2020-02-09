@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+    <script src="public/lib/phaser.js"></script>
+</head>
+<body>
+
+<script>
+    var config = {
+        type: Phaser.AUTO,
+        width: 1600,
+        height: 800,
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: {y: 200}
+            }
+        },
+        scene: {
+            preload: preload,
+            create: create
+            ,
+            update: update
+        }
+    };
+
+    var game = new Phaser.Game(config);
+    var logo;
+    var cursors;
+
+    function preload() {
+        this.load.setBaseURL('img');
+
+        this.load.image('sky', 'space3.png');
+        this.load.image('logo', 'brain.png');
+        this.load.image('red', 'red.png');
+    }
+
+    function create() {
+        cursors = this.input.keyboard.createCursorKeys();
+
+        this.add.image(400, 300, 'sky').setScale(3, 2);
+
+        var particles = this.add.particles('red');
+
+        var emitter = particles.createEmitter({
+            speed: 100,
+            scale: {start: 1, end: 0},
+            blendMode: 'ADD'
+        });
+
+        logo = this.physics.add.image(400, 100, 'logo');
+
+        // logo.setVelocity(100, 200);
+        logo.setBounce(1, 1);
+        logo.setCollideWorldBounds(true);
+
+        emitter.startFollow(logo);
+    }
+
+
+    function update() {
+        logo.setAngle(0);
+        if (cursors.left.isDown) {
+            logo.setAngle(-25).setVelocityX(-80);
+        } else if (cursors.right.isDown) {
+            logo.setAngle(25).setVelocityX(80);
+        }
+    }
+</script>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/7.8.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="/__/firebase/7.8.1/firebase-analytics.js"></script>
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+</body>
+</html>

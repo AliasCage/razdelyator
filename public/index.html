@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Firebase Hosting</title>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/7.8.1/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/7.8.1/firebase-auth.js"></script>
+    <script defer src="/__/firebase/7.8.1/firebase-database.js"></script>
+    <script defer src="/__/firebase/7.8.1/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/7.8.1/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+    <script src="/public/lib/phaser.js"></script>
+
+    <style media="screen">
+      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
+      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
+      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
+      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
+      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
+      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
+      @media (max-width: 600px) {
+        body, #message { margin-top: 0; background: white; box-shadow: none; }
+        body { border-top: 16px solid #ffa100; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <script>
+      var config = {
+        type: Phaser.AUTO,
+        width: window.innerWidth,
+        height: window.innerHeight,
+        physics: {
+          default: 'arcade',
+          arcade: {
+            gravity: {y: 200}
+          }
+        },
+        scene: {
+          preload: preload,
+          create: create,
+          update: update
+        }
+      };
+
+      var game = new Phaser.Game(config);
+      var logo;
+      var cursors;
+
+      function preload() {
+        this.load.setBaseURL('img');
+
+        this.load.image('sky', 'space3.png');
+        this.load.image('logo', 'brain.png');
+        this.load.image('red', 'red.png');
+      }
+
+      function create() {
+
+
+
+        cursors = this.input.keyboard.createCursorKeys();
+
+        // this.swipe = new Swipe(this.game);
+        this.add.image(400, 300, 'sky').setScale(3, 2);
+
+        var particles = this.add.particles('red');
+
+        var emitter = particles.createEmitter({
+          speed: 100,
+          scale: {start: 1, end: 0},
+          blendMode: 'ADD'
+        });
+
+        logo = this.physics.add.image(200, 100, 'logo');
+
+        // logo.setVelocity(100, 200);
+        logo.setBounce(1, 1);
+        logo.setCollideWorldBounds(true);
+        // logo.inputEnabled = true;
+        logo.input.enableDrag();
+
+        emitter.startFollow(logo);
+      }
+
+      function update() {
+        logo.setAngle(0);
+        var endX = game.input.x;
+        //
+        //
+        //check the start point against the end point
+        //
+        //
+        if (endX < this.startX) {
+          //swipe left
+          logo.setAngle(-25).setVelocityX(-80);
+        } else {
+          //swipe right
+          logo.setAngle(25).setVelocityX(80);
+        }
+
+        if (cursors.left.isDown) {
+          logo.setAngle(-25).setVelocityX(-80);
+        } else if (cursors.right.isDown) {
+          logo.setAngle(25).setVelocityX(80);
+        }
+      }
+    </script>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDwyP6pcgmdXmChCCVRHS-BoLoKePcsPdo",
+        authDomain: "razdelyator-2df4b.firebaseapp.com",
+        databaseURL: "https://razdelyator-2df4b.firebaseio.com",
+        projectId: "razdelyator-2df4b",
+        storageBucket: "razdelyator-2df4b.appspot.com",
+        messagingSenderId: "354974286422",
+        appId: "1:354974286422:web:37e805dcf1296a9a74f1f7",
+        measurementId: "G-E5MVVLT4BP"
+      };
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        // // The Firebase SDK is initialized and available here!
+        //
+        // firebase.auth().onAuthStateChanged(user => { });
+        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+        // firebase.messaging().requestPermission().then(() => { });
+        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+        //
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+        try {
+          let app = firebase.app();
+          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+        } catch (e) {
+          console.error(e);
+          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+        }
+      });
+    </script>
+
+  </body>
+</html>
