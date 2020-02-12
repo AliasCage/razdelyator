@@ -32,7 +32,7 @@
 
 <script>
     var config = {
-        type: Phaser.CANVAS,
+        type: Phaser.AUTO,
         width: window.innerWidth,
         height: window.innerHeight,
         physics: {
@@ -52,12 +52,15 @@
     var conveer_anim;
     var game = new Phaser.Game(config);
     var brain;
+    var brain2;
     var cursors;
+    var global_scale;
+    var midle_window;
 
     function preload() {
         this.load.setBaseURL('img');
 
-        this.load.image('intro', 'intro.jpg');
+        this.load.image('intro', 'intro.png');
         this.load.image('bg', 'bg.jpg');
         this.load.image('bg_tile', 'bg_tile.jpg');
         this.load.image('brain', 'brain.png');
@@ -76,6 +79,8 @@
     }
 
     function create() {
+        midle_window = window.innerWidth / 2;
+        cursors = this.input.keyboard.createCursorKeys();
 
         this.anims.create({
             key: 'conveer',
@@ -96,16 +101,14 @@
         });
 
 
-        this.add.tileSprite(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
-
-        cursors = this.input.keyboard.createCursorKeys();
-
+        this.add.tileSprite(midle_window, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
 
         var bg = this.physics.add.sprite(0, 0, 'bg').setOrigin(0.5, 0);
         bg.body.moves = false;
-        bg.setScale(window.innerHeight / bg.height, window.innerHeight / bg.height).setPosition(window.innerWidth / 2, 0);
+        global_scale = window.innerHeight / bg.height;
+        bg.setScale(global_scale).setPosition(midle_window, 0);
 
-        conveer_anim = this.add.sprite(window.innerWidth / 2, 0, 'con1').setOrigin(0.5, 0);
+        conveer_anim = this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0);
         conveer_anim.setScale(window.innerHeight / conveer_anim.height, window.innerHeight / conveer_anim.height);
 
         var particles = this.add.particles('red');
@@ -115,32 +118,51 @@
             blendMode: 'ADD'
         });
 
-        brain = this.physics.add.sprite(window.innerWidth / 2, 100, 'brain');
-        brain.setScale(window.innerHeight / bg.height, window.innerHeight / bg.height);
+        brain2 = this.physics.add.sprite(midle_window, 220, 'brain');
+        brain2.setScale(global_scale);
+        brain2.setInteractive();
+        brain2.setCollideWorldBounds(true);
+
+        brain = this.physics.add.sprite(midle_window, 100, 'brain');
+        brain.setScale(global_scale);
         brain.setInteractive();
         brain.setCollideWorldBounds(true);
-        brain.setBounce(0.8, 0.8);
-        emitter.startFollow(brain);
-
         brain.body.moves = false;
 
-        // var intro = this.add.sprite(0, 0, 'intro').setOrigin(0.5, 0);
-        // intro.setScale(window.innerHeight / intro.height, window.innerHeight / intro.height).setPosition(window.innerWidth / 2, 0);
+        emitter.startFollow(brain);
+
+        this.physics.add.collider(brain, brain2);
 
         this.input.setDraggable(brain);
+        this.input.setDraggable(brain2);
         this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
-            gameObject.body.moves = false;
-            gameObject.x = dragX;
-            gameObject.y = dragY;
-            // conveer_anim.play();
-            // conveer_anim.visible=false;
+            if (midle_window + (bg.width * (global_scale) / 2) < dragX || (midle_window - (bg.width * (global_scale) / 2)) > dragX) {
+                gameObject.body.moves = true;
+            } else {
+                gameObject.body.moves = false;
+                gameObject.x = dragX;
+                gameObject.y = dragY;
+            }
         });
+
+        this.input.on('dragend', function (pointer, gameObject, dragX, dragY) {
+            // conveer_anim.visible=true;
+            gameObject.body.moves = true;
+            gameObject.removeInteractive();
+            gameObject.setVelocityY(-250);
+            gameObject.setTint(0x6b6b6b, 0x6b6b6b, 0x6b6b6b, 0x6b6b6b);
+            console.log(gameObject);
+        });
+
+        var intro = this.add.sprite(0, 0, 'intro').setOrigin(0.5, 0);
+        intro.setScale(window.innerHeight / intro.height, window.innerHeight / intro.height).setPosition(midle_window, 0);
+
         this.input.on('pointerup', function (pointer) {
-            // conveer_anim.anims.frameRate = 24;
             if (isPause) {
                 isPause = false;
                 conveer_anim.play('conveer');
-                // intro.visible = false;
+                // this.remove().sprite(intro);
+                intro.visible = false;
             }
             brain.body.moves = true;
 
@@ -149,13 +171,6 @@
         this.input.on('pointerdown', function (pointer) {
             // var stop = conveer_anim.anims.stop('conveer');
         });
-
-        this.input.on('dragend', function (pointer, gameObject, dragX, dragY) {
-            // conveer_anim.visible=true;
-            gameObject.body.moves = true;
-            gameObject.setVelocityY(-250);
-        });
-
     }
 
     function update() {
@@ -163,7 +178,7 @@
 
         if (cursors.left.isDown) {
             // conveer_anim.anims.stop('conveer');
-            conveer_anim.anims.setTimeScale(4) ;
+            conveer_anim.anims.setTimeScale(4);
             conveer_anim.anims.play();
             brain.setAngle(-25).setVelocityX(-80);
         } else if (cursors.right.isDown) {
