@@ -82,8 +82,10 @@
 
     function create() {
         cursors = this.input.keyboard.createCursorKeys();
+        this.physics.world.checkCollision.up = false;
         // particles = this.add.particles('red');
 
+        debugger
         this.anims.create({
             key: 'conveer',
             frames: [
@@ -168,7 +170,7 @@
         var obj = this.physics.add.sprite(midle_window, -100, 'brain');
         obj.setScale(global_scale);
         obj.setInteractive();
-        obj.setCollideWorldBounds(false);
+        obj.setCollideWorldBounds(true);
         if (!isPause){
             obj.body.moves = true;
             obj.setVelocityY(59);
