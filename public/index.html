@@ -37,8 +37,10 @@
         height: window.innerHeight,
         physics: {
             default: 'arcade',
+            debug: true,
+
             arcade: {
-                // gravity: {y: 0}
+                debug: true
             }
         },
         scene: {
@@ -58,15 +60,17 @@
     var global_scale;
     var midle_window = window.innerWidth / 2;
     var now;
+    var group;
 
     function preload() {
         this.load.setBaseURL('img');
 
         this.load.image('intro', 'intro.png');
         this.load.image('bg', 'bg.jpg');
+        this.load.image('PL5', 'trash/blue/PL_5.png');
         this.load.image('bg_tile', 'bg_tile.jpg');
         this.load.image('brain', 'brain.png');
-        this.load.image('red', 'red.png');
+        // this.load.image('red', 'red.png');
 
         this.load.image('con1', '/conveer/1.png');
         this.load.image('con2', '/conveer/2.png');
@@ -83,9 +87,7 @@
     function create() {
         cursors = this.input.keyboard.createCursorKeys();
         this.physics.world.checkCollision.up = false;
-        // particles = this.add.particles('red');
 
-        debugger
         this.anims.create({
             key: 'conveer',
             frames: [
@@ -120,6 +122,8 @@
         // this.physics.add.collider(brain, brain2);
 
         this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+            console.log("Drag");
+            //На пк попытка вынести мусор за пределы поля
             if (midle_window + (bg.width * (global_scale) / 2) < dragX || (midle_window - (bg.width * (global_scale) / 2)) > dragX) {
                 gameObject.body.moves = true;
             } else {
@@ -132,12 +136,11 @@
 
         this.input.on('dragend', function (pointer, gameObject, dragX, dragY) {
             // conveer_anim.visible=true;
-
+            setInactive(gameObject);
             gameObject.body.moves = true;
-            gameObject.removeInteractive();
-            gameObject.setVelocityY(80);
-            gameObject.setTint(0x6b6b6b, 0x6b6b6b, 0x6b6b6b, 0x6b6b6b);
-            console.log(gameObject);
+            // gameObject.removeInteractive();
+            // gameObject.setVelocityY(80);
+            // gameObject.setTint(0x6b6b6b, 0x6b6b6b, 0x6b6b6b, 0x6b6b6b);
         });
 
         var intro = this.add.sprite(0, 0, 'intro').setOrigin(0.5, 0);
@@ -162,16 +165,39 @@
         });
         now = this.time.now;
 
+        group = this.physics.add.group({
+            collideWorldBounds: true
+        });
+        this.physics.add.collider(group, group, function (s1, s2) {
+            setInactive(s1);
+            s1.body.moves = false;
+            // if (s1.getPositio)
+            // debugger
+            // group.destroy();
+        });
+    }
+
+    function setInactive(object) {
+        // object.body.moves = true;
+        object.removeInteractive();
+        object.body.allowdraggable = false;
+        object.setVelocityY(200);
+        object.setTint(0x6b6b6b, 0x6b6b6b, 0x6b6b6b, 0x6b6b6b);
     }
 
     function createAndDropObject() {
 
-        var particles = this.add.particles('red');
-        var obj = this.physics.add.sprite(midle_window, -100, 'brain');
-        obj.setScale(global_scale);
+        // var particles = this.add.particles('red');
+        var obj = group.create(midle_window, -100, 'PL5', 30);
+        console.log(obj.width);
+        console.log(obj.height);
+        obj.setSize(obj.width / 1.5, obj.height / 1.5);
+
+        debugger
+        obj.setScale(global_scale / 2);
         obj.setInteractive();
         obj.setCollideWorldBounds(true);
-        if (!isPause){
+        if (!isPause) {
             obj.body.moves = true;
             obj.setVelocityY(59);
         } else {
@@ -179,18 +205,18 @@
         }
         this.input.setDraggable(obj);
 
-        var emitter = particles.createEmitter({
-            speed: 100,
-            scale: {start: 1, end: 0},
-            blendMode: 'ADD'
-        });
-        emitter.startFollow(obj);
+        // var emitter = particles.createEmitter({
+        //     speed: 100,
+        //     scale: {start: 1, end: 0},
+        //     blendMode: 'ADD'
+        // });
+        // emitter.startFollow(obj);
         return obj;
 
     }
 
     function update() {
-        if (this.time.now - now > 3000) {
+        if (!isPause && this.time.now - now > 3000) {
             now = this.time.now;
             createAndDropObject.call(this);
             console.log(now);
@@ -201,9 +227,9 @@
 
         // if (cursors.left.isDown) {
         //     conveer_anim.anims.stop('conveer');
-            // conveer_anim.anims.setTimeScale(4);
-            // conveer_anim.anims.play();
-            // brain.setAngle(-25).setVelocityX(-80);
+        // conveer_anim.anims.setTimeScale(4);
+        // conveer_anim.anims.play();
+        // brain.setAngle(-25).setVelocityX(-80);
         // } else if (cursors.right.isDown) {
         //     brain.setAngle(25).setVelocityX(80);
         // }
