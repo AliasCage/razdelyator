@@ -110,7 +110,6 @@
         this.load.image('b20', 'trash/blue/20.png');
 
         this.load.image('blank', 'blank.png');
-
     }
 
     function create() {
@@ -169,10 +168,12 @@
             setInactive(gameObject);
             gameObject.body.moves = true;
             gameObject.body.enable = true;
-            if (gameObject.x < midle_window) {
+            if (gameObject.x < (midle_window - conveer_anim.width * global_scale / 8)) {
                 gameObject.setVelocity(200, -300);
-            } else {
+            } else if (gameObject.x > (midle_window + conveer_anim.width * global_scale / 8)) {
                 gameObject.setVelocity(-200, -300);
+            } else {
+                gameObject.setVelocityY(200);
             }
             gameObject.setGravityY(300);
             gameObject.setBounce(0.4)
