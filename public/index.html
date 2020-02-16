@@ -31,8 +31,6 @@
 <body>
 
 
-<!--удаление физики при фризе мусора-->
-<!--Включение физики если сортируешь не в ту сторону-->
 <!--Определение что экран засрали-->
 <!--Скилы-->
 <!--Подсветка мусора-->
@@ -62,8 +60,6 @@
     var game = new Phaser.Game(config);
     var isPause = true;
     var conveer_anim;
-    var brain;
-    var brain2;
     var cursors;
     var global_scale;
     var midle_window = window.innerWidth / 2;
@@ -118,8 +114,6 @@
     }
 
     function create() {
-
-
         cursors = this.input.keyboard.createCursorKeys();
         this.physics.world.checkCollision.up = false;
         now = this.time.now;
@@ -142,7 +136,6 @@
             repeat: -1
         });
 
-
         this.add.tileSprite(midle_window, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
 
         var bg = this.add.sprite(0, 0, 'bg').setOrigin(0.5, 0);
@@ -152,18 +145,12 @@
         conveer_anim = this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0);
         conveer_anim.setScale(window.innerHeight / conveer_anim.height, window.innerHeight / conveer_anim.height);
 
+        activeGroup = this.physics.add.group();
         group = this.physics.add.group({
             collideWorldBounds: true
         });
-        activeGroup = this.physics.add.group();
-
-        // brain2 = createAndDropObject.call(this);
-        // brain = createAndDropObject.call(this);
-        //
-        // this.physics.add.collider(brain, brain2);
 
         this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
-            console.log("Drag");
             //На пк попытка вынести мусор за пределы поля
             if (midle_window + (bg.width * (global_scale) / 2) < dragX || (midle_window - (bg.width * (global_scale) / 2)) > dragX) {
                 gameObject.body.moves = true;
@@ -182,6 +169,13 @@
             setInactive(gameObject);
             gameObject.body.moves = true;
             gameObject.body.enable = true;
+            if (gameObject.x < midle_window ){
+                gameObject.setVelocity(200, -300);
+            } else {
+                gameObject.setVelocity(-200, -300);
+            }
+            gameObject.setBounce(0.3);
+            gameObject.setGravityY(300);
 
 
             // gameObject.removeInteractive();
@@ -207,21 +201,25 @@
         this.physics.add.collider(group, group, function (s1, s2) {
             // .body.allowdraggable
             s2.active = false;
-            if (s2.body.moves && !s1.body.moves) {
-                // if (s2.body.moves && !s1.body.allowdraggable) {
-                setInactive(s2);
-                s2.body.moves = false;
-                // s1.destroy();
-            }
+            // if (s2.body.moves && !s1.body.moves) {
+            // if (s2.body.moves && !s1.body.allowdraggable) {
+            // setInactive(s2);
+            s2.body.moves = false;
+            // s1.destroy();
+            // }
             // if (s1.getPositio)
             // group.destroy();
         });
 
-        var zone = this.physics.add.sprite(midle_window, window.innerHeight, 'blank').setOrigin(0.5, 0.5).setAlpha(0);
+        var zone = this.physics.add.sprite(midle_window, window.innerHeight, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
         this.physics.add.overlap(zone, activeGroup, function (s1, s2) {
             activeGroup.remove(s2);
             setInactive(s2);
-            s2.body.moves = true;
+            s2.body.moves = false;
+            s2.body.enable = true;
+        });
+        this.physics.add.overlap(zone, group, function (s1, s2) {
+            s2.body.moves = false;
             s2.body.enable = true;
         });
         this.physics.add.overlap(activeGroup, group, function (s1, s2) {
@@ -229,22 +227,13 @@
             if (!s2.body.allowdraggable && !s2.active) {
                 activeGroup.remove(s1);
                 setInactive(s1);
-                // s1.body.moves = true;
+                s1.body.moves = false;
                 // s1.body.enable = true;
                 // s1.destroy();
 
                 // gameObject.body.enable = true;
 
             }
-            // .body.allowdraggable
-            // if (s2.body.moves && !s1.body.moves) {
-            // if (s2.body.moves && !s1.body.allowdraggable) {
-            // setInactive(s2);
-            // s2.body.moves = false;
-            // s1.destroy();
-            // }
-            // if (s1.getPositio)
-            // group.destroy();
         });
     }
 
@@ -285,7 +274,6 @@
         if (!isPause && this.time.now - now > interval) {
             now = this.time.now;
             createAndDropObject.call(this);
-            console.log(interval);
         }
         // var overlapRect = this.physics.add.overlapRect(0, window.innerHeight -20, window.innerWidth, 100);
         // console.log(overlapRect);
