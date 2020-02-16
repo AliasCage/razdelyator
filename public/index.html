@@ -169,22 +169,17 @@
             setInactive(gameObject);
             gameObject.body.moves = true;
             gameObject.body.enable = true;
-            if (gameObject.x < midle_window ){
+            if (gameObject.x < midle_window) {
                 gameObject.setVelocity(200, -300);
             } else {
                 gameObject.setVelocity(-200, -300);
             }
-            gameObject.setBounce(0.3);
             gameObject.setGravityY(300);
-
-
-            // gameObject.removeInteractive();
-            // gameObject.setVelocityY(80);
-            // gameObject.setTint(0x6b6b6b, 0x6b6b6b, 0x6b6b6b, 0x6b6b6b);
+            gameObject.setBounce(0.4)
         });
 
-        var intro = this.add.sprite(0, 0, 'intro').setOrigin(0.5, 0);
-        intro.setScale(window.innerHeight / intro.height, window.innerHeight / intro.height).setPosition(midle_window, 0);
+        var intro = this.add.sprite(0, 0, 'intro').setOrigin(0.5, 0).setPosition(midle_window, 0);
+        intro.setScale(window.innerHeight / intro.height, window.innerHeight / intro.height);
 
         this.input.on('pointerup', function (pointer) {
             if (isPause) {
@@ -212,6 +207,30 @@
         });
 
         var zone = this.physics.add.sprite(midle_window, window.innerHeight, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
+        var zone2 = this.physics.add.sprite(0, 0, 'con9').setOrigin(1, 0).setAlpha(0).setImmovable(true);
+        zone2.setPosition(midle_window - conveer_anim.width * global_scale  / 8, 0);
+        var zone3 = this.physics.add.sprite(0, 0, 'con9').setOrigin(0, 0).setAlpha(0).setImmovable(true);
+        zone3.setPosition(midle_window + conveer_anim.width * global_scale  / 8, 0);
+
+
+        this.physics.add.collider(zone2, group, function (s1, s2) {});
+        this.physics.add.collider(zone3, group, function (s1, s2) {});
+        // zone2.setSize(zone2.width , zone2.height );
+        // zone2.body.enable = true;
+        // zone2.body.collideWorldBounds = true;
+        // zone2.body.checkCollision.left = false;
+        // zone2.body.checkCollision.up = false;
+        // zone2.body.checkCollision.down = false;
+        // zone2.body.checkCollision.right = false;
+        // zone2.body.checkCollision.none = true;
+
+        // zone2.body.blocked.left = true;
+        // zone2.body.blocked.up = true;
+        // zone2.body.blocked.down = true;
+        // zone2.body.blocked.right = true;
+        // zone2.body.blocked.none = false;
+
+        debugger
         this.physics.add.overlap(zone, activeGroup, function (s1, s2) {
             activeGroup.remove(s2);
             setInactive(s2);
@@ -250,9 +269,11 @@
     }
 
     function createAndDropObject() {
+        // Phaser.Utils.Array.D
         var trash = blue[Math.floor(Math.random() * blue.length)];
         var obj = activeGroup.create(midle_window, -20, trash);
         obj.setSize(obj.width / 2, obj.height / 2);
+        debugger
 
         obj.setScale(global_scale / 2);
         obj.setInteractive();
