@@ -195,51 +195,42 @@
 
         this.physics.add.collider(group, group, function (s1, s2) {
             // .body.allowdraggable
-            s2.active = false;
             // if (s2.body.moves && !s1.body.moves) {
             // if (s2.body.moves && !s1.body.allowdraggable) {
             // setInactive(s2);
-            s2.body.moves = false;
+            // if (!s1.active === false) {
+            s2.active = false;
+            if (!s1.body.moves) {
+                s2.body.moves = false;
+
+            }
+            // }
             // s1.destroy();
             // }
             // if (s1.getPositio)
             // group.destroy();
         });
 
-        var zone = this.physics.add.sprite(midle_window, window.innerHeight, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
-        var zone2 = this.physics.add.sprite(0, 0, 'con9').setOrigin(1, 0).setAlpha(0).setImmovable(true);
-        zone2.setPosition(midle_window - conveer_anim.width * global_scale  / 8, 0);
-        var zone3 = this.physics.add.sprite(0, 0, 'con9').setOrigin(0, 0).setAlpha(0).setImmovable(true);
-        zone3.setPosition(midle_window + conveer_anim.width * global_scale  / 8, 0);
+        var zone_left = this.physics.add.sprite(0, 0, 'con9').setOrigin(1, 0).setAlpha(0).setImmovable(true);
+        zone_left.setPosition(midle_window - conveer_anim.width * global_scale / 8, 0);
+        this.physics.add.collider(zone_left, group);
 
+        var zone_right = this.physics.add.sprite(0, 0, 'con9').setOrigin(0, 0).setAlpha(0).setImmovable(true);
+        zone_right.setPosition(midle_window + conveer_anim.width * global_scale / 8, 0);
+        this.physics.add.collider(zone_right, group);
 
-        this.physics.add.collider(zone2, group, function (s1, s2) {});
-        this.physics.add.collider(zone3, group, function (s1, s2) {});
-        // zone2.setSize(zone2.width , zone2.height );
-        // zone2.body.enable = true;
-        // zone2.body.collideWorldBounds = true;
-        // zone2.body.checkCollision.left = false;
-        // zone2.body.checkCollision.up = false;
-        // zone2.body.checkCollision.down = false;
-        // zone2.body.checkCollision.right = false;
-        // zone2.body.checkCollision.none = true;
-
-        // zone2.body.blocked.left = true;
-        // zone2.body.blocked.up = true;
-        // zone2.body.blocked.down = true;
-        // zone2.body.blocked.right = true;
-        // zone2.body.blocked.none = false;
-
-        debugger
-        this.physics.add.overlap(zone, activeGroup, function (s1, s2) {
+        var zone_bottom = this.physics.add.sprite(midle_window, window.innerHeight, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
+        this.physics.add.overlap(zone_bottom, activeGroup, function (s1, s2) {
             activeGroup.remove(s2);
             setInactive(s2);
             s2.body.moves = false;
             s2.body.enable = true;
         });
-        this.physics.add.overlap(zone, group, function (s1, s2) {
+        this.physics.add.overlap(zone_bottom, group, function (s1, s2) {
             s2.body.moves = false;
             s2.body.enable = true;
+            s2.active = false;
+
         });
         this.physics.add.overlap(activeGroup, group, function (s1, s2) {
 
