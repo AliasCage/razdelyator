@@ -203,7 +203,6 @@
             s2.active = false;
             if (!s1.body.moves) {
                 s2.body.moves = false;
-
             }
             // }
             // s1.destroy();
@@ -252,12 +251,16 @@
         group.add(object);
         // object.active = false;
 
-
         // object.body.moves = true;
         object.removeInteractive();
         object.body.allowdraggable = false;
         object.setVelocityY(400);
         object.setTint(0x6b6b6b, 0x6b6b6b, 0x6b6b6b, 0x6b6b6b);
+
+        console.log(object.y);
+        if (object.y < 0) {
+            group.clear(true);
+        }
     }
 
     function createAndDropObject() {
@@ -265,7 +268,7 @@
         var trash = blue[Math.floor(Math.random() * blue.length)];
         var obj = activeGroup.create(midle_window, -20, trash);
         obj.setSize(obj.width / 2, obj.height / 2);
-        debugger
+
 
         obj.setScale(global_scale / 2);
         obj.setInteractive();
@@ -277,9 +280,7 @@
             obj.body.moves = false;
         }
         this.input.setDraggable(obj);
-
         return obj;
-
     }
 
     function update() {
