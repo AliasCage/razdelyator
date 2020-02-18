@@ -47,7 +47,7 @@
             // debug: true,
 
             arcade: {
-                // debug: true
+                debug: true
             }
         },
         scene: {
@@ -66,15 +66,21 @@
     var now;
     var group;
     var activeGroup;
+    var destroyGroup = [];
     var blue = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11', 'b12', 'b13', 'b14', 'b15', 'b16',
         'b17', 'b18', 'b19', 'b20'];
+
+    var blue_bak;
+    var grey_bak;
 
     function preload() {
         this.load.setBaseURL('img');
 
         this.load.image('intro', 'intro.png');
-        this.load.image('bg', 'bg.jpg');
-        this.load.image('PL5', 'trash/blue/20.png');
+        // this.load.image('bg', 'bg.jpg');
+        this.load.image('bg', 'bg.png');
+        this.load.image('blue', 'blue_min.png');
+        this.load.image('grey', 'grey_min.png');
         this.load.image('bg_tile', 'bg_tile.jpg');
 
         this.load.image('con1', '/conveer/1.png');
@@ -141,12 +147,34 @@
         global_scale = window.innerHeight / bg.height;
         bg.setScale(global_scale).setPosition(midle_window, 0);
 
+        blue_bak = this.physics.add.sprite(0, 0, 'blue').setOrigin(-0.05, 0.5).setScale(global_scale)
+            .setPosition(midle_window - bg.width * global_scale * 0.5, window.innerHeight / 1.65);
+        grey_bak = this.physics.add.sprite(0, 0, 'grey').setOrigin(1.05, 0.5).setScale(global_scale)
+            .setPosition(midle_window + bg.width * global_scale * 0.5, window.innerHeight / 1.65);
+
         conveer_anim = this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0);
         conveer_anim.setScale(window.innerHeight / conveer_anim.height, window.innerHeight / conveer_anim.height);
 
         activeGroup = this.physics.add.group();
         group = this.physics.add.group({
             collideWorldBounds: true
+        });
+
+        this.physics.add.overlap(blue_bak, group, function (s1, s2) {
+            if (s2.type === 'blue') {
+                group.remove(s2);
+                destroyGroup.push(s2);
+                s2.setVelocity(-50, 60);
+                s2.setAngularVelocity(-50);
+            }
+        });
+        this.physics.add.overlap(grey_bak, group, function (s1, s2) {
+            if (s2.type === 'grey') {
+                group.remove(s2);
+                destroyGroup.push(s2);
+                s2.setVelocity(50, 60);
+                s2.setAngularVelocity(50);
+            }
         });
 
         this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
@@ -170,13 +198,15 @@
             gameObject.body.enable = true;
             if (gameObject.x < (midle_window - conveer_anim.width * global_scale / 8)) {
                 gameObject.setVelocity(200, -300);
+                gameObject.setAngularVelocity(-40);
             } else if (gameObject.x > (midle_window + conveer_anim.width * global_scale / 8)) {
                 gameObject.setVelocity(-200, -300);
+                gameObject.setAngularVelocity(40);
             } else {
                 gameObject.setVelocityY(200);
             }
             gameObject.setGravityY(300);
-            gameObject.setBounce(0.4)
+            gameObject.setBounce(0.4);
         });
 
         var intro = this.add.sprite(0, 0, 'intro').setOrigin(0.5, 0).setPosition(midle_window, 0);
@@ -212,11 +242,11 @@
         });
 
         var zone_left = this.physics.add.sprite(0, 0, 'con9').setOrigin(1, 0).setAlpha(0).setImmovable(true);
-        zone_left.setPosition(midle_window - conveer_anim.width * global_scale / 8, 0);
+        zone_left.setPosition(midle_window - conveer_anim.width * global_scale / 6, 0);
         this.physics.add.collider(zone_left, group);
 
         var zone_right = this.physics.add.sprite(0, 0, 'con9').setOrigin(0, 0).setAlpha(0).setImmovable(true);
-        zone_right.setPosition(midle_window + conveer_anim.width * global_scale / 8, 0);
+        zone_right.setPosition(midle_window + conveer_anim.width * global_scale / 6, 0);
         this.physics.add.collider(zone_right, group);
 
         var zone_bottom = this.physics.add.sprite(midle_window, window.innerHeight, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
@@ -260,6 +290,9 @@
         console.log(object.y);
         if (object.y < 0) {
             group.clear(true);
+            group.getChildren().forEach(function (trash) {
+                trash.destroy();
+            }, this);
         }
     }
 
@@ -268,9 +301,10 @@
         var trash = blue[Math.floor(Math.random() * blue.length)];
         var obj = activeGroup.create(midle_window, -20, trash);
         obj.setSize(obj.width / 2, obj.height / 2);
+        obj.type = 'blue';
 
 
-        obj.setScale(global_scale / 2);
+        obj.setScale(global_scale / 1.5);
         obj.setInteractive();
         obj.setCollideWorldBounds(true);
         if (!isPause) {
@@ -284,6 +318,21 @@
     }
 
     function update() {
+        if (Array.isArray(destroyGroup) && destroyGroup.length) {
+            var shift = destroyGroup.shift();
+            this.tweens.add({
+                targets: shift,
+                scaleX: 0.10,
+                scaleY: 0.10,
+                ease: 'Linear',
+                duration: 500,
+                onComplete: function () {
+                    shift.destroy();
+                },
+            });
+        }
+
+
         var interval = 3000 + (300 + Math.floor((1500 - 300) * Math.random()));
         if (!isPause && this.time.now - now > interval) {
             now = this.time.now;
