@@ -47,7 +47,7 @@
             // debug: true,
 
             arcade: {
-                debug: true
+                // debug: true
             }
         },
         scene: {
@@ -72,6 +72,7 @@
 
     var blue_bak;
     var grey_bak;
+    var rails;
 
     function preload() {
         this.load.setBaseURL('img');
@@ -81,6 +82,7 @@
         this.load.image('bg', 'bg.png');
         this.load.image('blue', 'blue_min.png');
         this.load.image('grey', 'grey_min.png');
+        this.load.image('rails', 'rails.png');
         this.load.image('bg_tile', 'bg_tile.jpg');
 
         this.load.image('con1', '/conveer/1.png');
@@ -154,6 +156,9 @@
 
         conveer_anim = this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0);
         conveer_anim.setScale(window.innerHeight / conveer_anim.height, window.innerHeight / conveer_anim.height);
+
+        rails = this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0).setScale(global_scale)
+            .setPosition(midle_window, window.innerHeight * 0.05);
 
         activeGroup = this.physics.add.group();
         group = this.physics.add.group({
@@ -337,6 +342,9 @@
         if (!isPause && this.time.now - now > interval) {
             now = this.time.now;
             createAndDropObject.call(this);
+            rails.destroy();
+            rails = this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0).setScale(global_scale)
+                .setPosition(midle_window, window.innerHeight * 0.05);
         }
         // var overlapRect = this.physics.add.overlapRect(0, window.innerHeight -20, window.innerWidth, 100);
         // console.log(overlapRect);
