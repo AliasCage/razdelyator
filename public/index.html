@@ -73,6 +73,7 @@
     var blue_bak;
     var grey_bak;
     var rails;
+    var battary_case;
 
     function preload() {
         this.load.setBaseURL('img');
@@ -83,6 +84,7 @@
         this.load.image('blue', 'blue_min.png');
         this.load.image('grey', 'grey_min.png');
         this.load.image('rails', 'rails.png');
+        this.load.image('battary_case', 'battary_case.png');
         this.load.image('bg_tile', 'bg_tile.jpg');
 
         this.load.image('con1', '/conveer/1.png');
@@ -159,6 +161,8 @@
 
         rails = this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0).setScale(global_scale)
             .setPosition(midle_window, window.innerHeight * 0.05);
+        battary_case = this.physics.add.sprite(0, 0, 'battary_case').setOrigin(0.5, 0.5).setScale(global_scale)
+            .setPosition(midle_window + rails.width * 0.2, window.innerHeight * 0.05);
 
         activeGroup = this.physics.add.group();
         group = this.physics.add.group({
@@ -345,6 +349,9 @@
             rails.destroy();
             rails = this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0).setScale(global_scale)
                 .setPosition(midle_window, window.innerHeight * 0.05);
+            battary_case.destroy();
+            battary_case = this.physics.add.sprite(0, 0, 'battary_case').setOrigin(0.5, 0.5).setScale(global_scale)
+                .setPosition(midle_window - rails.width * 0.2, window.innerHeight * 0.05);
         }
         // var overlapRect = this.physics.add.overlapRect(0, window.innerHeight -20, window.innerWidth, 100);
         // console.log(overlapRect);
