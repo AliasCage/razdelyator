@@ -17,26 +17,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
     <script src="/public/lib/phaser.js"></script>
-
-    <style media="screen">
-        body {
-            background: #ECEFF1;
-            color: rgba(3, 9, 8, 0.87);
-            font-family: Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
 </head>
 <body>
 
 
-<!--Определение что экран засрали-->
 <!--Скилы-->
 <!--Подсветка мусора-->
 <!--Таблица рекордов-->
 <!--ввод почты-->
-<!--Мусор ложится только на конвеер-->
 <script>
     var config = {
         type: Phaser.AUTO,
@@ -185,7 +173,7 @@
         rails = this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
             .setPosition(midle_window, window.innerHeight * 0.05);
         battary_case = this.physics.add.sprite(0, 0, 'battary_case').setOrigin(0.5, 0.5).setScale(global_scale)
-            .setPosition(midle_window + rails.width * 0.2, window.innerHeight * 0.05);
+            .setPosition(midle_window + rails.width * global_scale * 0.2, window.innerHeight * 0.05);
 
         activeGroup = this.physics.add.group();
         group = this.physics.add.group({
@@ -196,7 +184,7 @@
             if (s2.type === 'blue') {
                 group.remove(s2);
                 destroyGroup.push(s2);
-                s2.setVelocity(-50, 60);
+                s2.setVelocity((s1.x - s2.x) / 2, s1.y - s2.y);
                 s2.setAngularVelocity(-50);
             }
         });
@@ -204,7 +192,7 @@
             if (s2.type === 'grey') {
                 group.remove(s2);
                 destroyGroup.push(s2);
-                s2.setVelocity(50, 60);
+                s2.setVelocity((s1.x - s2.x) / 2, s1.y - s2.y);
                 s2.setAngularVelocity(50);
             }
         });
@@ -388,8 +376,10 @@
             rails.destroy();
             rails = this.physics.add.sprite(midle_window, window.innerHeight * 0.05, 'rails')
                 .setOrigin(0.5, 0.5).setScale(global_scale);
+
             battary_case.destroy();
-            battary_case = this.physics.add.sprite(midle_window - rails.width * 0.2, window.innerHeight * 0.05, 'battary_case')
+            var diff = getRandomInt(-rails.width * global_scale / 2, rails.width * global_scale / 2);
+            battary_case = this.physics.add.sprite(midle_window + diff, window.innerHeight * 0.05, 'battary_case')
                 .setOrigin(0.5, 0.5).setScale(global_scale);
         }
         // var overlapRect = this.physics.add.overlapRect(0, window.innerHeight -20, window.innerWidth, 100);
