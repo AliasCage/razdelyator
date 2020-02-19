@@ -69,6 +69,8 @@
     var destroyGroup = [];
     var blue = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11', 'b12', 'b13', 'b14', 'b15', 'b16',
         'b17', 'b18', 'b19', 'b20'];
+    var grey = ['g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7', 'g8', 'g9', 'g10', 'g11', 'g12', 'g13', 'g14', 'g15', 'g16',
+        'g17', 'g18', 'g19', 'g20'];
 
     var blue_bak;
     var grey_bak;
@@ -119,6 +121,27 @@
         this.load.image('b19', 'trash/blue/19.png');
         this.load.image('b20', 'trash/blue/20.png');
 
+        this.load.image('g1', 'trash/grey/1.png');
+        this.load.image('g2', 'trash/grey/2.png');
+        this.load.image('g3', 'trash/grey/3.png');
+        this.load.image('g4', 'trash/grey/4.png');
+        this.load.image('g5', 'trash/grey/5.png');
+        this.load.image('g6', 'trash/grey/6.png');
+        this.load.image('g7', 'trash/grey/7.png');
+        this.load.image('g8', 'trash/grey/8.png');
+        this.load.image('g9', 'trash/grey/9.png');
+        this.load.image('g10', 'trash/grey/10.png');
+        this.load.image('g11', 'trash/grey/11.png');
+        this.load.image('g12', 'trash/grey/12.png');
+        this.load.image('g13', 'trash/grey/13.png');
+        this.load.image('g14', 'trash/grey/14.png');
+        this.load.image('g15', 'trash/grey/15.png');
+        this.load.image('g16', 'trash/grey/16.png');
+        this.load.image('g17', 'trash/grey/17.png');
+        this.load.image('g18', 'trash/grey/18.png');
+        this.load.image('g19', 'trash/grey/19.png');
+        this.load.image('g20', 'trash/grey/20.png');
+
         this.load.image('blank', 'blank.png');
     }
 
@@ -159,7 +182,7 @@
         conveer_anim = this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0);
         conveer_anim.setScale(window.innerHeight / conveer_anim.height, window.innerHeight / conveer_anim.height);
 
-        rails = this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0).setScale(global_scale)
+        rails = this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
             .setPosition(midle_window, window.innerHeight * 0.05);
         battary_case = this.physics.add.sprite(0, 0, 'battary_case').setOrigin(0.5, 0.5).setScale(global_scale)
             .setPosition(midle_window + rails.width * 0.2, window.innerHeight * 0.05);
@@ -307,10 +330,20 @@
 
     function createAndDropObject() {
         // Phaser.Utils.Array.D
-        var trash = blue[Math.floor(Math.random() * blue.length)];
-        var obj = activeGroup.create(midle_window, -20, trash);
+        console.log(Math.random());
+        var trash;
+        var trashType;
+        if (Math.random() > 0.5) {
+            trash = blue[Math.floor(Math.random() * blue.length)];
+            trashType = 'blue';
+        } else {
+            trash = grey[Math.floor(Math.random() * grey.length)];
+            trashType = 'grey';
+        }
+        var diff = getRandomInt(-conveer_anim.width * global_scale / 8, conveer_anim.width * global_scale / 8);
+        var obj = activeGroup.create(midle_window + diff, -20, trash);
         obj.setSize(obj.width / 2, obj.height / 2);
-        obj.type = 'blue';
+        obj.type = trashType;
 
 
         obj.setScale(global_scale / 1.5);
@@ -324,6 +357,12 @@
         }
         this.input.setDraggable(obj);
         return obj;
+    }
+
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     function update() {
@@ -347,11 +386,11 @@
             now = this.time.now;
             createAndDropObject.call(this);
             rails.destroy();
-            rails = this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0).setScale(global_scale)
-                .setPosition(midle_window, window.innerHeight * 0.05);
+            rails = this.physics.add.sprite(midle_window, window.innerHeight * 0.05, 'rails')
+                .setOrigin(0.5, 0.5).setScale(global_scale);
             battary_case.destroy();
-            battary_case = this.physics.add.sprite(0, 0, 'battary_case').setOrigin(0.5, 0.5).setScale(global_scale)
-                .setPosition(midle_window - rails.width * 0.2, window.innerHeight * 0.05);
+            battary_case = this.physics.add.sprite(midle_window - rails.width * 0.2, window.innerHeight * 0.05, 'battary_case')
+                .setOrigin(0.5, 0.5).setScale(global_scale);
         }
         // var overlapRect = this.physics.add.overlapRect(0, window.innerHeight -20, window.innerWidth, 100);
         // console.log(overlapRect);
