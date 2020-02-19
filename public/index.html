@@ -47,6 +47,7 @@
 
     var game = new Phaser.Game(config);
     var isPause = true;
+    var isNeedDarknes = false;
     var conveer_anim;
     var cursors;
     var global_scale;
@@ -72,6 +73,7 @@
 
         this.load.image('intro', 'intro.png');
         this.load.image('bg', 'bg.png');
+        this.load.image('darknes', 'darknes.png');
         this.load.image('blue', 'blue_min.png');
         this.load.image('grey', 'grey_min.png');
         this.load.image('rails', 'rails.png');
@@ -278,6 +280,7 @@
             s2.body.moves = false;
             s2.body.enable = true;
         });
+
         this.physics.add.overlap(zone_bottom, group, function (s1, s2) {
             s2.body.moves = false;
             s2.body.enable = true;
@@ -313,6 +316,21 @@
             group.remove(trash);
         });
         group.clear(true);
+        isNeedDarknes = true;
+    }
+
+    function darkness() {
+        isNeedDarknes = false;
+        var darknes = this.add.sprite(0, 0, 'darknes').setOrigin(0.5, 0).setScale(global_scale).setPosition(midle_window, 0);
+        this.tweens.add({
+            targets: darknes,
+            alpha: 0,
+            ease: 'Linear',
+            duration: 3000,
+            onComplete: function () {
+                darknes.destroy();
+            },
+        });
     }
 
     function setInactive(object) {
@@ -390,6 +408,9 @@
                     shift.destroy();
                 },
             });
+        }
+        if (isNeedDarknes){
+            darkness.call(this);
         }
 
 
