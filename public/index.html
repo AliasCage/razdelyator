@@ -177,9 +177,9 @@
         conveer_anim.setScale(window.innerHeight / conveer_anim.height, window.innerHeight / conveer_anim.height);
 
         rails = this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
-            .setPosition(midle_window, window.innerHeight * 0.05);
+            .setPosition(midle_window, window.innerHeight * 0.05).setDepth(1);
         battary_case = this.physics.add.sprite(0, 0, 'battary_case').setOrigin(0.5, 0.5).setScale(global_scale)
-            .setPosition(midle_window + rails.width * global_scale * 0.2, window.innerHeight * 0.05);
+            .setPosition(midle_window + rails.width * global_scale * 0.2, window.innerHeight * 0.05).setDepth(2);
 
         activeGroup = this.physics.add.group();
         toxicGroup = this.physics.add.group();
@@ -222,6 +222,7 @@
                 gameObject.y = dragY;
             }
             gameObject.body.enable = false;
+            gameObject.setDepth(9);
         });
 
 
@@ -244,7 +245,7 @@
             gameObject.setBounce(0.4);
         });
 
-        var intro = this.add.sprite(0, 0, 'intro').setOrigin(0.5, 0).setPosition(midle_window, 0);
+        var intro = this.add.sprite(0, 0, 'intro').setOrigin(0.5, 0).setPosition(midle_window, 0).setDepth(10);
         intro.setScale(window.innerHeight / intro.height, window.innerHeight / intro.height);
 
         this.input.on('pointerup', function (pointer) {
@@ -378,11 +379,10 @@
             trashType = 'grey';
         }
         var diff = getRandomInt(-conveer_anim.width * global_scale / 8, conveer_anim.width * global_scale / 8);
-        var obj = activeGroup.create(midle_window + diff, -20, trash);
+        var obj = activeGroup.create(midle_window + diff, -20, trash).setDepth(0);
         obj.setSize(obj.width / 2, obj.height / 2);
         obj.type = trashType;
         obj.isToxic = toxic;
-
 
         obj.setScale(global_scale / 1.5);
         obj.setInteractive();
@@ -417,7 +417,7 @@
                 },
             });
         }
-        if (isNeedDarknes){
+        if (isNeedDarknes) {
             darkness.call(this);
         }
 
@@ -426,37 +426,9 @@
         if (!isPause && this.time.now - now > interval) {
             now = this.time.now;
             createAndDropObject.call(this);
-            rails.destroy();
-            rails = this.physics.add.sprite(midle_window, window.innerHeight * 0.05, 'rails')
-                .setOrigin(0.5, 0.5).setScale(global_scale);
-
-            battary_case.destroy();
             var diff = getRandomInt(-rails.width * global_scale / 2, rails.width * global_scale / 2);
-            battary_case = this.physics.add.sprite(midle_window + diff, window.innerHeight * 0.05, 'battary_case')
-                .setOrigin(0.5, 0.5).setScale(global_scale);
-
-            this.physics.add.overlap(battary_case, group, function (s1, s2) {
-                if (s2.type === 'acc') {
-                    group.remove(s2);
-                    destroyGroup.push(s2);
-                    s2.destroy();
-                }
-            });
+            battary_case.setPosition(midle_window + diff, window.innerHeight * 0.05);
         }
-        // var overlapRect = this.physics.add.overlapRect(0, window.innerHeight -20, window.innerWidth, 100);
-        // console.log(overlapRect);
-
-        // console.log(brain.position);
-        // brain.setAngle(0);
-
-        // if (cursors.left.isDown) {
-        //     conveer_anim.anims.stop('conveer');
-        // conveer_anim.anims.setTimeScale(4);
-        // conveer_anim.anims.play();
-        // brain.setAngle(-25).setVelocityX(-80);
-        // } else if (cursors.right.isDown) {
-        //     brain.setAngle(25).setVelocityX(80);
-        // }
     }
 </script>
 
