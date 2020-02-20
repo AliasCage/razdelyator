@@ -187,6 +187,14 @@
             collideWorldBounds: true
         });
 
+        this.physics.add.overlap(battary_case, group, function (s1, s2) {
+            if (s2.type === 'acc') {
+                group.remove(s2);
+                destroyGroup.push(s2);
+                s2.destroy();
+            }
+        });
+
         this.physics.add.overlap(blue_bak, group, function (s1, s2) {
             if (s2.type === 'blue') {
                 group.remove(s2);
@@ -426,6 +434,14 @@
             var diff = getRandomInt(-rails.width * global_scale / 2, rails.width * global_scale / 2);
             battary_case = this.physics.add.sprite(midle_window + diff, window.innerHeight * 0.05, 'battary_case')
                 .setOrigin(0.5, 0.5).setScale(global_scale);
+
+            this.physics.add.overlap(battary_case, group, function (s1, s2) {
+                if (s2.type === 'acc') {
+                    group.remove(s2);
+                    destroyGroup.push(s2);
+                    s2.destroy();
+                }
+            });
         }
         // var overlapRect = this.physics.add.overlapRect(0, window.innerHeight -20, window.innerWidth, 100);
         // console.log(overlapRect);
