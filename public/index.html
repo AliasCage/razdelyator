@@ -68,6 +68,8 @@
     var rails;
     var battary_case;
 
+    var battaryGroup;
+ var test;
     function preload() {
         this.load.setBaseURL('img');
 
@@ -176,16 +178,22 @@
         conveer_anim = this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0);
         conveer_anim.setScale(window.innerHeight / conveer_anim.height, window.innerHeight / conveer_anim.height);
 
-        rails = this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
+
+
+       /* rails = this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
             .setPosition(midle_window, window.innerHeight * 0.05);
         battary_case = this.physics.add.sprite(0, 0, 'battary_case').setOrigin(0.5, 0.5).setScale(global_scale)
-            .setPosition(midle_window + rails.width * global_scale * 0.2, window.innerHeight * 0.05);
+            .setPosition(midle_window + rails.width * global_scale * 0.2, window.innerHeight * 0.05);*/
+
+
 
         activeGroup = this.physics.add.group();
         toxicGroup = this.physics.add.group();
         group = this.physics.add.group({
             collideWorldBounds: true
         });
+
+
 
         this.physics.add.overlap(blue_bak, group, function (s1, s2) {
             if (s2.type === 'blue') {
@@ -236,6 +244,13 @@
             gameObject.setBounce(0.4);
         });
 
+    
+        battaryGroup = this.physics.add.group();
+        rails = battaryGroup.create(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
+            .setPosition(midle_window, window.innerHeight * 0.05);
+        battary_case = battaryGroup.create(0, 0, 'battary_case').setOrigin(0.5, 0.5).setScale(global_scale)
+            .setPosition(midle_window + rails.width * global_scale * 0.2, window.innerHeight * 0.05);
+
         var intro = this.add.sprite(0, 0, 'intro').setOrigin(0.5, 0).setPosition(midle_window, 0);
         intro.setScale(window.innerHeight / intro.height, window.innerHeight / intro.height);
 
@@ -273,6 +288,8 @@
         zone_right.setPosition(midle_window + conveer_anim.width * global_scale / 6, 0);
         this.physics.add.collider(zone_right, group);
 
+
+
         var zone_bottom = this.physics.add.sprite(midle_window, window.innerHeight, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
         this.physics.add.overlap(zone_bottom, activeGroup, function (s1, s2) {
             activeGroup.remove(s2);
@@ -303,6 +320,8 @@
         };
         this.physics.add.overlap(activeGroup, group, coliderActiveGroup);
         this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup);
+
+
     }
 
     function toxicality(accumulator) {
@@ -418,14 +437,14 @@
         if (!isPause && this.time.now - now > interval) {
             now = this.time.now;
             createAndDropObject.call(this);
-            rails.destroy();
+           /* rails.destroy();
             rails = this.physics.add.sprite(midle_window, window.innerHeight * 0.05, 'rails')
                 .setOrigin(0.5, 0.5).setScale(global_scale);
 
             battary_case.destroy();
             var diff = getRandomInt(-rails.width * global_scale / 2, rails.width * global_scale / 2);
             battary_case = this.physics.add.sprite(midle_window + diff, window.innerHeight * 0.05, 'battary_case')
-                .setOrigin(0.5, 0.5).setScale(global_scale);
+                .setOrigin(0.5, 0.5).setScale(global_scale);*/
         }
         // var overlapRect = this.physics.add.overlapRect(0, window.innerHeight -20, window.innerWidth, 100);
         // console.log(overlapRect);
