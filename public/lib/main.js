@@ -17,6 +17,10 @@ var config = {
     }
 };
 
+// const myFunctions = require('./fb.js');
+import { load } from './fb.js';
+// let val = ;  // val is "Hello";
+
 var game = new Phaser.Game(config);
 var isPause = true;
 var isNeedDarknes = false;
@@ -264,6 +268,9 @@ function create() {
             conveer_anim.play('conveer');
             // intro.visible = false;
             intro.destroy();
+            //todo: save data via it
+            load("phaser01");
+
         }
     });
     this.input.on('pointerdown', function (pointer) {

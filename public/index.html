@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Razdelyator 2049</title>
+    <link rel="shortcut icon" href="img/trash/grey/1.png" type="image/x-icon">
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/7.8.1/firebase-app.js"></script>
@@ -29,40 +30,6 @@
 </head>
 <body>
 <script type="module" src="lib/main.js"></script>
-
-<script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyDwyP6pcgmdXmChCCVRHS-BoLoKePcsPdo",
-        authDomain: "razdelyator-2df4b.firebaseapp.com",
-        databaseURL: "https://razdelyator-2df4b.firebaseio.com",
-        projectId: "razdelyator-2df4b",
-        storageBucket: "razdelyator-2df4b.appspot.com",
-        messagingSenderId: "354974286422",
-        appId: "1:354974286422:web:37e805dcf1296a9a74f1f7",
-        measurementId: "G-E5MVVLT4BP"
-    };
-
-    document.addEventListener('DOMContentLoaded', function () {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-            let app = firebase.app();
-            let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-            document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-            console.error(e);
-            document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-    });
-</script>
-
+<script type="module" src="lib/fb.js"></script>
 </body>
 </html>
