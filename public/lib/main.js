@@ -28,13 +28,14 @@ var cursors;
 var global_scale;
 var midle_window = window.innerWidth / 2;
 var now;
-
+var now1;
 var conveer_anim;
 
 var group;
 var activeGroup;
 var toxicGroup;
 var destroyGroup = [];
+var nonActiveGroup;
 
 var blue = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11', 'b12', 'b13', 'b14', 'b15', 'b16',
     'b17', 'b18', 'b19', 'b20'];
@@ -46,7 +47,7 @@ var blue_bak;
 var grey_bak;
 var rails;
 var battary_case;
-
+var clear_on;
 function preload() {
     this.load.setBaseURL('img');
 
@@ -135,7 +136,7 @@ function create() {
     cursors = this.input.keyboard.createCursorKeys();
     this.physics.world.checkCollision.up = false;
     now = this.time.now;
-
+    now1 = this.time.now;
     this.anims.create({
         key: 'conveer',
         frames: [
@@ -174,6 +175,7 @@ function create() {
         .setPosition(midle_window + rails.width * global_scale * 0.2, window.innerHeight * 0.05).setDepth(2);
 
     activeGroup = this.physics.add.group();
+    nonActiveGroup = this.physics.add.group();
     toxicGroup = this.physics.add.group({
         collideWorldBounds: true
     });
@@ -187,6 +189,8 @@ function create() {
         .setOrigin(1, 0.5).setScale(global_scale);
     var clear_off = this.add.sprite(midle_window + side_middle, window.innerHeight / 6, 'clear_off')
         .setOrigin(0, 0.5).setScale(global_scale);
+    clear_on = this.add.sprite(midle_window + side_middle, window.innerHeight / 6, 'clear_on').setOrigin(0, 0.5).setScale(global_scale);
+    clear_on.visible = false;
     var one_off = this.add.sprite(midle_window - side_middle, window.innerHeight / 3, 'one_off')
         .setOrigin(1, 0.5).setScale(global_scale);
     var slow_off = this.add.sprite(midle_window + side_middle, window.innerHeight / 3, 'slow_on')
@@ -331,6 +335,18 @@ function create() {
     this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup);
 }
 
+function clearConveer() {
+    group.clear(true);
+    group.getChildren().forEach(function (trash) {
+        if(trash.type !== 'acc'){
+            group.remove(trash);
+            trash.destroy();
+        }
+    });
+
+    clear_on.visible = false;
+}
+
 function toxicality(accumulator) {
     accumulator.setTint(0x01DF01, 0x01DF01, 0x01DF01, 0x01DF01);
     group.getChildren().forEach(function (trash) {
@@ -443,4 +459,11 @@ function update() {
         var diff = getRandomInt(-rails.width * global_scale / 2, rails.width * global_scale / 2);
         battary_case.setPosition(midle_window + diff, window.innerHeight * 0.05);
     }
+    if(!isPause && this.time.now - now1 > 10000){
+        clearConveer();
+        now1 = this.time.now;
+    }else if (!isPause && this.time.now - now1 > 9000){
+        clear_on.visible = true;
+    }
+
 }
