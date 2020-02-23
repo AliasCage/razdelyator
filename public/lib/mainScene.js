@@ -24,7 +24,6 @@ var blue_bak;
 var grey_bak;
 var rails;
 var battary_case;
-var intro;
 
 const midle_window = window.innerWidth / 2;
 
@@ -72,7 +71,6 @@ var MainSc = new Phaser.Class({
 
         this.load.setBaseURL('img');
 
-        // this.load.image('intro', 'intro.png');
         this.load.image('bg', 'bg.png');
         this.load.image('bg_tile', 'bg_tile.jpg');
         this.load.image('darknes', 'darknes.png');
@@ -95,8 +93,8 @@ var MainSc = new Phaser.Class({
         this.load.image('slow_off', 'btn/slow_off.png');
         this.load.image('slow_on', 'btn/slow_on.png');
 
-        this.load.image('menu_off', 'menu_off.png');
-        this.load.image('menu_on', 'menu_on.png');
+        this.load.image('menu_off', 'btn/menu_off.png');
+        this.load.image('menu_on', 'btn/menu_on.png');
 
 
         this.load.image('con1', '/conveer/1.png');
@@ -206,8 +204,7 @@ var MainSc = new Phaser.Class({
             collideWorldBounds: true
         });
 
-
-        var side_middle = (conveer_anim.width + (bg.width - conveer_anim.width)) * global_scale * 0.25;
+        var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
         var auto_off = this.add.sprite(midle_window - side_middle, window.innerHeight / 6, 'auto_on')
             .setOrigin(1, 0.5).setScale(global_scale);
         var clear_off = this.add.sprite(midle_window + side_middle, window.innerHeight / 6, 'clear_off')
@@ -222,13 +219,12 @@ var MainSc = new Phaser.Class({
             console.log('Clear touch');
         }, this);
 
-
-        // clear_off.on('pointerdown', function (pointer) {
-        //     group.getChildren().forEach(function (trash) {
-        //         trash.destroy();
-        //     });
-        //     group.clear(true);
-        // });
+        this.add.sprite(midle_window + side_middle, window.innerHeight * 0.9, 'menu_on')
+            .setOrigin(0, 0.5).setScale(global_scale).setInteractive()
+            .on("pointerup", function () {
+                isPause = true;
+                this.scene.start('logo', {name: 'Move from Main to Logo'});
+            }, this);
 
         this.physics.add.overlap(battary_case, group, function (s1, s2) {
             if (s2.type === 'acc') {
@@ -382,7 +378,7 @@ var MainSc = new Phaser.Class({
             }
 
             isPause = true;
-            this.scene.switch('raiting', {name: 'test'});
+            this.scene.switch('raiting', {name: 'Move from Main to Raiting'});
         }
 
         var interval = 3000 + (300 + Math.floor((1500 - 300) * Math.random()));
@@ -432,7 +428,7 @@ function setInactive(object) {
     object.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
 
     console.log(object.y);
-    if (object.y < 100) {
+    if (object.y < 50) {
         clearGroup(group);
         switchToRaiting = true;
         isPause = true;

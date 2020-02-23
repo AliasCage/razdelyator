@@ -1,3 +1,6 @@
+var rating = [];
+var rating_loaded = false;
+
 var Raiting = new Phaser.Class({
 
     Extends: Phaser.Scene,
@@ -32,6 +35,7 @@ var Raiting = new Phaser.Class({
             progressBox.destroy();
             groundBar.destroy();
         });
+        rating = getRating();
 
         this.load.image('bg_tile', 'bg_tile.jpg');
         this.load.image('bg', 'bg.png');
@@ -44,18 +48,21 @@ var Raiting = new Phaser.Class({
         this.add.tileSprite(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
         this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0).setScale(global_scale);
 
-        createGridTable(this);
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
         this.add.sprite(midle_window + side_middle, window.innerHeight * 0.9, 'menu_on')
             .setOrigin(0, 0.5).setScale(global_scale).setInteractive()
             .on("pointerup", function (sprite, pointer) {
-                this.scene.start('logo', {name: 'test'});
+                this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
     },
 
     update: function () {
+        if (rating.length > 0 && !rating_loaded) {
+            console.log("loaded");
+            rating_loaded = true;
+            createGridTable(this);
+        }
     },
-
 });
 
 function createGridTable(game) {
@@ -94,8 +101,8 @@ function createGridTable(game) {
             width: undefined,
             height: 30,
 
-            background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
-            text: game.add.text(0, 0, 'Footer'),
+            background: game.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_DARK),
+            // text: game.add.text(0, 0, 'Footer'),
         }),
 
         space: {
@@ -188,15 +195,14 @@ var createRowItem = function (scene, config) {
 };
 
 var getItems = function (count) {
-
-
-    var rating = getRating();
+    debugger
     var data = [];
-    for (var i = 0; i < count; i++) {
+    for (var i = 0; i < rating.length; i++) {
+        var line = rating[i];
         data.push({
             id: i,
-            score: i,
-            name: 'mock' + (100 - i * 2)
+            score: line.score,
+            name: line.name + (100 - i * 2)
         });
     }
     return data;
@@ -238,10 +244,7 @@ function getRating() {
     var urlRef = rootRef.child("raiting");
     urlRef.once("value", function (snapshot) {
         snapshot.forEach(function (child) {
-            var childKey = child.key;
-            var childData = child.val();
-            console.log(childKey + ": " + childData);
-            list.push(childData);
+            list.push(child.val());
         });
     });
     return list;

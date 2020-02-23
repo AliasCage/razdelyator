@@ -9,8 +9,7 @@ var Logo = new Phaser.Class({
         },
 
     init: function (data) {
-        this.conveer_anim_width = data.conveer_anim_width;
-        console.log(name)
+        console.log(data.name)
     },
 
 
@@ -50,7 +49,7 @@ var Logo = new Phaser.Class({
             if (isPause) {
                 isPause = false;
                 intro.destroy();
-                this.scene.switch('mainSc', {name: 'test', restart: true});
+                this.scene.switch('mainSc', {name: 'Move from Logo to Main'});
             }
         }, this);
     },
