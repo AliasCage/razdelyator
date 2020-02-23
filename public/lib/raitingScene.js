@@ -49,12 +49,13 @@ var Raiting = new Phaser.Class({
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
         var buttons = this.rexUI.add.buttons({
             x: midle_window + side_middle,
-            y: window.innerHeight * 0.90,
-
+            y: window.innerHeight * 0.9,
             orientation: 'x',
             space: 20,
             buttons: [createButton(this)],
-        }).setOrigin(0, 0.5).setScale(global_scale).layout();
+        }).setOrigin(0, 0.5)
+            // .drawBounds(this.add.graphics(), 0xff0000)
+            .layout();
 
         debugger
         buttons.on('button.click', function (button, index, pointer, event) {
@@ -71,17 +72,17 @@ var Raiting = new Phaser.Class({
 
 function createButton(scene) {
     return scene.rexUI.add.label({
-        action: scene.add.image(0, 0, 'menu_on').setOrigin(0, 0.5)
+        action: scene.add.image(0, 0, 'menu_on').setOrigin(0, 0).setScale(global_scale)
     });
 }
 
 function createGridTable(game) {
 
     var gridTable = game.rexUI.add.gridTable({
-        x: midle_window ,
+        x: midle_window,
         y: window.innerHeight * 0.05,
         width: bg_width * 0.9,
-        height: window.innerHeight * 0.8,
+        height: window.innerHeight * 0.7,
 
         scrollMode: 0,
 

@@ -427,7 +427,7 @@ function setInactive(object) {
     object.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
 
     console.log(object.y);
-    if (object.y < 600) {
+    if (object.y < 100) {
         clearGroup(group);
         switchToRaiting = true;
         isPause = true;
