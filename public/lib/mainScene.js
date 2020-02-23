@@ -217,6 +217,11 @@ var MainSc = new Phaser.Class({
         var slow_off = this.add.sprite(midle_window + side_middle, window.innerHeight / 3, 'slow_on')
             .setOrigin(0, 0.5).setScale(global_scale);
 
+        clear_off.setInteractive();
+        clear_off.on("pointerdown", function (sprite, pointer) {
+            console.log('Clear touch');
+        }, this);
+
 
         // clear_off.on('pointerdown', function (pointer) {
         //     group.getChildren().forEach(function (trash) {
