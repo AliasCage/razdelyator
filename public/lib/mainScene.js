@@ -22,8 +22,6 @@ var acc = ['a1', 'a2', 'a3'];
 
 var blue_bak;
 var grey_bak;
-var rails;
-var battary_case;
 
 const midle_window = window.innerWidth / 2;
 
@@ -32,6 +30,8 @@ const COLOR_PRIMARY = 0xe3f2fd;
 const COLOR_DARK = 0xb1bfca;
 const TOXIC_COLOR = 0x01DF01;
 const INACTIVE_COLOR = 0x6b6b6b;
+
+const batary_case_speed = 4500;
 
 var MainSc = new Phaser.Class({
 
@@ -187,14 +187,22 @@ var MainSc = new Phaser.Class({
             .setPosition(midle_window + bg_width * 0.5, window.innerHeight / 1.65);
 
         conveer_anim = this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0);
-        conveer_anim.setScale(window.innerHeight / conveer_anim.height, window.innerHeight / conveer_anim.height);
+        conveer_anim.setScale(window.innerHeight / conveer_anim.height);
         conveer_anim.play('conveer');
         conveer_width = conveer_anim.width * global_scale;
 
-        rails = this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
+        this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
             .setPosition(midle_window, window.innerHeight * 0.05).setDepth(1);
-        battary_case = this.physics.add.sprite(0, 0, 'battary_case').setOrigin(0.5, 0.5).setScale(global_scale)
-            .setPosition(midle_window + rails.width * global_scale * 0.2, window.innerHeight * 0.05).setDepth(2);
+        var battary_case = this.physics.add.sprite(midle_window + bg_width * 0.4, window.innerHeight * 0.05, 'battary_case')
+            .setOrigin(0.5, 0.5).setScale(global_scale).setDepth(2);
+        this.tweens.add({
+            targets: battary_case,
+            x: midle_window - bg_width * 0.4,
+            ease: 'Linear',
+            duration: batary_case_speed,
+            repeat: -1,
+            yoyo: true
+        });
 
         activeGroup = this.physics.add.group();
         toxicGroup = this.physics.add.group({
@@ -270,10 +278,10 @@ var MainSc = new Phaser.Class({
             setInactive(gameObject, this);
             gameObject.body.moves = true;
             gameObject.body.enable = true;
-            if (gameObject.x < (midle_window - conveer_anim.width * global_scale / 8)) {
+            if (gameObject.x < (midle_window - conveer_width / 8)) {
                 gameObject.setVelocity(200, -300);
                 gameObject.setAngularVelocity(-40);
-            } else if (gameObject.x > (midle_window + conveer_anim.width * global_scale / 8)) {
+            } else if (gameObject.x > (midle_window + conveer_width / 8)) {
                 gameObject.setVelocity(-200, -300);
                 gameObject.setAngularVelocity(40);
             } else {
@@ -302,11 +310,11 @@ var MainSc = new Phaser.Class({
         this.physics.add.collider(group, group, coliderGroupFunction);
 
         var zone_left = this.physics.add.sprite(0, 0, 'con9').setOrigin(1, 0).setAlpha(0).setImmovable(true);
-        zone_left.setPosition(midle_window - conveer_anim.width * global_scale / 6, 0);
+        zone_left.setPosition(midle_window - conveer_width / 6, 0);
         this.physics.add.collider(zone_left, group);
 
         var zone_right = this.physics.add.sprite(0, 0, 'con9').setOrigin(0, 0).setAlpha(0).setImmovable(true);
-        zone_right.setPosition(midle_window + conveer_anim.width * global_scale / 6, 0);
+        zone_right.setPosition(midle_window + conveer_width / 6, 0);
         this.physics.add.collider(zone_right, group);
 
         var zone_bottom = this.physics.add.sprite(midle_window, window.innerHeight, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
@@ -385,8 +393,6 @@ var MainSc = new Phaser.Class({
         if (!isPause && this.time.now - now > interval) {
             now = this.time.now;
             createAndDropObject.call(this);
-            var diff = getRandomInt(-rails.width * global_scale / 2, rails.width * global_scale / 2);
-            battary_case.setPosition(midle_window + diff, window.innerHeight * 0.05);
         }
     },
 });
@@ -408,7 +414,7 @@ function toxicality(accumulator) {
 
 function darkness() {
     isNeedDarknes = false;
-    var darknes = this.add.sprite(0, 0, 'darknes').setOrigin(0.5, 0).setScale(global_scale).setPosition(midle_window, 0);
+    var darknes = this.add.sprite(midle_window, 0, 'darknes').setOrigin(0.5, 0).setScale(global_scale).setDepth(11);
     this.tweens.add({
         targets: darknes,
         alpha: 0,
@@ -428,7 +434,7 @@ function setInactive(object) {
     object.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
 
     console.log(object.y);
-    if (object.y < 50) {
+    if (object.y < 0) {
         clearGroup(group);
         switchToRaiting = true;
         isPause = true;
@@ -458,13 +464,13 @@ function createAndDropObject() {
         trash = grey[Math.floor(Math.random() * grey.length)];
         trashType = 'grey';
     }
-    var diff = getRandomInt(-conveer_anim.width * global_scale / 8, conveer_anim.width * global_scale / 8);
+    var diff = getRandomInt(-conveer_width / 8, conveer_width / 8);
     var obj = activeGroup.create(midle_window + diff, -20, trash).setDepth(0);
     obj.setSize(obj.width / 2, obj.height / 2);
     obj.type = trashType;
     obj.isToxic = toxic;
 
-    obj.setScale(global_scale / 1.5);
+    obj.setScale(global_scale / 1.25);
     obj.setInteractive();
     obj.setCollideWorldBounds(true);
     if (!isPause) {

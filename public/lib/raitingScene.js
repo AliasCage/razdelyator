@@ -12,7 +12,9 @@ var Raiting = new Phaser.Class({
         },
 
     init: function (data) {
-        console.log(data.name)
+        console.log(data.name);
+        rating = getRating();
+        rating_loaded = false;
     },
 
     preload: function () {
