@@ -16,20 +16,21 @@
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
-    <script src="/public/lib/phaser.js"></script>
+    <script src="lib/phaser.js"></script>
+    <script src="lib/rexuiplugin.min.js"></script>
     <style media="screen">
         body {
             background: #ECEFF1;
             color: rgba(3, 9, 8, 0.87);
             font-family: Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            margin: 0 !important;
+            padding: 0 !important;
         }
     </style>
 </head>
 <body>
 <script type="module" src="lib/main.js"></script>
 <script type="module" src="lib/fb.js"></script>
+<script type="text/javascript" src="lib/raitingScene.js"></script>
 </body>
 </html>

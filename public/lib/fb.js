@@ -11,26 +11,48 @@ const firebaseConfig = {
 var database;
 
 export function load(name) {
-    debugger
     if (!database) {
         return;
     }
     var ref = database.ref("base");
-
-    debugger
     var postsRef = ref.child("raiting");
-
     var newPostRef = postsRef.push();
     newPostRef.set({
-        count: 23,
+        score: 23,
         name: name,
-        email: "Announcing COBOL, a New Programming Language"
+        email: "cool_gamer@gmail.com"
     });
+}
 
-    postsRef.push().set({
-        count: 232,
-        name: name + 2,
-        email: "Announcing COBOL, a New Programming Language"
+export function getRating() {
+    if (!database) {
+        return;
+    }
+    var list = [];
+    var rootRef = database.ref("base");
+    var urlRef = rootRef.child("raiting");
+    urlRef.once("value", function (snapshot) {
+        snapshot.forEach(function (child) {
+            var childKey = child.key;
+            var childData = child.val();
+            console.log(childKey + ": " + childData);
+            list.push(childData);
+        });
+    });
+    return list;
+}
+
+export function saveResult(name, email, score) {
+    if (!database) {
+        return;
+    }
+    var ref = database.ref("base");
+    var postsRef = ref.child("raiting");
+    var newPostRef = postsRef.push();
+    newPostRef.set({
+        count: score,
+        name: name,
+        email: email
     });
 }
 
@@ -38,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
     // // The Firebase SDK is initialized and available here!
     //
-    debugger
+
     // firebase.initializeApp(firebaseConfig);
     // firebase.auth().onAuthStateChanged(user => { });
     // firebase.database().ref('/base').on('child_added', snapshot => {
@@ -54,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let features = ['database'].filter(feature => typeof app[feature] === 'function');
         // document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
 
-        debugger
+
         database = firebase.database();
         load("def");
 

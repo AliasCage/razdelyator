@@ -1,7 +1,8 @@
 var config = {
+    key: 'main',
     type: Phaser.AUTO,
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: window.innerWidth - 2.3,
+    height: window.innerHeight - 2.3,
     physics: {
         default: 'arcade',
         // debug: true,
@@ -17,16 +18,13 @@ var config = {
     }
 };
 
-// const myFunctions = require('./fb.js');
-import { load } from './fb.js';
-// let val = ;  // val is "Hello";
-
 var game = new Phaser.Game(config);
 var isPause = true;
 var isNeedDarknes = false;
 var cursors;
 var global_scale;
 var midle_window = window.innerWidth / 2;
+var bg_width;
 var now;
 
 var conveer_anim;
@@ -47,7 +45,34 @@ var grey_bak;
 var rails;
 var battary_case;
 
+const COLOR_PRIMARY = 0xe3f2fd;
+const COLOR_DARK = 0xb1bfca;
+const TOXIC_COLOR = 0x01DF01;
+const INACTIVE_COLOR = 0x6b6b6b;
+
 function preload() {
+    var groundBar = this.add.graphics();
+    var progressBar = this.add.graphics();
+    var progressBox = this.add.graphics();
+    groundBar.fillStyle(COLOR_PRIMARY, 0.6);
+    groundBar.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    progressBox.fillStyle(COLOR_DARK, 0.7);
+    progressBox.fillRect(midle_window - 160, 270, 320, 50);
+    this.load.on('progress', function (value) {
+        console.log(value);
+        console.log(midle_window);
+        progressBar.clear();
+        progressBar.fillStyle(COLOR_PRIMARY, 1);
+        progressBar.fillRect(midle_window + 10 - 150, 280, 300 * value - 10, 30);
+    });
+
+    this.load.on('complete', function () {
+        progressBar.destroy();
+        progressBox.destroy();
+        groundBar.destroy();
+    });
+
+    this.scene.add('Raiting', Raiting);
     this.load.setBaseURL('img');
 
     this.load.image('intro', 'intro.png');
@@ -156,14 +181,15 @@ function create() {
 
     this.add.tileSprite(midle_window, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
 
-    var bg = this.add.sprite(0, 0, 'bg').setOrigin(0.5, 0);
+    var bg = this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0);
     global_scale = window.innerHeight / bg.height;
-    bg.setScale(global_scale).setPosition(midle_window, 0);
+    bg_width = bg.width * global_scale;
+    bg.setScale(global_scale);
 
     blue_bak = this.physics.add.sprite(0, 0, 'blue').setOrigin(-0.05, 0.5).setScale(global_scale)
-        .setPosition(midle_window - bg.width * global_scale * 0.5, window.innerHeight / 1.65);
+        .setPosition(midle_window - bg_width * 0.5, window.innerHeight / 1.65);
     grey_bak = this.physics.add.sprite(0, 0, 'grey').setOrigin(1.05, 0.5).setScale(global_scale)
-        .setPosition(midle_window + bg.width * global_scale * 0.5, window.innerHeight / 1.65);
+        .setPosition(midle_window + bg_width * 0.5, window.innerHeight / 1.65);
 
     conveer_anim = this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0);
     conveer_anim.setScale(window.innerHeight / conveer_anim.height, window.innerHeight / conveer_anim.height);
@@ -194,7 +220,6 @@ function create() {
 
 
     // clear_off.on('pointerdown', function (pointer) {
-    //     debugger
     //     group.getChildren().forEach(function (trash) {
     //         trash.destroy();
     //     });
@@ -228,7 +253,7 @@ function create() {
 
     this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
         //На пк попытка вынести мусор за пределы поля
-        if (midle_window + (bg.width * (global_scale) / 2) < dragX || (midle_window - (bg.width * (global_scale) / 2)) > dragX) {
+        if ((midle_window + bg_width * 0.5) < dragX || (midle_window - bg_width * 0.5) > dragX) {
             gameObject.body.moves = true;
         } else {
             gameObject.body.moves = false;
@@ -243,7 +268,7 @@ function create() {
     this.input.on('dragend', function (pointer, gameObject, dragX, dragY) {
         // conveer_anim.visible=true;
         activeGroup.remove(gameObject);
-        setInactive(gameObject);
+        setInactive(gameObject, this);
         gameObject.body.moves = true;
         gameObject.body.enable = true;
         if (gameObject.x < (midle_window - conveer_anim.width * global_scale / 8)) {
@@ -257,7 +282,9 @@ function create() {
         }
         gameObject.setGravityY(300);
         gameObject.setBounce(0.4);
-    });
+        debugger
+        this.scene.start('Raiting', {name: 'test', conveer_anim_width: conveer_anim.width});
+    }, this);
 
     var intro = this.add.sprite(0, 0, 'intro').setOrigin(0.5, 0).setPosition(midle_window, 0).setDepth(10);
     intro.setScale(window.innerHeight / intro.height, window.innerHeight / intro.height);
@@ -266,11 +293,7 @@ function create() {
         if (isPause) {
             isPause = false;
             conveer_anim.play('conveer');
-            // intro.visible = false;
             intro.destroy();
-            //todo: save data via it
-            load("phaser01");
-
         }
     });
     this.input.on('pointerdown', function (pointer) {
@@ -281,7 +304,6 @@ function create() {
         if (!s1.body.moves) {
             s2.body.moves = false;
             if (s2.type === 'acc' && s2.active) {
-                debugger
                 toxicality(s2);
             }
         }
@@ -302,10 +324,10 @@ function create() {
     var zone_bottom = this.physics.add.sprite(midle_window, window.innerHeight, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
     this.physics.add.overlap(zone_bottom, activeGroup, function (s1, s2) {
         activeGroup.remove(s2);
-        setInactive(s2);
+        setInactive(s2, this);
         s2.body.moves = false;
         s2.body.enable = true;
-    });
+    }, this);
 
     this.physics.add.overlap(zone_bottom, group, function (s1, s2) {
         s2.body.moves = false;
@@ -320,23 +342,23 @@ function create() {
     var coliderActiveGroup = function (s1, s2) {
         if (!s2.body.allowdraggable && !s2.active) {
             activeGroup.remove(s1);
-            setInactive(s1);
+            setInactive(s1, this);
             s1.body.moves = false;
             if (s1.type === 'acc') {
                 toxicality(s2);
             }
         }
     };
-    this.physics.add.overlap(activeGroup, group, coliderActiveGroup);
-    this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup);
+    this.physics.add.overlap(activeGroup, group, coliderActiveGroup, this);
+    this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup, this);
 }
 
 function toxicality(accumulator) {
-    accumulator.setTint(0x01DF01, 0x01DF01, 0x01DF01, 0x01DF01);
+    accumulator.setTint(TOXIC_COLOR, TOXIC_COLOR, TOXIC_COLOR, TOXIC_COLOR);
     group.getChildren().forEach(function (trash) {
         toxicGroup.add(trash);
         trash.isToxic = true;
-        trash.setTint(0x01DF01, 0x01DF01, 0x01DF01, 0x01DF01);
+        trash.setTint(TOXIC_COLOR, TOXIC_COLOR, TOXIC_COLOR, TOXIC_COLOR);
     });
     toxicGroup.getChildren().forEach(function (trash) {
         group.remove(trash);
@@ -359,19 +381,21 @@ function darkness() {
     });
 }
 
-function setInactive(object) {
+function setInactive(object, game) {
     group.add(object);
     object.removeInteractive();
     object.body.allowdraggable = false;
     object.setVelocityY(400);
-    object.setTint(0x6b6b6b, 0x6b6b6b, 0x6b6b6b, 0x6b6b6b);
+    object.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
 
     console.log(object.y);
-    if (object.y < 0) {
+    if (object.y < 600) {
         group.clear(true);
         group.getChildren().forEach(function (trash) {
             trash.destroy();
-        }, this);
+        });
+        debugger
+        game.scene.start('raiting');
     }
 }
 
