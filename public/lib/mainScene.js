@@ -9,6 +9,8 @@ var now;
 
 var conveer_anim;
 
+var player_score = 0;
+var text_score;
 var group;
 var activeGroup;
 var toxicGroup;
@@ -45,6 +47,7 @@ var MainSc = new Phaser.Class({
 
     init: function (data) {
         console.log(data.name);
+        player_score = 0;
     },
 
 
@@ -77,6 +80,9 @@ var MainSc = new Phaser.Class({
         this.load.image('blue', 'blue_min.png');
         this.load.image('grey', 'grey_min.png');
         this.load.image('blank', 'blank.png');
+        this.load.image('+1', '+1.png');
+        this.load.image('+2', '+2.png');
+        this.load.image('+3', '+3.png');
 
         this.load.image('battary_case', 'battary/battary_case.png');
         this.load.image('rails', 'battary/rails.png');
@@ -234,13 +240,36 @@ var MainSc = new Phaser.Class({
                 this.scene.start('logo', {name: 'Move from Main to Logo'});
             }, this);
 
+        text_score = this.add.text(midle_window - side_middle * 1.5, window.innerHeight * 0.9, player_score, {
+            font: "32px Arial Black",
+            fill: "#fff"
+        }).setStroke('#00f', 3).setShadow(2, 2, "#333333", 2, true, true);
+
         this.physics.add.overlap(battary_case, group, function (s1, s2) {
             if (s2.type === 'acc') {
                 group.remove(s2);
                 destroyGroup.push(s2);
                 s2.destroy();
+                player_score += 3;
+
+                var coin = this.add.sprite(s2.x - 50, s2.y + 150, '+3')
+                    .setOrigin(0.5, 0.5).setScale(global_scale * 0.5);
+                this.tweens.add({
+                    targets: coin,
+                    x: text_score.x,
+                    y: text_score.y,
+                    scaleX: 0.10,
+                    scaleY: 0.10,
+                    ease: 'Linear',
+                    duration: 500,
+                    delay: 300,
+                    onComplete: function () {
+                        coin.destroy();
+                    },
+                });
+
             }
-        });
+        }, null, this);
 
         this.physics.add.overlap(blue_bak, group, function (s1, s2) {
             if (s2.type === 'blue') {
@@ -248,16 +277,53 @@ var MainSc = new Phaser.Class({
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) / 2, s1.y - s2.y);
                 s2.setAngularVelocity(-50);
+
+                player_score += 2;
+                debugger
+                // this.callbackScope.physics.add.sprite(400, 150, "+1");
+
+                var coin = this.add.sprite(s2.x + 100, s2.y - 150, '+2')
+                    .setOrigin(0.5, 0.5).setScale(global_scale * 0.5);
+                this.tweens.add({
+                    targets: coin,
+                    x: text_score.x,
+                    y: text_score.y,
+                    scaleX: 0.10,
+                    scaleY: 0.10,
+                    ease: 'Linear',
+                    duration: 500,
+                    delay: 300,
+                    onComplete: function () {
+                        coin.destroy();
+                    },
+                });
             }
-        });
+        }, null, this);
         this.physics.add.overlap(grey_bak, group, function (s1, s2) {
             if (s2.type === 'grey') {
                 group.remove(s2);
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) / 2, s1.y - s2.y);
                 s2.setAngularVelocity(50);
+
+                player_score += 1;
+                var coin = this.add.sprite(s2.x - 100, s2.y - 150, '+1')
+                    .setOrigin(0.5, 0.5).setScale(global_scale * 0.5);
+                this.tweens.add({
+                    targets: coin,
+                    x: text_score.x,
+                    y: text_score.y,
+                    scaleX: 0.10,
+                    scaleY: 0.10,
+                    ease: 'Linear',
+                    duration: 500,
+                    delay: 300,
+                    onComplete: function () {
+                        coin.destroy();
+                    },
+                });
             }
-        });
+        }, null, this);
 
         this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
             //На пк попытка вынести мусор за пределы поля
@@ -328,8 +394,6 @@ var MainSc = new Phaser.Class({
         });
 
         this.physics.add.overlap(zone_bottom, group, function (s1, s2) {
-            debugger
-
             s2.body.moves = false;
             s2.body.enable = true;
             s2.active = false;
@@ -340,8 +404,6 @@ var MainSc = new Phaser.Class({
         });
 
         var coliderActiveGroup = function (s1, s2) {
-            debugger
-
             if (!s2.body.allowdraggable && !s2.active) {
                 activeGroup.remove(s1);
                 setInactive(s1, this);
@@ -356,6 +418,7 @@ var MainSc = new Phaser.Class({
     },
 
     update: function () {
+        text_score.text = player_score;
         if (Array.isArray(destroyGroup) && destroyGroup.length) {
             var shift = destroyGroup.shift();
             this.tweens.add({
