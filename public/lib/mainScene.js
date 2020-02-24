@@ -253,7 +253,7 @@ var MainSc = new Phaser.Class({
         });
 
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
-        
+
         var auto_off = this.add.sprite(midle_window - side_middle, window.innerHeight / 6, 'auto_off')
             .setOrigin(1, 0.5).setScale(global_scale);
         auto_on = this.add.sprite(midle_window - side_middle, window.innerHeight / 6, 'auto_on')
@@ -656,11 +656,11 @@ function getRandomInt(min, max) {
 }
 
 function autoTrash() {
-   /* if(one_type === 0){
+    if(one_type === 0){
         auto_type = getRandomInt(1,2);
     }else{
         auto_type = one_type;
-    }*/
+    }
     auto_trash = true;
     auto_on.visible = false;
     now2 = this.time.now;
