@@ -511,6 +511,18 @@ var MainSc = new Phaser.Class({
             autoSort();
         }
 
+        if(slow_trash){
+           activeGroup.getChildren().forEach(function (trash) {
+               trash.setVelocityY(31);
+           });
+        }/*else{
+            activeGroup.getChildren().forEach(function (trash) {
+                if(trash.getVelosityY()<40){
+                    trash.setVelocityY(59);
+                }
+            });
+        }*/
+
         //таймеры для скилов
         if(!isPause && this.time.now - now1 > timerClear){
             clear_on.visible = true;
@@ -637,11 +649,7 @@ function createAndDropObject() {
     obj.setCollideWorldBounds(true);
     if (!isPause) {
         obj.body.moves = true;
-        if(slow_trash){
-            obj.setVelocityY(31);
-        }else {
-            obj.setVelocityY(59);
-        }
+        obj.setVelocityY(59);
     } else {
         obj.body.moves = false;
     }
@@ -717,7 +725,6 @@ function oneTrash() {
     }else{
         one_type = auto_type;
     }
-    one_type = getRandomInt(1,2);
     one_trash = true;
     one_on.visible = false;
     now3 = this.time.now;
