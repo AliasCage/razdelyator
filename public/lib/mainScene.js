@@ -11,6 +11,7 @@ var now1;
 var now2;
 var now3;
 var now4;
+var nowDifficulty;
 
 var conveer_anim;
 
@@ -43,6 +44,10 @@ var auto_trash;
 var one_type;
 var auto_type;
 
+var speedTrash;
+var intervalCreateTrash;
+var timerDifficulty;
+var difficultyUp;
 
 const  timerClear = 90000;
 const  timerAuto = 45000;
@@ -185,6 +190,10 @@ var MainSc = new Phaser.Class({
         cursors = this.input.keyboard.createCursorKeys();
         this.physics.world.checkCollision.up = false;
         now = this.time.now;
+        timerDifficulty = 50000;
+        difficultyUp = true;
+        intervalCreateTrash = 3000;
+        speedTrash = 59;
         one_type = 0;
         auto_type = 0;
         slow_trash = false;
@@ -195,6 +204,7 @@ var MainSc = new Phaser.Class({
         now2 = this.time.now;
         now3 = this.time.now;
         now4 = this.time.now;
+        nowDifficulty = this.time.now;
 
         this.anims.create({
             key: 'conveer',
@@ -347,7 +357,7 @@ var MainSc = new Phaser.Class({
                 gameObject.setVelocity(-200, -300);
                 gameObject.setAngularVelocity(40);
             } else {
-                gameObject.setVelocityY(200);
+                gameObject.setVelocityY(speedTrash + 150);
             }
             gameObject.setGravityY(300);
             gameObject.setBounce(0.4);
@@ -400,14 +410,28 @@ var MainSc = new Phaser.Class({
         });
 
         var coliderActiveGroup = function (s1, s2) {
-            if (!s2.body.allowdraggable && !s2.active) {
-                activeGroup.remove(s1);
-                setInactive(s1, this);
-                s1.body.moves = false;
-                if (s1.type === 'acc') {
-                    toxicality(s2);
+            if(!auto_trash){
+                if (!s2.body.allowdraggable && !s2.active) {
+                    activeGroup.remove(s1);
+                    setInactive(s1, this);
+                    s1.body.moves = false;
+                    if (s1.type === 'acc') {
+                        toxicality(s2);
+                    }
+                }
+            }else if (auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue'){
+                if (!s2.body.allowdraggable && !s2.active) {
+                    activeGroup.remove(s1);
+                    setInactive(s1, this);
+                    s1.body.moves = false;
+                    if (s1.type === 'acc') {
+                        toxicality(s2);
+                    }
                 }
             }
+
+
+
         };
         this.physics.add.overlap(activeGroup, group, coliderActiveGroup);
         this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup);
@@ -450,7 +474,7 @@ var MainSc = new Phaser.Class({
             this.scene.switch('raiting', {name: 'Move from Main to Raiting'});
         }
 
-        var interval = 3000 + (300 + Math.floor((1500 - 300) * Math.random()));
+        var interval = intervalCreateTrash + (300 + Math.floor((1500 - 300) * Math.random()));
         if (slow_trash){
             interval = interval * 2;
         }
@@ -461,6 +485,18 @@ var MainSc = new Phaser.Class({
         if(auto_trash){
             autoSort();
         }
+
+        if(slow_trash){
+           activeGroup.getChildren().forEach(function (trash) {
+               trash.setVelocityY(speedTrash/2);
+           });
+        }/*else{
+            activeGroup.getChildren().forEach(function (trash) {
+                if(trash.getVelosityY()<40){
+                    trash.setVelocityY(59);
+                }
+            });
+        }*/
 
         //таймеры для скилов
         if(!isPause && this.time.now - now1 > timerClear){
@@ -494,6 +530,16 @@ var MainSc = new Phaser.Class({
         } else  if ((this.time.now - now4 > timerSlow / 2) && slow_trash){
             slow_trash = false;
             now4 = this.time.now;
+        }
+
+        if(this.time.now - nowDifficulty > timerDifficulty){
+            speedTrash = speedTrash + 3;
+            intervalCreateTrash = intervalCreateTrash - 50;
+            timerDifficulty = this.time.now;
+            difficultyUp = true;
+        }else if (this.time.now - nowDifficulty > timerDifficulty/2 && difficultyUp){
+            speedTrash = speedTrash + 3;
+            difficultyUp = false;
         }
     },
 });
@@ -530,7 +576,7 @@ function setInactive(object) {
     group.add(object);
     object.removeInteractive();
     object.body.allowdraggable = false;
-    object.setVelocityY(400);
+    object.setVelocityY(speedTrash + 350);
     object.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
 
     console.log(object.y);
@@ -573,12 +619,12 @@ function createAndDropObject() {
     var toxic = false;
     if( one_trash) {
         if(one_type === 1) {
-        grey_bak.setTint(0x6b6b6b, 0x6b6b6b, 0x6b6b6b, 0x6b6b6b);
+        grey_bak.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
         trash = blue[Math.floor(Math.random() * blue.length)];
         trashType = 'blue';
     }
         if(one_type === 2){
-            blue_bak.setTint(0x6b6b6b, 0x6b6b6b, 0x6b6b6b, 0x6b6b6b);
+            blue_bak.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
             trash = grey[Math.floor(Math.random() * grey.length)];
             trashType = 'grey';
         }
@@ -606,11 +652,7 @@ function createAndDropObject() {
     obj.setCollideWorldBounds(true);
     if (!isPause) {
         obj.body.moves = true;
-        if(slow_trash){
-            obj.setVelocityY(31);
-        }else {
-            obj.setVelocityY(59);
-        }
+        obj.setVelocityY(speedTrash);
     } else {
         obj.body.moves = false;
     }
@@ -636,17 +678,55 @@ function autoTrash() {
 }
 
 function  destoyBlueTrash(bak , trash) {
-    group.remove(trash);
+    activeGroup.remove(trash);
     destroyGroup.push(trash);
     trash.setVelocity((bak.x - trash.x) / 2, bak.y - trash.y);
     trash.setAngularVelocity(-50);
+    player_score += 2;
+    debugger
+    // this.callbackScope.physics.add.sprite(400, 150, "+1");
+
+    var coin = this.add.sprite(trash.x + 100, trash.y - 150, '+2')
+        .setOrigin(0.5, 0.5).setScale(global_scale * 0.5);
+    this.tweens.add({
+        targets: coin,
+        x: text_score.x,
+        y: text_score.y,
+        scaleX: 0.10,
+        scaleY: 0.10,
+        ease: 'Linear',
+        duration: 500,
+        delay: 300,
+        onComplete: function () {
+            coin.destroy();
+        },
+    });
 }
 
 function  destoyGreyTrash(bak , trash) {
-    group.remove(trash);
+    activeGroup.remove(trash);
     destroyGroup.push(trash);
     trash.setVelocity((bak.x - trash.x) / 2, bak.y - trash.y);
     trash.setAngularVelocity(50);
+    player_score += 1;
+    debugger
+    // this.callbackScope.physics.add.sprite(400, 150, "+1");
+
+    var coin = this.add.sprite(trash.x + 100, trash.y - 150, '+1')
+        .setOrigin(0.5, 0.5).setScale(global_scale * 0.5);
+    this.tweens.add({
+        targets: coin,
+        x: text_score.x,
+        y: text_score.y,
+        scaleX: 0.10,
+        scaleY: 0.10,
+        ease: 'Linear',
+        duration: 500,
+        delay: 300,
+        onComplete: function () {
+            coin.destroy();
+        },
+    });
 }
 
 function autoSort() {
@@ -666,8 +746,20 @@ function clearConveer() {
     group.clear(true);
     group.getChildren().forEach(function (trash) {
         if(trash.type !== 'acc'){
+            this.tweens.add({
+                targets: trash,
+                x: text_score.x,
+                y: text_score.y,
+                scaleX: 0.10,
+                scaleY: 0.10,
+                ease: 'Linear',
+                duration: 500,
+                delay: 300,
+                onComplete: function () {
+                    trash.destroy();
+                },
+            });
             group.remove(trash);
-            trash.destroy();
         }
     });
     now1 = this.time.now;
@@ -686,7 +778,6 @@ function oneTrash() {
     }else{
         one_type = auto_type;
     }
-    one_type = getRandomInt(1,2);
     one_trash = true;
     one_on.visible = false;
     now3 = this.time.now;
