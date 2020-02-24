@@ -29,6 +29,9 @@ var global_scale;
 var midle_window = window.innerWidth / 2;
 var now;
 var now1;
+var now2;
+var now3;
+var now4;
 var conveer_anim;
 
 var group;
@@ -47,7 +50,25 @@ var blue_bak;
 var grey_bak;
 var rails;
 var battary_case;
+
+//кнопки скилов
 var clear_on;
+var auto_on;
+var one_on;
+var slow_on;
+
+var slow_trash;
+var one_trash;
+var auto_trash;
+
+const  timerClear = 90000;
+const  timerAuto = 45000;
+const  timerOne = 45000;
+const  timerSlow = 45000;
+
+var one_type;
+var auto_type;
+
 function preload() {
     this.load.setBaseURL('img');
 
@@ -135,8 +156,16 @@ function preload() {
 function create() {
     cursors = this.input.keyboard.createCursorKeys();
     this.physics.world.checkCollision.up = false;
+    one_type = 0;
+    auto_type = 0;
+    slow_trash = false;
+    one_trash = false;
+    auto_trash = false;
     now = this.time.now;
     now1 = this.time.now;
+    now2 = this.time.now;
+    now3 = this.time.now;
+    now4 = this.time.now;
     this.anims.create({
         key: 'conveer',
         frames: [
@@ -185,17 +214,30 @@ function create() {
 
 
     var side_middle = (conveer_anim.width + (bg.width - conveer_anim.width)) * global_scale * 0.25;
-    var auto_off = this.add.sprite(midle_window - side_middle, window.innerHeight / 6, 'auto_on')
-        .setOrigin(1, 0.5).setScale(global_scale);
+
+
     var clear_off = this.add.sprite(midle_window + side_middle, window.innerHeight / 6, 'clear_off')
         .setOrigin(0, 0.5).setScale(global_scale);
     clear_on = this.add.sprite(midle_window + side_middle, window.innerHeight / 6, 'clear_on').setOrigin(0, 0.5).setScale(global_scale);
     clear_on.visible = false;
+
+
+    var auto_off = this.add.sprite(midle_window - side_middle, window.innerHeight / 6, 'auto_off')
+        .setOrigin(1, 0.5).setScale(global_scale);
+    auto_on =  this.add.sprite(midle_window - side_middle, window.innerHeight / 6, 'auto_on').setOrigin(1, 0.5).setScale(global_scale);
+    auto_on.visible = false;
+
+
     var one_off = this.add.sprite(midle_window - side_middle, window.innerHeight / 3, 'one_off')
         .setOrigin(1, 0.5).setScale(global_scale);
-    var slow_off = this.add.sprite(midle_window + side_middle, window.innerHeight / 3, 'slow_on')
-        .setOrigin(0, 0.5).setScale(global_scale);
+    one_on =  this.add.sprite(midle_window - side_middle, window.innerHeight / 3, 'one_on').setOrigin(1, 0.5).setScale(global_scale);
+    one_on.visible = false;
 
+
+    var slow_off = this.add.sprite(midle_window + side_middle, window.innerHeight / 3, 'slow_off')
+        .setOrigin(0, 0.5).setScale(global_scale);
+    slow_on =  this.add.sprite(midle_window + side_middle, window.innerHeight / 3, 'slow_on').setOrigin(0, 0.5).setScale(global_scale);
+    slow_on.visible = false;
 
     // clear_off.on('pointerdown', function (pointer) {
     //     debugger
@@ -227,6 +269,7 @@ function create() {
             destroyGroup.push(s2);
             s2.setVelocity((s1.x - s2.x) / 2, s1.y - s2.y);
             s2.setAngularVelocity(50);
+            autoTrash() ;
         }
     });
 
@@ -266,7 +309,7 @@ function create() {
     var intro = this.add.sprite(0, 0, 'intro').setOrigin(0.5, 0).setPosition(midle_window, 0).setDepth(10);
     intro.setScale(window.innerHeight / intro.height, window.innerHeight / intro.height);
 
-    this.input.on('pointerup', function (pointer) {
+   this.input.on('pointerup', function (pointer) {
         if (isPause) {
             isPause = false;
             conveer_anim.play('conveer');
@@ -278,7 +321,6 @@ function create() {
         }
     });
     this.input.on('pointerdown', function (pointer) {
-        // var stop = conveer_anim.anims.stop('conveer');
     });
 
     var coliderGroupFunction = function (s1, s2) {
@@ -315,7 +357,6 @@ function create() {
         s2.body.moves = false;
         s2.body.enable = true;
         s2.active = false;
-
         if (s2.type === 'acc') {
             toxicality(s2);
         }
@@ -333,6 +374,8 @@ function create() {
     };
     this.physics.add.overlap(activeGroup, group, coliderActiveGroup);
     this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup);
+    this.physics.add.overlap(activeGroup, blue_bak, destoyBlueTrash, null, this);
+   // this.physics.add.overlap(activeGroup, grey_bak, destoyGreyTrash, null, this);
 }
 
 function clearConveer() {
@@ -343,8 +386,45 @@ function clearConveer() {
             trash.destroy();
         }
     });
-
+    now1 = this.time.now;
     clear_on.visible = false;
+}
+
+function slowTrash() {
+    slow_trash = true;
+    slow_on.visible = false;
+    now4 = this.time.now;
+}
+
+function oneTrash() {
+    one_type = getRandomInt(1,2);
+    one_trash = true;
+    one_on.visible = false;
+    now3 = this.time.now;
+}
+
+function autoTrash() {
+    auto_type = getRandomInt(1,2);
+    auto_trash = true;
+    auto_on.visible = false;
+    now2 = this.time.now;
+}
+
+
+function  destoyBlueTrash(bak , trash) {
+    group.remove(trash);
+    destroyGroup.push(trash);
+    trash.setVelocity((bak.x - trash.x) / 2, bak.y - trash.y);
+    trash.setAngularVelocity(-50);
+}
+
+function autoSort() {
+    activeGroup.getChildren().forEach(function (trash) {
+        //if(one_type === 1){
+            trash.setVelocity((blue_bak.x - trash.x)/2, blue_bak.y - trash.y);
+            trash.setAngularVelocity(-1);
+        //}
+    });
 }
 
 function toxicality(accumulator) {
@@ -394,20 +474,39 @@ function setInactive(object) {
 function createAndDropObject() {
     // Phaser.Utils.Array.D
     var trash;
+    var y;
     var trashType;
-    var number = Math.random();
     var toxic = false;
-    if (number > 0.8) {
-        trash = acc[Math.floor(Math.random() * acc.length)];
-        trashType = 'acc';
-        toxic = true;
-    } else if (number > 0.4) {
-        trash = blue[Math.floor(Math.random() * blue.length)];
-        trashType = 'blue';
+    if( one_trash) {
+        if(one_type === 1) {
+            grey_bak.setTint(0x6b6b6b, 0x6b6b6b, 0x6b6b6b, 0x6b6b6b);
+            trash = blue[Math.floor(Math.random() * blue.length)];
+            trashType = 'blue';
+
+        }
+       if(one_type === 2){
+           blue_bak.setTint(0x6b6b6b, 0x6b6b6b, 0x6b6b6b, 0x6b6b6b);
+           trash = grey[Math.floor(Math.random() * grey.length)];
+           trashType = 'grey';
+        }
     } else {
-        trash = grey[Math.floor(Math.random() * grey.length)];
-        trashType = 'grey';
+        var number = Math.random();
+        if (number > 0.8) {
+            trash = acc[Math.floor(Math.random() * acc.length)];
+            trashType = 'acc';
+            toxic = true;
+
+        } else if (number > 0.4) {
+            trash = blue[Math.floor(Math.random() * blue.length)];
+            trashType = 'blue';
+            y = 1;
+        } else {
+            y = 2;
+            trash = grey[Math.floor(Math.random() * grey.length)];
+            trashType = 'grey';
+        }
     }
+
     var diff = getRandomInt(-conveer_anim.width * global_scale / 8, conveer_anim.width * global_scale / 8);
     var obj = activeGroup.create(midle_window + diff, -20, trash).setDepth(0);
     obj.setSize(obj.width / 2, obj.height / 2);
@@ -419,8 +518,14 @@ function createAndDropObject() {
     obj.setCollideWorldBounds(true);
     if (!isPause) {
         obj.body.moves = true;
-        obj.setVelocityY(59);
-    } else {
+        if(slow_trash){
+            obj.setVelocityY(31);
+        }else {
+            obj.setVelocityY(59);
+        }
+    }
+
+     else {
         obj.body.moves = false;
     }
     this.input.setDraggable(obj);
@@ -453,17 +558,48 @@ function update() {
 
 
     var interval = 3000 + (300 + Math.floor((1500 - 300) * Math.random()));
+
     if (!isPause && this.time.now - now > interval) {
         now = this.time.now;
         createAndDropObject.call(this);
         var diff = getRandomInt(-rails.width * global_scale / 2, rails.width * global_scale / 2);
         battary_case.setPosition(midle_window + diff, window.innerHeight * 0.05);
     }
-    if(!isPause && this.time.now - now1 > 10000){
-        clearConveer();
-        now1 = this.time.now;
-    }else if (!isPause && this.time.now - now1 > 9000){
+    //таймеры для скилов
+    if(!isPause && this.time.now - now1 > timerClear){
         clear_on.visible = true;
+    }
+    if(!isPause && this.time.now - now2 > timerAuto && !auto_trash){
+        auto_on.visible = true;
+        now2 = this.time.now;
+    }else  if (!isPause && this.time.now - now2 > timerAuto / 2 && auto_trash){
+        auto_trash = false;
+        now2 = this.time.now;
+    }
+    if((this.time.now - now3 > timerOne) && !one_trash){
+        one_on.visible = true;
+        one_type = 0;
+        now3 = this.time.now;
+    } else if ((this.time.now - now3 > timerOne/2) && one_trash) {
+        if(one_type === 1) {
+            grey_bak.setTint();
+        }
+        if(one_type === 2){
+            blue_bak.setTint();
+        }
+        one_trash = false;
+        now3 = this.time.now;
+    }
+    if((this.time.now - now4 > timerSlow) && !slow_trash){
+        slow_on.visible = true;
+        now4 = this.time.now;
+    } else  if ((this.time.now - now4 > timerSlow / 2) && slow_trash){
+        slow_trash = false;
+        now4 = this.time.now;
+    }
+
+    if(auto_trash){
+        autoSort();
     }
 
 }
