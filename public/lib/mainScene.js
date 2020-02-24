@@ -449,14 +449,28 @@ var MainSc = new Phaser.Class({
         });
 
         var coliderActiveGroup = function (s1, s2) {
-            if (!s2.body.allowdraggable && !s2.active) {
-                activeGroup.remove(s1);
-                setInactive(s1, this);
-                s1.body.moves = false;
-                if (s1.type === 'acc') {
-                    toxicality(s2);
+            if(!auto_trash){
+                if (!s2.body.allowdraggable && !s2.active) {
+                    activeGroup.remove(s1);
+                    setInactive(s1, this);
+                    s1.body.moves = false;
+                    if (s1.type === 'acc') {
+                        toxicality(s2);
+                    }
+                }
+            }else if (auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue'){
+                if (!s2.body.allowdraggable && !s2.active) {
+                    activeGroup.remove(s1);
+                    setInactive(s1, this);
+                    s1.body.moves = false;
+                    if (s1.type === 'acc') {
+                        toxicality(s2);
+                    }
                 }
             }
+
+
+
         };
         this.physics.add.overlap(activeGroup, group, coliderActiveGroup);
         this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup);
@@ -616,12 +630,12 @@ function createAndDropObject() {
     var toxic = false;
     if( one_trash) {
         if(one_type === 1) {
-        grey_bak.setTint(0x6b6b6b, 0x6b6b6b, 0x6b6b6b, 0x6b6b6b);
+        grey_bak.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
         trash = blue[Math.floor(Math.random() * blue.length)];
         trashType = 'blue';
     }
         if(one_type === 2){
-            blue_bak.setTint(0x6b6b6b, 0x6b6b6b, 0x6b6b6b, 0x6b6b6b);
+            blue_bak.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
             trash = grey[Math.floor(Math.random() * grey.length)];
             trashType = 'grey';
         }
@@ -675,17 +689,55 @@ function autoTrash() {
 }
 
 function  destoyBlueTrash(bak , trash) {
-    group.remove(trash);
+    activeGroup.remove(trash);
     destroyGroup.push(trash);
     trash.setVelocity((bak.x - trash.x) / 2, bak.y - trash.y);
     trash.setAngularVelocity(-50);
+    player_score += 2;
+    debugger
+    // this.callbackScope.physics.add.sprite(400, 150, "+1");
+
+    var coin = this.add.sprite(trash.x + 100, trash.y - 150, '+2')
+        .setOrigin(0.5, 0.5).setScale(global_scale * 0.5);
+    this.tweens.add({
+        targets: coin,
+        x: text_score.x,
+        y: text_score.y,
+        scaleX: 0.10,
+        scaleY: 0.10,
+        ease: 'Linear',
+        duration: 500,
+        delay: 300,
+        onComplete: function () {
+            coin.destroy();
+        },
+    });
 }
 
 function  destoyGreyTrash(bak , trash) {
-    group.remove(trash);
+    activeGroup.remove(trash);
     destroyGroup.push(trash);
     trash.setVelocity((bak.x - trash.x) / 2, bak.y - trash.y);
     trash.setAngularVelocity(50);
+    player_score += 1;
+    debugger
+    // this.callbackScope.physics.add.sprite(400, 150, "+1");
+
+    var coin = this.add.sprite(trash.x + 100, trash.y - 150, '+1')
+        .setOrigin(0.5, 0.5).setScale(global_scale * 0.5);
+    this.tweens.add({
+        targets: coin,
+        x: text_score.x,
+        y: text_score.y,
+        scaleX: 0.10,
+        scaleY: 0.10,
+        ease: 'Linear',
+        duration: 500,
+        delay: 300,
+        onComplete: function () {
+            coin.destroy();
+        },
+    });
 }
 
 function autoSort() {
@@ -705,8 +757,20 @@ function clearConveer() {
     group.clear(true);
     group.getChildren().forEach(function (trash) {
         if(trash.type !== 'acc'){
+            this.tweens.add({
+                targets: trash,
+                x: text_score.x,
+                y: text_score.y,
+                scaleX: 0.10,
+                scaleY: 0.10,
+                ease: 'Linear',
+                duration: 500,
+                delay: 300,
+                onComplete: function () {
+                    trash.destroy();
+                },
+            });
             group.remove(trash);
-            trash.destroy();
         }
     });
     now1 = this.time.now;
