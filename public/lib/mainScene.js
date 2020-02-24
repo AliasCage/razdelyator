@@ -295,24 +295,8 @@ var MainSc = new Phaser.Class({
                 group.remove(s2);
                 destroyGroup.push(s2);
                 s2.destroy();
-                player_score += 3;
 
-                var coin = this.add.sprite(s2.x - 50, s2.y + 150, '+3')
-                    .setOrigin(0.5, 0.5).setScale(global_scale * 0.5);
-                this.tweens.add({
-                    targets: coin,
-                    x: text_score.x,
-                    y: text_score.y,
-                    scaleX: 0.10,
-                    scaleY: 0.10,
-                    ease: 'Linear',
-                    duration: 500,
-                    delay: 300,
-                    onComplete: function () {
-                        coin.destroy();
-                    },
-                });
-
+                createCoin(s2.x - 50, s2.y + 50, 3, this);
             }
         }, null, this);
 
@@ -323,25 +307,7 @@ var MainSc = new Phaser.Class({
                 s2.setVelocity((s1.x - s2.x) / 2, s1.y - s2.y);
                 s2.setAngularVelocity(-50);
 
-                player_score += 2;
-                debugger
-                // this.callbackScope.physics.add.sprite(400, 150, "+1");
-
-                var coin = this.add.sprite(s2.x + 100, s2.y - 150, '+2')
-                    .setOrigin(0.5, 0.5).setScale(global_scale * 0.5);
-                this.tweens.add({
-                    targets: coin,
-                    x: text_score.x,
-                    y: text_score.y,
-                    scaleX: 0.10,
-                    scaleY: 0.10,
-                    ease: 'Linear',
-                    duration: 500,
-                    delay: 300,
-                    onComplete: function () {
-                        coin.destroy();
-                    },
-                });
+                createCoin(s2.x + 50, s2.y - 50, 2, this);
             }
         }, null, this);
         this.physics.add.overlap(grey_bak, group, function (s1, s2) {
@@ -351,22 +317,7 @@ var MainSc = new Phaser.Class({
                 s2.setVelocity((s1.x - s2.x) / 2, s1.y - s2.y);
                 s2.setAngularVelocity(50);
 
-                player_score += 1;
-                var coin = this.add.sprite(s2.x - 100, s2.y - 150, '+1')
-                    .setOrigin(0.5, 0.5).setScale(global_scale * 0.5);
-                this.tweens.add({
-                    targets: coin,
-                    x: text_score.x,
-                    y: text_score.y,
-                    scaleX: 0.10,
-                    scaleY: 0.10,
-                    ease: 'Linear',
-                    duration: 500,
-                    delay: 300,
-                    onComplete: function () {
-                        coin.destroy();
-                    },
-                });
+                createCoin(s2.x - 50, s2.y - 50, 1, this);
             }
         }, null, this);
 
@@ -596,6 +547,24 @@ function clearGroup(g) {
         trash.destroy();
     });
 }
+
+var createCoin = function (x, y, points, scene) {
+    player_score += points;
+    var coin = scene.add.sprite(x, y, '+' + points).setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20);
+    scene.tweens.add({
+        targets: coin,
+        x: text_score.x,
+        y: text_score.y,
+        scaleX: 0.10,
+        scaleY: 0.10,
+        ease: 'Linear',
+        duration: 500,
+        delay: 300,
+        onComplete: function () {
+            coin.destroy();
+        },
+    });
+};
 
 function createAndDropObject() {
     var trash;
