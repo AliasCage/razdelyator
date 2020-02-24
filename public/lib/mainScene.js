@@ -11,6 +11,7 @@ var now1;
 var now2;
 var now3;
 var now4;
+var nowDifficulty;
 
 var conveer_anim;
 
@@ -43,6 +44,10 @@ var auto_trash;
 var one_type;
 var auto_type;
 
+var speedTrash;
+var intervalCreateTrash;
+var timerDifficulty;
+var difficultyUp;
 
 const  timerClear = 90000;
 const  timerAuto = 45000;
@@ -185,6 +190,10 @@ var MainSc = new Phaser.Class({
         cursors = this.input.keyboard.createCursorKeys();
         this.physics.world.checkCollision.up = false;
         now = this.time.now;
+        timerDifficulty = 50000;
+        difficultyUp = true;
+        intervalCreateTrash = 3000;
+        speedTrash = 59;
         one_type = 0;
         auto_type = 0;
         slow_trash = false;
@@ -195,6 +204,7 @@ var MainSc = new Phaser.Class({
         now2 = this.time.now;
         now3 = this.time.now;
         now4 = this.time.now;
+        nowDifficulty = this.time.now;
 
         this.anims.create({
             key: 'conveer',
@@ -396,7 +406,7 @@ var MainSc = new Phaser.Class({
                 gameObject.setVelocity(-200, -300);
                 gameObject.setAngularVelocity(40);
             } else {
-                gameObject.setVelocityY(200);
+                gameObject.setVelocityY(speedTrash + 150);
             }
             gameObject.setGravityY(300);
             gameObject.setBounce(0.4);
@@ -513,7 +523,7 @@ var MainSc = new Phaser.Class({
             this.scene.switch('raiting', {name: 'Move from Main to Raiting'});
         }
 
-        var interval = 3000 + (300 + Math.floor((1500 - 300) * Math.random()));
+        var interval = intervalCreateTrash + (300 + Math.floor((1500 - 300) * Math.random()));
         if (slow_trash){
             interval = interval * 2;
         }
@@ -527,7 +537,7 @@ var MainSc = new Phaser.Class({
 
         if(slow_trash){
            activeGroup.getChildren().forEach(function (trash) {
-               trash.setVelocityY(31);
+               trash.setVelocityY(speedTrash/2);
            });
         }/*else{
             activeGroup.getChildren().forEach(function (trash) {
@@ -570,6 +580,16 @@ var MainSc = new Phaser.Class({
             slow_trash = false;
             now4 = this.time.now;
         }
+
+        if(this.time.now - nowDifficulty > timerDifficulty){
+            speedTrash = speedTrash + 3;
+            intervalCreateTrash = intervalCreateTrash - 50;
+            timerDifficulty = this.time.now;
+            difficultyUp = true;
+        }else if (this.time.now - nowDifficulty > timerDifficulty/2 && difficultyUp){
+            speedTrash = speedTrash + 3;
+            difficultyUp = false;
+        }
     },
 });
 
@@ -605,7 +625,7 @@ function setInactive(object) {
     group.add(object);
     object.removeInteractive();
     object.body.allowdraggable = false;
-    object.setVelocityY(400);
+    object.setVelocityY(speedTrash + 350);
     object.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
 
     console.log(object.y);
@@ -663,7 +683,7 @@ function createAndDropObject() {
     obj.setCollideWorldBounds(true);
     if (!isPause) {
         obj.body.moves = true;
-        obj.setVelocityY(59);
+        obj.setVelocityY(speedTrash);
     } else {
         obj.body.moves = false;
     }
