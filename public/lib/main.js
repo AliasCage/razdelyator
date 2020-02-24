@@ -269,7 +269,6 @@ function create() {
             destroyGroup.push(s2);
             s2.setVelocity((s1.x - s2.x) / 2, s1.y - s2.y);
             s2.setAngularVelocity(50);
-            autoTrash() ;
         }
     });
 
@@ -375,7 +374,7 @@ function create() {
     this.physics.add.overlap(activeGroup, group, coliderActiveGroup);
     this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup);
     this.physics.add.overlap(activeGroup, blue_bak, destoyBlueTrash, null, this);
-   // this.physics.add.overlap(activeGroup, grey_bak, destoyGreyTrash, null, this);
+    this.physics.add.overlap(activeGroup, grey_bak, destoyGreyTrash, null, this);
 }
 
 function clearConveer() {
@@ -410,7 +409,6 @@ function autoTrash() {
     now2 = this.time.now;
 }
 
-
 function  destoyBlueTrash(bak , trash) {
     group.remove(trash);
     destroyGroup.push(trash);
@@ -418,12 +416,23 @@ function  destoyBlueTrash(bak , trash) {
     trash.setAngularVelocity(-50);
 }
 
+function  destoyGreyTrash(bak , trash) {
+    group.remove(trash);
+    destroyGroup.push(trash);
+    trash.setVelocity((bak.x - trash.x) / 2, bak.y - trash.y);
+    trash.setAngularVelocity(50);
+}
+
 function autoSort() {
     activeGroup.getChildren().forEach(function (trash) {
-        //if(one_type === 1){
+        if(one_type === 1){
             trash.setVelocity((blue_bak.x - trash.x)/2, blue_bak.y - trash.y);
             trash.setAngularVelocity(-1);
-        //}
+        }
+        else{
+            trash.setVelocity((grey_bak.x - trash.x)/2, grey_bak.y - trash.y);
+            trash.setAngularVelocity(-1);
+        }
     });
 }
 
