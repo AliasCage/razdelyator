@@ -106,8 +106,10 @@ var MainSc = new Phaser.Class({
         this.load.image('bg', 'bg.png');
         this.load.image('bg_tile', 'bg_tile.jpg');
         this.load.image('darknes', 'darknes.png');
-        this.load.image('blue', 'blue_min.png');
-        this.load.image('grey', 'grey_min.png');
+        this.load.image('blue1', 'blue_up.png');
+        this.load.image('blue2', 'blue_down.png');
+        this.load.image('grey1', 'grey_up.png');
+        this.load.image('grey2', 'grey_down.png');
         this.load.image('blank', 'blank.png');
         this.load.image('+1', '+1.png');
         this.load.image('+2', '+2.png');
@@ -231,10 +233,14 @@ var MainSc = new Phaser.Class({
         bg_width = bg.width * global_scale;
         bg.setScale(global_scale);
 
-        blue_bak = this.physics.add.sprite(0, 0, 'blue').setOrigin(-0.05, 0.5).setScale(global_scale)
+        blue_bak = this.physics.add.sprite(0, 0, 'blue1').setOrigin(-0.05, 1).setScale(global_scale)
             .setPosition(midle_window - bg_width * 0.5, window.innerHeight / 1.65);
-        grey_bak = this.physics.add.sprite(0, 0, 'grey').setOrigin(1.05, 0.5).setScale(global_scale)
+        this.physics.add.sprite(0, 0, 'blue2').setOrigin(-0.05, 0).setScale(global_scale)
+            .setPosition(midle_window - bg_width * 0.5, window.innerHeight / 1.65).setDepth(9);
+        grey_bak = this.physics.add.sprite(0, 0, 'grey1').setOrigin(1.05, 1).setScale(global_scale)
             .setPosition(midle_window + bg_width * 0.5, window.innerHeight / 1.65);
+        this.physics.add.sprite(0, 0, 'grey2').setOrigin(1.05, 0).setScale(global_scale)
+            .setPosition(midle_window + bg_width * 0.5, window.innerHeight / 1.65).setDepth(9);
 
         conveer_anim = this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0);
         conveer_anim.setScale(window.innerHeight / conveer_anim.height);
@@ -295,7 +301,7 @@ var MainSc = new Phaser.Class({
                 this.scene.start('logo', {name: 'Move from Main to Logo'});
             }, this);
 
-        text_score = this.add.text(midle_window - side_middle * 1.5, window.innerHeight * 0.9, player_score, {
+        text_score = this.add.text(midle_window - side_middle * 1.6, window.innerHeight * 0.9, player_score, {
             font: "32px Arial Black",
             fill: "#fff"
         }).setStroke('#00f', 3).setShadow(2, 2, "#333333", 2, true, true);
@@ -565,7 +571,7 @@ function darkness() {
         targets: darknes,
         alpha: 0,
         ease: 'Linear',
-        duration: 3000,
+        duration: 2000,
         onComplete: function () {
             darknes.destroy();
         },
