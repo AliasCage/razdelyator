@@ -39,6 +39,7 @@ var Raiting = new Phaser.Class({
         });
         rating = getRating();
 
+        this.load.image('cell', 'img/cell.jpg');
         this.load.scenePlugin('rexuiplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js', 'rexUI', 'rexUI');
     },
 
@@ -73,11 +74,11 @@ function createGridTable(game) {
 
         scrollMode: 0,
 
-        background: game.rexUI.add.roundRectangle(0, 0, 20, 10, 10, COLOR_PRIMARY),
+        background: game.rexUI.add.roundRectangle(0, 0, 20, 10, 10, COLOR_DARK),
 
         table: {
             cellWidth: undefined,
-            cellHeight: 30,
+            cellHeight: 50,
             columns: 1,
             mask: {
                 padding: 2,
@@ -88,26 +89,26 @@ function createGridTable(game) {
         header: createRowItem(game,
             {
                 background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
-                id: game.add.text(0, 0, 'Id'),
-                score: game.add.text(0, 0, 'Score'),
-                name: game.add.text(0, 0, 'Name'),
+                id: game.add.text(0, 0, 'Id').setColor(DARK),
+                score: game.add.text(0, 0, 'Score').setColor(DARK),
+                name: game.add.text(0, 0, 'Name').setColor(DARK),
                 height: 30
             }
         ),
-
-        footer: game.rexUI.add.label({
-            width: undefined,
-            height: 30,
-
-            background: game.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_DARK),
-            // text: game.add.text(0, 0, 'Footer'),
-        }),
+        //
+        // footer: game.rexUI.add.label({
+        //     width: undefined,
+        //     height: 30,
+        //
+        //     background: game.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_DARK),
+        //     // text: game.add.text(0, 0, 'Footer'),
+        // }),
 
         space: {
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
+            left: 2,
+            right: 2,
+            top: 2,
+            bottom: 2,
 
             table: 10,
             header: 10,
@@ -121,6 +122,7 @@ function createGridTable(game) {
                 item = cell.item,
                 index = cell.index;
             if (cellContainer === null) {
+                debugger
                 cellContainer = createRowItem(scene);
                 console.log(cell.index + ': create new cell-container');
             } else {
@@ -140,7 +142,11 @@ function createGridTable(game) {
 
 const GetValue = Phaser.Utils.Objects.GetValue;
 var createRowItem = function (scene, config) {
+    debugger
     var background = GetValue(config, 'background', undefined);
+    if (background === undefined) {
+        background = scene.add.sprite(0, 0, 'cell');
+    }
     if (background === undefined) {
         background = scene.rexUI.add.roundRectangle(0, 0, 20, 20, 0).setStrokeStyle(3, COLOR_DARK)
     }
