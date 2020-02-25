@@ -41,13 +41,14 @@ var auto_type;
 
 var speedTrash;
 var intervalCreateTrash;
-var timerDifficulty;
-var difficultyUp;
+var scoreDifficulty;
+var intervalScoreDiff;
 
-const  timerClear = 90000;
-const  timerAuto = 45000;
-const  timerOne = 45000;
-const  timerSlow = 45000;
+
+const timerClear = 90000;
+const timerAuto = 45000;
+const timerOne = 45000;
+const timerSlow = 45000;
 
 
 const batary_case_speed = 4500;
@@ -173,9 +174,11 @@ var MainSc = new Phaser.Class({
         cursors = this.input.keyboard.createCursorKeys();
         this.physics.world.checkCollision.up = false;
         now = this.time.now;
-        timerDifficulty = 50000;
-        difficultyUp = true;
+
+        scoreDifficulty = 15;
         intervalCreateTrash = 3000;
+        intervalScoreDiff = 15;
+
         speedTrash = 59;
         one_type = 0;
         auto_type = 0;
@@ -187,7 +190,7 @@ var MainSc = new Phaser.Class({
         now2 = this.time.now;
         now3 = this.time.now;
         now4 = this.time.now;
-        nowDifficulty = this.time.now;
+
 
         this.anims.create({
             key: 'conveer',
@@ -264,7 +267,7 @@ var MainSc = new Phaser.Class({
 
         var slow_off = this.add.sprite(midle_window + side_middle, window.innerHeight / 3, 'slow_off')
             .setOrigin(0, 0.5).setScale(global_scale);
-        slow_on =  this.add.sprite(midle_window + side_middle, window.innerHeight / 3, 'slow_on')
+        slow_on = this.add.sprite(midle_window + side_middle, window.innerHeight / 3, 'slow_on')
             .setOrigin(0, 0.5).setScale(global_scale).setInteractive().on("pointerdown", slowTrash, this);
         slow_on.visible = false;
 
@@ -388,7 +391,7 @@ var MainSc = new Phaser.Class({
         });
 
         var coliderActiveGroup = function (s1, s2) {
-            if(!auto_trash){
+            if (!auto_trash) {
                 if (!s2.body.allowdraggable && !s2.active) {
                     activeGroup.remove(s1);
                     setInactive(s1, this);
@@ -397,7 +400,7 @@ var MainSc = new Phaser.Class({
                         toxicality(s2);
                     }
                 }
-            }else if (auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue'){
+            } else if (auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue') {
                 if (!s2.body.allowdraggable && !s2.active) {
                     activeGroup.remove(s1);
                     setInactive(s1, this);
@@ -409,7 +412,6 @@ var MainSc = new Phaser.Class({
             }
 
 
-
         };
         this.physics.add.overlap(activeGroup, group, coliderActiveGroup);
         this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup);
@@ -418,6 +420,12 @@ var MainSc = new Phaser.Class({
     },
 
     update: function () {
+        if (player_score === scoreDifficulty) {
+            scoreDifficulty = scoreDifficulty + intervalScoreDiff;
+            speedTrash = speedTrash + 50;
+            intervalCreateTrash = intervalCreateTrash - 70;
+            intervalScoreDiff = intervalScoreDiff + 5;
+        }
         text_score.text = player_score;
         if (Array.isArray(destroyGroup) && destroyGroup.length) {
             var shift = destroyGroup.shift();
@@ -453,72 +461,56 @@ var MainSc = new Phaser.Class({
         }
 
         var interval = intervalCreateTrash + (300 + Math.floor((1500 - 300) * Math.random()));
-        if (slow_trash){
+        if (slow_trash) {
             interval = interval * 2;
         }
         if (!isPause && this.time.now - now > interval) {
             now = this.time.now;
             createAndDropObject.call(this);
         }
-        if(auto_trash){
+        if (auto_trash) {
             autoSort();
         }
 
-        if(slow_trash){
-           activeGroup.getChildren().forEach(function (trash) {
-               trash.setVelocityY(speedTrash/2);
-           });
-        }/*else{
+        if (slow_trash) {
             activeGroup.getChildren().forEach(function (trash) {
-                if(trash.getVelosityY()<40){
-                    trash.setVelocityY(59);
-                }
+                trash.setVelocityY(speedTrash / 2);
             });
-        }*/
-
+        }
         //таймеры для скилов
-        if(!isPause && this.time.now - now1 > timerClear){
+        if (!isPause && this.time.now - now1 > timerClear) {
             clear_on.visible = true;
         }
-        if(!isPause && this.time.now - now2 > timerAuto && !auto_trash){
+        if (!isPause && this.time.now - now2 > timerAuto && !auto_trash) {
             auto_on.visible = true;
             now2 = this.time.now;
-        }else  if (!isPause && this.time.now - now2 > timerAuto / 2 && auto_trash){
+        } else if (!isPause && this.time.now - now2 > timerAuto / 2 && auto_trash) {
             auto_trash = false;
             now2 = this.time.now;
             auto_type = 0;
         }
-        if((this.time.now - now3 > timerOne) && !one_trash){
+        if ((this.time.now - now3 > timerOne) && !one_trash) {
             one_on.visible = true;
             now3 = this.time.now;
-        } else if ((this.time.now - now3 > timerOne/2) && one_trash) {
-            if(one_type === 1) {
+        } else if ((this.time.now - now3 > timerOne / 2) && one_trash) {
+            if (one_type === 1) {
                 grey_bak.setTint();
             }
-            if(one_type === 2){
+            if (one_type === 2) {
                 blue_bak.setTint();
             }
             one_trash = false;
             now3 = this.time.now;
             one_type = 0;
         }
-        if((this.time.now - now4 > timerSlow) && !slow_trash){
+        if ((this.time.now - now4 > timerSlow) && !slow_trash) {
             slow_on.visible = true;
             now4 = this.time.now;
-        } else  if ((this.time.now - now4 > timerSlow / 2) && slow_trash){
+        } else if ((this.time.now - now4 > timerSlow / 2) && slow_trash) {
             slow_trash = false;
             now4 = this.time.now;
         }
 
-        if(this.time.now - nowDifficulty > timerDifficulty){
-            speedTrash = speedTrash + 3;
-            intervalCreateTrash = intervalCreateTrash - 50;
-            timerDifficulty = this.time.now;
-            difficultyUp = true;
-        }else if (this.time.now - nowDifficulty > timerDifficulty/2 && difficultyUp){
-            speedTrash = speedTrash + 3;
-            difficultyUp = false;
-        }
     },
 });
 
@@ -595,18 +587,18 @@ function createAndDropObject() {
     var trashType;
     var number = Math.random();
     var toxic = false;
-    if( one_trash) {
-        if(one_type === 1) {
-        grey_bak.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
-        trash = blue[Math.floor(Math.random() * blue.length)];
-        trashType = 'blue';
-    }
-        if(one_type === 2){
+    if (one_trash) {
+        if (one_type === 1) {
+            grey_bak.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
+            trash = blue[Math.floor(Math.random() * blue.length)];
+            trashType = 'blue';
+        }
+        if (one_type === 2) {
             blue_bak.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
             trash = grey[Math.floor(Math.random() * grey.length)];
             trashType = 'grey';
         }
-    }else {
+    } else {
         if (number > 0.8) {
             trash = acc[Math.floor(Math.random() * acc.length)];
             trashType = 'acc';
@@ -645,9 +637,9 @@ function getRandomInt(min, max) {
 }
 
 function autoTrash() {
-    if(one_type === 0){
-        auto_type = getRandomInt(1,2);
-    }else{
+    if (one_type === 0) {
+        auto_type = getRandomInt(1, 2);
+    } else {
         auto_type = one_type;
     }
     auto_trash = true;
@@ -655,64 +647,29 @@ function autoTrash() {
     now2 = this.time.now;
 }
 
-function  destoyBlueTrash(bak , trash) {
+function destoyBlueTrash(bak, trash) {
     activeGroup.remove(trash);
     destroyGroup.push(trash);
     trash.setVelocity((bak.x - trash.x) / 2, bak.y - trash.y);
     trash.setAngularVelocity(-50);
-    player_score += 2;
-    // this.callbackScope.physics.add.sprite(400, 150, "+1");
-
-    var coin = this.add.sprite(trash.x + 100, trash.y - 150, '+2')
-        .setOrigin(0.5, 0.5).setScale(global_scale * 0.5);
-    this.tweens.add({
-        targets: coin,
-        x: text_score.x,
-        y: text_score.y,
-        scaleX: 0.10,
-        scaleY: 0.10,
-        ease: 'Linear',
-        duration: 500,
-        delay: 300,
-        onComplete: function () {
-            coin.destroy();
-        },
-    });
+    createCoin(trash.x + 50, trash.y - 50, 2, this);
 }
 
-function  destoyGreyTrash(bak , trash) {
+function destoyGreyTrash(bak, trash) {
     activeGroup.remove(trash);
     destroyGroup.push(trash);
     trash.setVelocity((bak.x - trash.x) / 2, bak.y - trash.y);
     trash.setAngularVelocity(50);
-    player_score += 1;
-    // this.callbackScope.physics.add.sprite(400, 150, "+1");
-
-    var coin = this.add.sprite(trash.x + 100, trash.y - 150, '+1')
-        .setOrigin(0.5, 0.5).setScale(global_scale * 0.5);
-    this.tweens.add({
-        targets: coin,
-        x: text_score.x,
-        y: text_score.y,
-        scaleX: 0.10,
-        scaleY: 0.10,
-        ease: 'Linear',
-        duration: 500,
-        delay: 300,
-        onComplete: function () {
-            coin.destroy();
-        },
-    });
+    createCoin(trash.x - 50, trash.y - 50, 1, this);
 }
 
 function autoSort() {
     activeGroup.getChildren().forEach(function (trash) {
-        if(auto_type === 1 && trash.type === 'blue'){
-            trash.setVelocity((blue_bak.x - trash.x)/2, blue_bak.y - trash.y);
+        if (auto_type === 1 && trash.type === 'blue') {
+            trash.setVelocity((blue_bak.x - trash.x) / 2, blue_bak.y - trash.y);
             trash.setAngularVelocity(-1);
-        }
-        else if(auto_type === 2 && trash.type === 'grey'){
-            trash.setVelocity((grey_bak.x - trash.x)/2, grey_bak.y - trash.y);
+        } else if (auto_type === 2 && trash.type === 'grey') {
+            trash.setVelocity((grey_bak.x - trash.x) / 2, grey_bak.y - trash.y);
             trash.setAngularVelocity(-1);
         }
     });
@@ -721,7 +678,7 @@ function autoSort() {
 function clearConveer() {
     group.clear(true);
     group.getChildren().forEach(function (trash) {
-        if(trash.type !== 'acc'){
+        if (trash.type !== 'acc') {
             this.tweens.add({
                 targets: trash,
                 x: text_score.x,
@@ -749,9 +706,9 @@ function slowTrash() {
 }
 
 function oneTrash() {
-    if(auto_type === 0){
-        one_type = getRandomInt(1,2);
-    }else{
+    if (auto_type === 0) {
+        one_type = getRandomInt(1, 2);
+    } else {
         one_type = auto_type;
     }
     one_trash = true;
