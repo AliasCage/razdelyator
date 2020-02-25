@@ -12,7 +12,6 @@ var Raiting = new Phaser.Class({
         },
 
     init: function (data) {
-        debugger
         console.log(data.name);
         rating = getRating();
         rating_loaded = false;
@@ -20,17 +19,17 @@ var Raiting = new Phaser.Class({
 
     preload: function () {
 
-        var groundBar = this.add.graphics();
+        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, window.innerWidth, window.innerHeight);
+        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7).fillRect(midle_window - 160, 270, 320, 50);
         var progressBar = this.add.graphics();
-        var progressBox = this.add.graphics();
-        groundBar.fillStyle(COLOR_PRIMARY, 0.6);
-        groundBar.fillRect(0, 0, window.innerWidth, window.innerHeight);
-        progressBox.fillStyle(COLOR_DARK, 0.7);
-        progressBox.fillRect(midle_window - 160, 270, 320, 50);
         this.load.on('progress', function (value) {
-            progressBar.clear();
-            progressBar.fillStyle(COLOR_PRIMARY, 1);
-            progressBar.fillRect(midle_window + 10 - 150, 280, 300 * value - 10, 30);
+            progressBar.clear().fillStyle(COLOR_PRIMARY, 1).fillRect(midle_window + 10 - 150, 280, 300 * value - 10, 30);
+        });
+
+        this.load.on('complete', function () {
+            progressBar.destroy();
+            progressBox.destroy();
+            groundBar.destroy();
         });
 
         this.load.on('complete', function () {
@@ -41,11 +40,9 @@ var Raiting = new Phaser.Class({
         rating = getRating();
 
         this.load.scenePlugin('rexuiplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js', 'rexUI', 'rexUI');
-        debugger
     },
 
     create: function () {
-        debugger
         this.add.tileSprite(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
         this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0).setScale(global_scale);
 
