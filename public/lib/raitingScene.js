@@ -12,6 +12,7 @@ var Raiting = new Phaser.Class({
         },
 
     init: function (data) {
+        debugger
         console.log(data.name);
         rating = getRating();
         rating_loaded = false;
@@ -39,21 +40,19 @@ var Raiting = new Phaser.Class({
         });
         rating = getRating();
 
-        this.load.image('bg_tile', 'bg_tile.jpg');
-        this.load.image('bg', 'bg.png');
-        this.load.image('menu_on', 'img/btn/menu_on.png');
-
         this.load.scenePlugin('rexuiplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js', 'rexUI', 'rexUI');
+        debugger
     },
 
     create: function () {
+        debugger
         this.add.tileSprite(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
         this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0).setScale(global_scale);
 
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
-        this.add.sprite(midle_window + side_middle, window.innerHeight * 0.9, 'menu_on')
-            .setOrigin(0, 0.5).setScale(global_scale).setInteractive()
-            .on("pointerup", function (sprite, pointer) {
+        this.add.sprite(midle_window + side_middle, window.innerHeight * 0.875, 'menu_on')
+            .setOrigin(0, 0).setScale(global_scale).setInteractive()
+            .on("pointerup", function () {
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
     },
@@ -197,7 +196,6 @@ var createRowItem = function (scene, config) {
 };
 
 var getItems = function (count) {
-    debugger
     var data = [];
     for (var i = 0; i < rating.length; i++) {
         var line = rating[i];

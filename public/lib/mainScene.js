@@ -2,9 +2,6 @@ var isPause = true;
 var isNeedDarknes = false;
 var switchToRaiting = false;
 var cursors;
-var global_scale;
-var bg_width;
-var conveer_width;
 var now;
 
 var now1;
@@ -12,8 +9,6 @@ var now2;
 var now3;
 var now4;
 var nowDifficulty;
-
-var conveer_anim;
 
 var player_score = 0;
 var text_score;
@@ -54,13 +49,6 @@ const  timerAuto = 45000;
 const  timerOne = 45000;
 const  timerSlow = 45000;
 
-const midle_window = window.innerWidth / 2;
-
-const DARK = 0xeffffff;
-const COLOR_PRIMARY = 0xe3f2fd;
-const COLOR_DARK = 0xb1bfca;
-const TOXIC_COLOR = 0x01DF01;
-const INACTIVE_COLOR = 0x6b6b6b;
 
 const batary_case_speed = 4500;
 
@@ -103,8 +91,6 @@ var MainSc = new Phaser.Class({
 
         this.load.setBaseURL('img');
 
-        this.load.image('bg', 'bg.png');
-        this.load.image('bg_tile', 'bg_tile.jpg');
         this.load.image('darknes', 'darknes.png');
         this.load.image('blue1', 'blue_up.png');
         this.load.image('blue2', 'blue_down.png');
@@ -130,11 +116,6 @@ var MainSc = new Phaser.Class({
         this.load.image('slow_off', 'btn/slow_off.png');
         this.load.image('slow_on', 'btn/slow_on.png');
 
-        this.load.image('menu_off', 'btn/menu_off.png');
-        this.load.image('menu_on', 'btn/menu_on.png');
-
-
-        this.load.image('con1', '/conveer/1.png');
         this.load.image('con2', '/conveer/2.png');
         this.load.image('con3', '/conveer/3.png');
         this.load.image('con4', '/conveer/4.png');
@@ -227,25 +208,18 @@ var MainSc = new Phaser.Class({
         });
 
         this.add.tileSprite(midle_window, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
+        this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0).setScale(global_scale);
 
-        var bg = this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0);
-        global_scale = window.innerHeight / bg.height;
-        bg_width = bg.width * global_scale;
-        bg.setScale(global_scale);
+        blue_bak = this.physics.add.sprite(midle_window - bg_width * 0.5, window.innerHeight / 1.65, 'blue1')
+            .setOrigin(-0.05, 1).setScale(global_scale);
+        this.physics.add.sprite(midle_window - bg_width * 0.5, window.innerHeight / 1.65, 'blue2')
+            .setOrigin(-0.05, 0).setScale(global_scale).setDepth(9);
+        grey_bak = this.physics.add.sprite(midle_window + bg_width * 0.5, window.innerHeight / 1.65, 'grey1')
+            .setOrigin(1.05, 1).setScale(global_scale);
+        this.physics.add.sprite(midle_window + bg_width * 0.5, window.innerHeight / 1.65, 'grey2')
+            .setOrigin(1.05, 0).setScale(global_scale).setDepth(9);
 
-        blue_bak = this.physics.add.sprite(0, 0, 'blue1').setOrigin(-0.05, 1).setScale(global_scale)
-            .setPosition(midle_window - bg_width * 0.5, window.innerHeight / 1.65);
-        this.physics.add.sprite(0, 0, 'blue2').setOrigin(-0.05, 0).setScale(global_scale)
-            .setPosition(midle_window - bg_width * 0.5, window.innerHeight / 1.65).setDepth(9);
-        grey_bak = this.physics.add.sprite(0, 0, 'grey1').setOrigin(1.05, 1).setScale(global_scale)
-            .setPosition(midle_window + bg_width * 0.5, window.innerHeight / 1.65);
-        this.physics.add.sprite(0, 0, 'grey2').setOrigin(1.05, 0).setScale(global_scale)
-            .setPosition(midle_window + bg_width * 0.5, window.innerHeight / 1.65).setDepth(9);
-
-        conveer_anim = this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0);
-        conveer_anim.setScale(window.innerHeight / conveer_anim.height);
-        conveer_anim.play('conveer');
-        conveer_width = conveer_anim.width * global_scale;
+        this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0).setScale(global_scale).play('conveer');
 
         this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
             .setPosition(midle_window, window.innerHeight * 0.05).setDepth(1);
@@ -294,8 +268,8 @@ var MainSc = new Phaser.Class({
             .setOrigin(0, 0.5).setScale(global_scale).setInteractive().on("pointerdown", slowTrash, this);
         slow_on.visible = false;
 
-        this.add.sprite(midle_window + side_middle, window.innerHeight * 0.9, 'menu_on')
-            .setOrigin(0, 0.5).setScale(global_scale).setInteractive()
+        this.add.sprite(midle_window + side_middle, window.innerHeight * 0.875, 'menu_on')
+            .setOrigin(0, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
                 isPause = true;
                 this.scene.start('logo', {name: 'Move from Main to Logo'});
@@ -374,7 +348,6 @@ var MainSc = new Phaser.Class({
         });
 
         var coliderGroupFunction = function (s1, s2) {
-            debugger
             if (!s1.body.moves) {
                 s2.body.moves = false;
                 if (s2.type === 'acc' && s2.active) {
@@ -397,7 +370,6 @@ var MainSc = new Phaser.Class({
 
         var zone_bottom = this.physics.add.sprite(midle_window, window.innerHeight, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
         this.physics.add.overlap(zone_bottom, activeGroup, function (s1, s2) {
-            debugger
 
             activeGroup.remove(s2);
             setInactive(s2, this);
@@ -689,7 +661,6 @@ function  destoyBlueTrash(bak , trash) {
     trash.setVelocity((bak.x - trash.x) / 2, bak.y - trash.y);
     trash.setAngularVelocity(-50);
     player_score += 2;
-    debugger
     // this.callbackScope.physics.add.sprite(400, 150, "+1");
 
     var coin = this.add.sprite(trash.x + 100, trash.y - 150, '+2')
@@ -715,7 +686,6 @@ function  destoyGreyTrash(bak , trash) {
     trash.setVelocity((bak.x - trash.x) / 2, bak.y - trash.y);
     trash.setAngularVelocity(50);
     player_score += 1;
-    debugger
     // this.callbackScope.physics.add.sprite(400, 150, "+1");
 
     var coin = this.add.sprite(trash.x + 100, trash.y - 150, '+1')
