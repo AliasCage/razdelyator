@@ -95,6 +95,8 @@ var Logo = new Phaser.Class({
             .on("pointerup", function () {
                 tutorial_btn.setScale(global_scale);
                 console.log("tutr");
+                debugger
+                this.scene.start('tutorial', {name: 'Move from Logo to Raiting'});
             }, this)
             .on("pointerdown", function () {
                 tutorial_btn.setScale(global_scale * 1.3);
