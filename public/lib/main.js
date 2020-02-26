@@ -10,7 +10,7 @@ var config = {
             // debug: true
         }
     },
-    scene: [Logo, MainSc, Raiting]
+    scene: [Logo, MainSc, Raiting, Tutorial]
 };
 
 var game = new Phaser.Game(config);
