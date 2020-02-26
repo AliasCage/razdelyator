@@ -56,7 +56,7 @@ var Raiting = new Phaser.Class({
     },
 
     update: function () {
-        if (rating.length > 0 && !rating_loaded) {
+        if (rating && rating.length > 0 && !rating_loaded) {
             console.log("loaded");
             rating_loaded = true;
             createGridTable(this);

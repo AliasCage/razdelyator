@@ -42,24 +42,23 @@ var Tutorial = new Phaser.Class({
     create: function () {
         debugger
         this.add.tileSprite(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
-        //this.add.sprite(midle_window, 0, 'bg').setOrigin(1, 1).setScale(global_scale);
 
-        var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
-        this.add.sprite(midle_window, 0, 'tut3')
+        var tut3 = this.add.sprite(midle_window, 0, 'tut3')
             .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
-                this.scene.start('logo', {name: 'Move from Tutorial to Logo'});
+                tut3.destroy();
+                this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
             }, this);
         var tut2 = this.add.sprite(midle_window, 0, 'tut2')
             .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
-                tut2.visible = false;
-                }, this);
+                tut2.destroy();
+            });
         var tut1 = this.add.sprite(midle_window, 0, 'tut1')
             .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
-                tut1.visible = false;
-            }, this);
+                tut1.destroy();
+            });
     },
 
     update: function () {

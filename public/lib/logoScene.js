@@ -77,30 +77,30 @@ var Logo = new Phaser.Class({
             }, this)
             .on("pointerdown", function () {
                 start_btn.setScale(global_scale * 1.3);
-            }, this)
+            })
             .on("pointerover", function () {
                 start_btn.setScale(global_scale * 1.3);
-            }, this)
+            })
             .on("pointerout", function () {
                 start_btn.setScale(global_scale);
-            }, this);
+            });
         var tutorial_btn = this.add.sprite(midle_window, window.innerHeight * 0.605, 'tutorial').setOrigin(0.5, 0.5)
             .setDepth(11).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
                 tutorial_btn.setScale(global_scale);
                 console.log("tutr");
                 debugger
-                this.scene.start('tutorial', {name: 'Move from Logo to Raiting'});
+                this.scene.start('tutorial', {name: 'Move from Logo to Tutorial'});
             }, this)
             .on("pointerdown", function () {
                 tutorial_btn.setScale(global_scale * 1.3);
-            }, this)
+            })
             .on("pointerover", function () {
                 tutorial_btn.setScale(global_scale * 1.3);
-            }, this)
+            })
             .on("pointerout", function () {
                 tutorial_btn.setScale(global_scale);
-            }, this);
+            });
         var raiting_btn = this.add.sprite(midle_window, window.innerHeight * 0.68, 'raiting').setOrigin(0.5, 0.5)
             .setDepth(11).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
@@ -111,13 +111,13 @@ var Logo = new Phaser.Class({
             }, this)
             .on("pointerdown", function () {
                 raiting_btn.setScale(global_scale * 1.3);
-            }, this)
+            })
             .on("pointerover", function () {
                 raiting_btn.setScale(global_scale * 1.3);
-            }, this)
+            })
             .on("pointerout", function () {
                 raiting_btn.setScale(global_scale);
-            }, this);
+            });
     },
 
     update: function () {
