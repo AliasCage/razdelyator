@@ -14,19 +14,14 @@ var Tutorial = new Phaser.Class({
     },
 
     preload: function () {
-        var groundBar = this.add.graphics();
         var progressBar = this.add.graphics();
-        var progressBox = this.add.graphics();
-        groundBar.fillStyle(COLOR_PRIMARY, 0.6);
-        groundBar.fillRect(0, 0, window.innerWidth, window.innerHeight);
-        progressBox.fillStyle(COLOR_DARK, 0.7);
-        progressBox.fillRect(midle_window - 160, 270, 320, 50);
+        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, window.innerWidth, window.innerHeight);
+        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7).fillRect(midle_window - 160, 270, 320, 50);
         this.load.on('progress', function (value) {
             progressBar.clear();
             progressBar.fillStyle(COLOR_PRIMARY, 1);
             progressBar.fillRect(midle_window + 10 - 150, 280, 300 * value - 10, 30);
         });
-
         this.load.on('complete', function () {
             progressBar.destroy();
             progressBox.destroy();
@@ -34,9 +29,6 @@ var Tutorial = new Phaser.Class({
         });
 
         this.load.setBaseURL('img');
-        this.load.image('tut1', 'tutorial/tut1.png');
-        this.load.image('tut2', 'tutorial/tut2.png');
-        this.load.image('tut3', 'tutorial/tut3.png');
     },
 
     create: function () {
