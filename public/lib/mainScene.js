@@ -32,6 +32,11 @@ var auto_on;
 var one_on;
 var slow_on;
 
+var light_clear_on;
+var light_auto_on;
+var light_one_on;
+var light_slow_on;
+
 var slow_trash;
 var one_trash;
 var auto_trash;
@@ -41,8 +46,10 @@ var auto_type;
 
 var speedTrash;
 var intervalCreateTrash;
+
 var scoreDifficulty;
-var intervalScoreDiff;
+
+const intervalScoreDiff = 2000;
 
 
 const timerClear = 90000;
@@ -169,11 +176,10 @@ var MainSc = new Phaser.Class({
         this.physics.world.checkCollision.up = false;
         now = this.time.now;
 
-        scoreDifficulty = 15;
+        scoreDifficulty = this.time.now;
         intervalCreateTrash = 3000;
-        intervalScoreDiff = 15;
-
         speedTrash = 59;
+
         one_type = 0;
         auto_type = 0;
         slow_trash = false;
@@ -241,8 +247,28 @@ var MainSc = new Phaser.Class({
 
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
 
+        var light_clear_on;
+        var light_auto_on;
+        var light_one_on;
+        var light_slow_on;
+
+
         var auto_off = this.add.sprite(midle_window - side_middle, window.innerHeight / 6, 'auto_off')
             .setOrigin(1, 0.5).setScale(global_scale);
+
+        light_clear_on = this.add.sprite(midle_window - side_middle, window.innerHeight / 6, 'auto_on')
+            .setOrigin(1, 0.5).setScale(global_scale).setInteractive().setTint(0x6bdaff,0xbae8f7,0x6bdaff,0xbae8f7);
+        light_clear_on.visible = false;
+        this.tweens.add({
+            targets: light_clear_on,
+            scaleX: 0.6,
+            scaleY: 0.6,
+            ease: 'Linear',
+            duration: 700,
+            repeat: -1,
+            yoyo: true
+        });
+
         auto_on = this.add.sprite(midle_window - side_middle, window.innerHeight / 6, 'auto_on')
             .setOrigin(1, 0.5).setScale(global_scale).setInteractive().on("pointerdown", autoTrash, this);
         auto_on.visible = false;
@@ -414,12 +440,21 @@ var MainSc = new Phaser.Class({
     },
 
     update: function () {
-        if (player_score === scoreDifficulty) {
-            scoreDifficulty = scoreDifficulty + intervalScoreDiff;
-            speedTrash = speedTrash + 50;
-            intervalCreateTrash = intervalCreateTrash - 70;
-            intervalScoreDiff = intervalScoreDiff + 5;
+        var y = false;
+        if (player_score > 5) {
+            if(this.time.now - scoreDifficulty > intervalScoreDiff){
+                speedTrash = speedTrash + 2;
+                if(intervalCreateTrash > 1000 ){
+                    intervalCreateTrash = intervalCreateTrash - 200;
+                }
+                else if(intervalCreateTrash  > 400){
+                    intervalCreateTrash = intervalCreateTrash - 100;
+                }
+                scoreDifficulty = this.time.now;
+            }
         }
+
+
         text_score.text = player_score;
         if (Array.isArray(destroyGroup) && destroyGroup.length) {
             var shift = destroyGroup.shift();
@@ -454,7 +489,7 @@ var MainSc = new Phaser.Class({
             this.scene.switch('raiting', {name: 'Move from Main to Raiting'});
         }
 
-        var interval = intervalCreateTrash + (300 + Math.floor((1500 - 300) * Math.random()));
+        var interval = intervalCreateTrash  + (300 + Math.floor((1500 - 300) * Math.random()));
         if (slow_trash) {
             interval = interval * 2;
         }
