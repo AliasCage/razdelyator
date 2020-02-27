@@ -194,14 +194,14 @@ function createGridTable(game) {
                 height: 30
             }
         ),
-        //
-        // footer: game.rexUI.add.label({
-        //     width: undefined,
-        //     height: 30,
-        //
-        //     background: game.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_DARK),
-        //     // text: game.add.text(0, 0, 'Footer'),
-        // }),
+
+        footer: game.rexUI.add.label({
+            width: undefined,
+            height: 30,
+
+            background: game.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_DARK),
+            // text: game.add.text(0, 0, user_top_place ? 'Ваше место: ' + user_top_place + ' счёт: ' + player_score : '').setColor(DARK),
+        }),
 
         space: {
             left: 2,
@@ -315,10 +315,10 @@ var getItems = function () {
         return 0;
     });
 
-    for (var i = 0; i < data.length; i++) {
+    for (i = 0; i < data.length; i++) {
         data[i].id = i + 1;
     }
-    return data;
+    return data.slice(0, 100);
 };
 
 
