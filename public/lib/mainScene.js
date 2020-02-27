@@ -169,14 +169,14 @@ var MainSc = new Phaser.Class({
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
 
         light_auto_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'auto_on')
-            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff,0xffffff,0xffffff,0xffffff);
+            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff,0xffffff,0xffffff,0xffffff).setAlpha(0.5);
         light_auto_on.visible = false;
         this.tweens.add({
             targets: light_auto_on,
-            scaleX: 0.55,
-            scaleY: 0.55,
+            scaleX: 0.65,
+            scaleY: 0.65,
             ease: 'Linear',
-            duration: 800,
+            duration: 900,
             repeat: -1,
             yoyo: true
         });
@@ -207,14 +207,14 @@ var MainSc = new Phaser.Class({
 
 
         light_one_on = this.add.sprite( midle_window  - (bg_width / 3), window.innerHeight / 3, 'one_on')
-            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff,0xffffff,0xffffff,0xffffff);
+            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff,0xffffff,0xffffff,0xffffff).setAlpha(0.5);
         light_one_on.visible = false;
         this.tweens.add({
             targets:  light_one_on,
-            scaleX: 0.55,
-            scaleY: 0.55,
+            scaleX: 0.65,
+            scaleY: 0.65,
             ease: 'Linear',
-            duration: 800,
+            duration: 900,
             repeat: -1,
             yoyo: true
         });
@@ -226,14 +226,14 @@ var MainSc = new Phaser.Class({
 
 
         light_slow_on = this.add.sprite( midle_window  + (bg_width / 3), window.innerHeight / 3, 'slow_on')
-            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff,0xffffff,0xffffff,0xffffff);
+            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff,0xffffff,0xffffff,0xffffff).setAlpha(0.5);
         light_slow_on.visible = false;
         this.tweens.add({
             targets: light_slow_on,
-            scaleX: 0.55,
-            scaleY: 0.55,
+            scaleX: 0.65,
+            scaleY: 0.65,
             ease: 'Linear',
-            duration: 800,
+            duration: 900,
             repeat: -1,
             yoyo: true
         });
@@ -514,7 +514,7 @@ function toxicality(accumulator) {
 
 function darkness() {
     isNeedDarknes = false;
-    var darknes = this.add.sprite(midle_window, 0, 'darknes').setOrigin(0.5, 0).setScale(global_scale).setDepth(11);
+    var darknes = this.add.sprite(midle_window, 0, 'darknes').setOrigin(0.5, 0).setScale(1/global_scale).setDepth(11);
     this.tweens.add({
         targets: darknes,
         alpha: 0,
