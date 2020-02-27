@@ -47,6 +47,7 @@ var Tutorial = new Phaser.Class({
             .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
                 tut3.destroy();
+                isPause = false;
                 this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
             }, this);
         var tut2 = this.add.sprite(midle_window, 0, 'tut2')

@@ -1,5 +1,8 @@
 var rating = [];
 var rating_loaded = false;
+var table;
+
+const GetValue = Phaser.Utils.Objects.GetValue;
 
 var Raiting = new Phaser.Class({
 
@@ -78,11 +81,10 @@ var Raiting = new Phaser.Class({
         if (rating && rating.length > 0 && !rating_loaded) {
             console.log("loaded");
             rating_loaded = true;
-            createGridTable(this);
+            table = createGridTable(this);
         }
     },
 });
-
 
 var CreateLoginDialog = function (scene, config, onSubmit) {
     var username = GetValue(config, 'username', '');
@@ -167,8 +169,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
 };
 
 function createGridTable(game) {
-
-    var gridTable = game.rexUI.add.gridTable({
+    return game.rexUI.add.gridTable({
         x: midle_window,
         y: window.innerHeight * 0.05,
         width: bg_width * 0.9,
@@ -191,9 +192,9 @@ function createGridTable(game) {
         header: createRowItem(game,
             {
                 background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
-                id: game.add.text(0, 0, 'Id').setColor(DARK),
-                score: game.add.text(0, 0, 'Score').setColor(DARK),
-                name: game.add.text(0, 0, 'Name').setColor(DARK),
+                id: game.add.text(0, 0, 'Место').setColor(DARK),
+                score: game.add.text(0, 0, 'Очки').setColor(DARK),
+                name: game.add.text(0, 0, 'Никнейм').setColor(DARK),
                 height: 30
             }
         ),
@@ -242,7 +243,6 @@ function createGridTable(game) {
     }).setOrigin(0.5, 0).layout();
 }
 
-const GetValue = Phaser.Utils.Objects.GetValue;
 var createRowItem = function (scene, config) {
     debugger
     var background = GetValue(config, 'background', undefined);
@@ -300,15 +300,27 @@ var createRowItem = function (scene, config) {
         )
 };
 
-var getItems = function (count) {
+var getItems = function () {
     var data = [];
     for (var i = 0; i < rating.length; i++) {
         var line = rating[i];
         data.push({
-            id: i,
             score: line.score,
-            name: line.name + (100 - i * 2)
+            name: line.name
         });
+    }
+    data.sort(function (a, b) {
+        if (a.score < b.score) {
+            return 1;
+        }
+        if (a.score > b.score) {
+            return -1;
+        }
+        return 0;
+    });
+
+    for (var i = 0; i < data.length; i++) {
+        data[i].id = i + 1;
     }
     return data;
 };
@@ -325,20 +337,6 @@ const firebaseConfig = {
     measurementId: "G-E5MVVLT4BP"
 };
 var database;
-
-function load(name) {
-    if (!database) {
-        return;
-    }
-    var ref = database.ref("base");
-    var postsRef = ref.child("raiting");
-    var newPostRef = postsRef.push();
-    newPostRef.set({
-        score: 23,
-        name: name,
-        email: "cool_gamer@gmail.com"
-    });
-}
 
 function getRating() {
     if (!database) {
@@ -363,10 +361,17 @@ function saveResult(name, email, score) {
     var postsRef = ref.child("raiting");
     var newPostRef = postsRef.push();
     newPostRef.set({
-        count: score,
+        score: score,
         name: name,
         email: email
     });
+
+    table.destroy();
+    rating.push({
+        score: score,
+        name: name
+    });
+    rating_loaded = false;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -391,8 +396,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         database = firebase.database();
-        // load("def");
-
 
     } catch (e) {
         console.error(e);
