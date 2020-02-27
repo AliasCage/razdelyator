@@ -46,7 +46,7 @@ var Logo = new Phaser.Class({
         //common img
         this.load.image('menu_on', 'btn/menu_on.png');
         this.load.image('bg', 'bg.png');
-        this.load.image('bg_tile', 'bg_tile.jpg');
+        this.load.image('bg_tile', 'bg_tile.png');
         this.load.image('con1', '/conveer/1.png');
     },
 
@@ -89,7 +89,6 @@ var Logo = new Phaser.Class({
             .on("pointerup", function () {
                 tutorial_btn.setScale(global_scale);
                 console.log("tutr");
-                debugger
                 this.scene.start('tutorial', {name: 'Move from Logo to Tutorial'});
             }, this)
             .on("pointerdown", function () {

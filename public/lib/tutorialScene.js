@@ -4,7 +4,7 @@ var Tutorial = new Phaser.Class({
 
     initialize:
 
-        function Raiting() {
+        function Tutorial() {
             Phaser.Scene.call(this, {key: 'tutorial'});
         },
 

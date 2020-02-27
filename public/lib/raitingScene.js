@@ -53,6 +53,25 @@ var Raiting = new Phaser.Class({
             .on("pointerup", function () {
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
+
+
+        debugger
+        if (player_score && player_score > 0) {
+            var loginDialog = CreateLoginDialog(this, {
+                x: midle_window,
+                y: window.innerHeight * 0.8,
+                title: 'Вы набрали ' + player_score + ' очков!',
+                username: 'username',
+                email: 'user@email.ru',
+            })
+                .on('login', function (username, email) {
+                    print.text += `${username}:${email}\n`;
+                    saveResult(username, email, player_score);
+                    player_score = 0;
+                    loginDialog.destroy();
+                })
+                .popUp(500).setDepth(10);
+        }
     },
 
     update: function () {
@@ -63,6 +82,89 @@ var Raiting = new Phaser.Class({
         }
     },
 });
+
+
+var CreateLoginDialog = function (scene, config, onSubmit) {
+    var username = GetValue(config, 'username', '');
+    var email = GetValue(config, 'email', '');
+    var title = GetValue(config, 'title', 'Welcome');
+    var x = GetValue(config, 'x', 0);
+    var y = GetValue(config, 'y', 0);
+    var width = GetValue(config, 'width', undefined);
+    var height = GetValue(config, 'height', undefined);
+
+    var background = scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, COLOR_PRIMARY);
+    var titleField = scene.add.text(0, 0, title).setColor(DARK);
+    var userNameField = scene.rexUI.add.label({
+        orientation: 'x',
+        background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
+        text: scene.rexUI.add.BBCodeText(0, 0, username, {
+            fixedWidth: 150,
+            fixedHeight: 36,
+            valign: 'center'
+        }).setColor(DARK),
+        space: {top: 5, bottom: 5, left: 5, right: 5, icon: 10,}
+    })
+        .setInteractive()
+        .on('pointerdown', function () {
+            var config = {
+                onTextChanged: function (textObject, text) {
+                    username = text;
+                    textObject.text = text;
+                }
+            };
+            scene.rexUI.edit(userNameField.getElement('text'), config);
+        });
+
+    var emailField = scene.rexUI.add.label({
+        orientation: 'x',
+        background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
+        text: scene.rexUI.add.BBCodeText(0, 0, email, {
+            fixedWidth: 150,
+            fixedHeight: 36,
+            valign: 'center'
+        }).setColor(DARK),
+        space: {top: 5, bottom: 5, left: 5, right: 5, icon: 10,}
+    })
+        .setInteractive()
+        .on('pointerdown', function () {
+            var config = {
+                type: 'email',
+                text: email,
+                onTextChanged: function (textObject, text) {
+                    email = text;
+                    textObject.text = email;
+                }
+            };
+            scene.rexUI.edit(emailField.getElement('text'), config);
+        });
+
+    var loginButton = scene.rexUI.add.label({
+        orientation: 'x',
+        background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, DARK),
+        text: scene.add.text(0, 0, 'Cохранить результат?').setColor(DARK),
+        space: {top: 8, bottom: 8, left: 8, right: 8}
+    })
+        .setInteractive()
+        .on('pointerdown', function () {
+            loginDialog.emit('login', username, email);
+        });
+
+    var loginDialog = scene.rexUI.add.sizer({
+        orientation: 'y',
+        x: x,
+        y: y,
+        width: width,
+        height: height,
+    })
+        .addBackground(background)
+        .add(titleField, 0, 'center', {top: 10, bottom: 10, left: 10, right: 10}, false)
+        .add(userNameField, 0, 'left', {bottom: 10, left: 10, right: 10}, true)
+        .add(emailField, 0, 'left', {bottom: 10, left: 10, right: 10}, true)
+        .add(loginButton, 0, 'center', {bottom: 10, left: 10, right: 10}, false)
+        .layout();
+    return loginDialog;
+};
 
 function createGridTable(game) {
 
@@ -289,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         database = firebase.database();
-        load("def");
+        // load("def");
 
 
     } catch (e) {
