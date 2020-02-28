@@ -169,7 +169,7 @@ var MainSc = new Phaser.Class({
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
 
         light_auto_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'auto_on')
-            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff,0xffffff,0xffffff,0xffffff).setAlpha(0.5);
+            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_auto_on.visible = false;
         this.tweens.add({
             targets: light_auto_on,
@@ -180,37 +180,37 @@ var MainSc = new Phaser.Class({
             repeat: -1,
             yoyo: true
         });
-        var auto_off = this.add.sprite(midle_window  - (bg_width / 3), window.innerHeight / 6, 'auto_off')
+        var auto_off = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'auto_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
-        auto_on = this.add.sprite(midle_window  - (bg_width / 3), window.innerHeight / 6, 'auto_on')
+        auto_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'auto_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", autoTrash, this);
         auto_on.visible = false;
 
 
-       /* light_clear_on = this.add.sprite( midle_window  + (bg_width / 3), window.innerHeight / 6, 'clear_on')
-            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff,0xffffff,0xffffff,0xffffff);
-        light_clear_on.visible = false;
-        this.tweens.add({
-            targets: light_clear_on,
-            scaleX: 0.55,
-            scaleY: 0.55,
-            ease: 'Linear',
-            duration: 800,
-            repeat: -1,
-            yoyo: true
-        });*/
-        var clear_off = this.add.sprite(midle_window  + (bg_width / 3), window.innerHeight / 6, 'clear_off')
+        /* light_clear_on = this.add.sprite( midle_window  + (bg_width / 3), window.innerHeight / 6, 'clear_on')
+             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff,0xffffff,0xffffff,0xffffff);
+         light_clear_on.visible = false;
+         this.tweens.add({
+             targets: light_clear_on,
+             scaleX: 0.55,
+             scaleY: 0.55,
+             ease: 'Linear',
+             duration: 800,
+             repeat: -1,
+             yoyo: true
+         });*/
+        var clear_off = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 6, 'clear_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
-        clear_on = this.add.sprite(midle_window  + (bg_width / 3), window.innerHeight / 6, 'clear_on')
+        clear_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 6, 'clear_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", clearConveer, this);
         clear_on.visible = false;
 
 
-        light_one_on = this.add.sprite( midle_window  - (bg_width / 3), window.innerHeight / 3, 'one_on')
-            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff,0xffffff,0xffffff,0xffffff).setAlpha(0.5);
+        light_one_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'one_on')
+            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_one_on.visible = false;
         this.tweens.add({
-            targets:  light_one_on,
+            targets: light_one_on,
             scaleX: 0.65,
             scaleY: 0.65,
             ease: 'Linear',
@@ -218,15 +218,15 @@ var MainSc = new Phaser.Class({
             repeat: -1,
             yoyo: true
         });
-        var one_off = this.add.sprite(midle_window  - (bg_width / 3), window.innerHeight / 3, 'one_off')
+        var one_off = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'one_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
-        one_on = this.add.sprite(midle_window  - (bg_width / 3), window.innerHeight / 3, 'one_on')
+        one_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'one_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", oneTrash, this);
         one_on.visible = false;
 
 
-        light_slow_on = this.add.sprite( midle_window  + (bg_width / 3), window.innerHeight / 3, 'slow_on')
-            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff,0xffffff,0xffffff,0xffffff).setAlpha(0.5);
+        light_slow_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'slow_on')
+            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_slow_on.visible = false;
         this.tweens.add({
             targets: light_slow_on,
@@ -237,9 +237,9 @@ var MainSc = new Phaser.Class({
             repeat: -1,
             yoyo: true
         });
-        var slow_off = this.add.sprite(midle_window  + (bg_width / 3), window.innerHeight / 3, 'slow_off')
+        var slow_off = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'slow_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
-        slow_on = this.add.sprite(midle_window  + (bg_width / 3), window.innerHeight / 3, 'slow_on')
+        slow_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'slow_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", slowTrash, this);
         slow_on.visible = false;
 
@@ -302,14 +302,25 @@ var MainSc = new Phaser.Class({
 
         this.input.on('dragend', function (pointer, gameObject, dragX, dragY) {
             activeGroup.remove(gameObject);
+            if (gameObject.y < 0) {
+                gameObject.setPosition(gameObject.x, 1);
+            }
             setInactive(gameObject, this);
             gameObject.body.moves = true;
             gameObject.body.enable = true;
             if (gameObject.x < (midle_window - conveer_width / 8)) {
-                gameObject.setVelocity(200, -300);
+                if (gameObject.y < 100) {
+                    gameObject.setVelocity(200, 50);
+                } else {
+                    gameObject.setVelocity(200, -300);
+                }
                 gameObject.setAngularVelocity(-40);
             } else if (gameObject.x > (midle_window + conveer_width / 8)) {
-                gameObject.setVelocity(-200, -300);
+                if (gameObject.y < 100) {
+                    gameObject.setVelocity(-200, 50);
+                } else {
+                    gameObject.setVelocity(-200, -300);
+                }
                 gameObject.setAngularVelocity(40);
             } else {
                 gameObject.setVelocityY(speedTrash + 150);
@@ -394,12 +405,11 @@ var MainSc = new Phaser.Class({
     update: function () {
         var y = false;
         if (player_score > 5) {
-            if(this.time.now - scoreDifficulty > intervalScoreDiff){
+            if (this.time.now - scoreDifficulty > intervalScoreDiff) {
                 speedTrash = speedTrash + 2;
-                if(intervalCreateTrash > 1000 ){
+                if (intervalCreateTrash > 1000) {
                     intervalCreateTrash = intervalCreateTrash - 200;
-                }
-                else if(intervalCreateTrash  > 400){
+                } else if (intervalCreateTrash > 400) {
                     intervalCreateTrash = intervalCreateTrash - 100;
                 }
                 scoreDifficulty = this.time.now;
@@ -441,7 +451,7 @@ var MainSc = new Phaser.Class({
             this.scene.switch('raiting', {name: 'Move from Main to Raiting'});
         }
 
-        var interval = intervalCreateTrash  + (300 + Math.floor((1500 - 300) * Math.random()));
+        var interval = intervalCreateTrash + (300 + Math.floor((1500 - 300) * Math.random()));
         if (slow_trash) {
             interval = interval * 2;
         }
@@ -514,7 +524,7 @@ function toxicality(accumulator) {
 
 function darkness() {
     isNeedDarknes = false;
-    var darknes = this.add.sprite(midle_window, 0, 'darknes').setOrigin(0.5, 0).setScale(1/global_scale).setDepth(11);
+    var darknes = this.add.sprite(midle_window, 0, 'darknes').setOrigin(0.5, 0).setScale(1 / global_scale).setDepth(11);
     this.tweens.add({
         targets: darknes,
         alpha: 0,
