@@ -448,7 +448,7 @@ var MainSc = new Phaser.Class({
             }
 
             isPause = true;
-            this.scene.switch('raiting', {name: 'Move from Main to Raiting'});
+            this.scene.start('raiting', {name: 'Move from Main to Raiting'});
         }
 
         var interval = intervalCreateTrash + (300 + Math.floor((1500 - 300) * Math.random()));

@@ -155,7 +155,7 @@ var Logo = new Phaser.Class({
                     start_btn.destroy();
                     tutorial_btn.destroy();
                     raiting_btn.destroy();
-                    this.scene.switch('mainSc', {name: 'Move from Logo to Main'});
+                    this.scene.start('mainSc', {name: 'Move from Logo to Main'});
                 }
             }, this)
             .on("pointerdown", function () {
