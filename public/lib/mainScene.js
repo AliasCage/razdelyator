@@ -59,6 +59,7 @@ const timerSlow = 45000;
 
 
 const batary_case_speed = 4500;
+var batary_counter = -1;
 
 var MainSc = new Phaser.Class({
 
@@ -374,16 +375,7 @@ var MainSc = new Phaser.Class({
         });
 
         var coliderActiveGroup = function (s1, s2) {
-            if (!auto_trash) {
-                if (!s2.body.allowdraggable && !s2.active) {
-                    activeGroup.remove(s1);
-                    setInactive(s1, this);
-                    s1.body.moves = false;
-                    if (s1.type === 'acc') {
-                        toxicality(s2);
-                    }
-                }
-            } else if (auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue') {
+            if (!auto_trash || auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue') {
                 if (!s2.body.allowdraggable && !s2.active) {
                     activeGroup.remove(s1);
                     setInactive(s1, this);
@@ -393,8 +385,6 @@ var MainSc = new Phaser.Class({
                     }
                 }
             }
-
-
         };
         this.physics.add.overlap(activeGroup, group, coliderActiveGroup);
         this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup);
@@ -415,7 +405,6 @@ var MainSc = new Phaser.Class({
                 scoreDifficulty = this.time.now;
             }
         }
-
 
         text_score.text = player_score;
         if (Array.isArray(destroyGroup) && destroyGroup.length) {
@@ -593,16 +582,19 @@ function createAndDropObject() {
             trashType = 'grey';
         }
     } else {
-        if (number > 0.8) {
+        if (number > 0.8 && batary_counter < 0) {
             trash = acc[Math.floor(Math.random() * acc.length)];
             trashType = 'acc';
             toxic = true;
+            batary_counter = 1;
         } else if (number > 0.4) {
             trash = blue[Math.floor(Math.random() * blue.length)];
             trashType = 'blue';
+            batary_counter--;
         } else {
             trash = grey[Math.floor(Math.random() * grey.length)];
             trashType = 'grey';
+            batary_counter--;
         }
     }
     var diff = getRandomInt(-conveer_width / 8, conveer_width / 8);
