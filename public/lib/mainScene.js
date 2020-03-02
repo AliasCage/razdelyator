@@ -49,7 +49,7 @@ var intervalCreateTrash;
 
 var scoreDifficulty;
 
-const intervalScoreDiff = 2000;
+const intervalScoreDiff = 2200;
 
 
 const timerClear = 90000;
@@ -375,14 +375,13 @@ var MainSc = new Phaser.Class({
     },
 
     update: function () {
-        var y = false;
         if (player_score > 5) {
             if (this.time.now - scoreDifficulty > intervalScoreDiff) {
                 speedTrash = speedTrash + 2;
                 if (intervalCreateTrash > 1000) {
-                    intervalCreateTrash = intervalCreateTrash - 200;
-                } else if (intervalCreateTrash > 400) {
                     intervalCreateTrash = intervalCreateTrash - 100;
+                } else if (intervalCreateTrash > 200) {
+                    intervalCreateTrash = intervalCreateTrash - 20;
                 }
                 scoreDifficulty = this.time.now;
             }
