@@ -75,6 +75,7 @@ var MainSc = new Phaser.Class({
         console.log(data.name);
         player_score = 0;
 
+
     },
 
 
@@ -95,25 +96,6 @@ var MainSc = new Phaser.Class({
     create: function () {
         cursors = this.input.keyboard.createCursorKeys();
         this.physics.world.checkCollision.up = false;
-
-        now = this.time.now;
-
-        scoreDifficulty = this.time.now;
-        intervalCreateTrash = 3000;
-        speedTrash = 59;
-
-        one_type = 0;
-        auto_type = 0;
-        slow_trash = false;
-        one_trash = false;
-        auto_trash = false;
-        now = this.time.now;
-        now1 = this.time.now;
-        now2 = this.time.now;
-        now3 = this.time.now;
-        now4 = this.time.now;
-
-
         this.anims.create({
             key: 'conveer',
             frames: [

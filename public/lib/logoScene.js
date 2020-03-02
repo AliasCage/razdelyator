@@ -8,7 +8,7 @@ const midle_window = window.innerWidth / 2;
 var global_scale;
 var bg_width;
 var conveer_width;
-
+var isInputUserMail = false;
 var Logo = new Phaser.Class({
 
     Extends: Phaser.Scene,
@@ -155,6 +155,28 @@ var Logo = new Phaser.Class({
                     start_btn.destroy();
                     tutorial_btn.destroy();
                     raiting_btn.destroy();
+                    if(isInputUserMail){
+                        now1 = this.time.now - timerClear;
+                        now2 = this.time.now - timerAuto;
+                        now3 = this.time.now - timerAuto;
+                        now4 = this.time.now - timerAuto;
+                    }else{
+                        now1 = this.time.now;
+                        now2 = this.time.now;
+                        now3 = this.time.now;
+                        now4 = this.time.now;
+                    }
+                    now = this.time.now;
+                    slow_trash = false;
+                    one_trash = false;
+                    auto_trash = false;
+                    scoreDifficulty = this.time.now;
+                    intervalCreateTrash = 3000;
+                    speedTrash = 59;
+
+                    one_type = 0;
+                    auto_type = 0;
+
                     this.scene.start('mainSc', {name: 'Move from Logo to Main'});
                 }
             }, this)
