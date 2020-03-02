@@ -49,7 +49,7 @@ var intervalCreateTrash;
 
 var scoreDifficulty;
 
-const intervalScoreDiff = 2000;
+const intervalScoreDiff = 2200;
 
 
 const timerClear = 90000;
@@ -75,6 +75,7 @@ var MainSc = new Phaser.Class({
         console.log(data.name);
         player_score = 0;
 
+
     },
 
 
@@ -95,25 +96,6 @@ var MainSc = new Phaser.Class({
     create: function () {
         cursors = this.input.keyboard.createCursorKeys();
         this.physics.world.checkCollision.up = false;
-
-        now = this.time.now;
-
-        scoreDifficulty = this.time.now;
-        intervalCreateTrash = 3000;
-        speedTrash = 59;
-
-        one_type = 0;
-        auto_type = 0;
-        slow_trash = false;
-        one_trash = false;
-        auto_trash = false;
-        now = this.time.now;
-        now1 = this.time.now;
-        now2 = this.time.now;
-        now3 = this.time.now;
-        now4 = this.time.now;
-
-
         this.anims.create({
             key: 'conveer',
             frames: [
@@ -393,14 +375,13 @@ var MainSc = new Phaser.Class({
     },
 
     update: function () {
-        var y = false;
         if (player_score > 5) {
             if (this.time.now - scoreDifficulty > intervalScoreDiff) {
                 speedTrash = speedTrash + 2;
                 if (intervalCreateTrash > 1000) {
-                    intervalCreateTrash = intervalCreateTrash - 200;
-                } else if (intervalCreateTrash > 400) {
                     intervalCreateTrash = intervalCreateTrash - 100;
+                } else if (intervalCreateTrash > 200) {
+                    intervalCreateTrash = intervalCreateTrash - 20;
                 }
                 scoreDifficulty = this.time.now;
             }

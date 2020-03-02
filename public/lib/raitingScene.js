@@ -353,6 +353,7 @@ function saveResult(name, email, score) {
     if (!database) {
         return;
     }
+    isInputUserMail = true;
     var ref = database.ref("base");
     var postsRef = ref.child("raiting");
     var newPostRef = postsRef.push();
