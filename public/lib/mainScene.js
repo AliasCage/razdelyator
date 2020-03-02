@@ -406,6 +406,12 @@ var MainSc = new Phaser.Class({
             }
         }
 
+        //На экране очень много мусора, но экран не засорён
+        if ((toxicGroup.getChildren().length + group.getChildren().length) > 150) {
+            clearGroup(group);
+            switchToRaiting = true;
+            isPause = true;
+        }
         text_score.text = player_score;
         if (Array.isArray(destroyGroup) && destroyGroup.length) {
             var shift = destroyGroup.shift();
