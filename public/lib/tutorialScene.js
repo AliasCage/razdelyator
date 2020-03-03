@@ -27,8 +27,6 @@ var Tutorial = new Phaser.Class({
             progressBox.destroy();
             groundBar.destroy();
         });
-
-        this.load.setBaseURL('img');
     },
 
     create: function () {

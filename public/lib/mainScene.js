@@ -60,6 +60,7 @@ const timerSlow = 45000;
 
 const batary_case_speed = 4500;
 var batary_counter = -1;
+var music;
 
 var MainSc = new Phaser.Class({
 
@@ -75,7 +76,27 @@ var MainSc = new Phaser.Class({
         console.log(data.name);
         player_score = 0;
 
+        if (isInputUserMail) {
+            now1 = this.time.now - timerClear;
+            now2 = this.time.now - timerAuto;
+            now3 = this.time.now - timerAuto;
+            now4 = this.time.now - timerAuto;
+        } else {
+            now1 = this.time.now;
+            now2 = this.time.now;
+            now3 = this.time.now;
+            now4 = this.time.now;
+        }
+        now = this.time.now;
+        slow_trash = false;
+        one_trash = false;
+        auto_trash = false;
+        scoreDifficulty = this.time.now;
+        intervalCreateTrash = 3000;
+        speedTrash = 59;
 
+        one_type = 0;
+        auto_type = 0;
     },
 
 
@@ -230,6 +251,7 @@ var MainSc = new Phaser.Class({
             .setOrigin(0, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
                 isPause = true;
+                music.stop();
                 this.scene.start('logo', {name: 'Move from Main to Logo'});
             }, this);
 
@@ -372,6 +394,9 @@ var MainSc = new Phaser.Class({
         this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup);
         this.physics.add.overlap(activeGroup, blue_bak, destoyBlueTrash, null, this);
         this.physics.add.overlap(activeGroup, grey_bak, destoyGreyTrash, null, this);
+
+
+        music.play();
     },
 
     update: function () {
@@ -424,6 +449,7 @@ var MainSc = new Phaser.Class({
             }
 
             isPause = true;
+            music.stop();
             this.scene.start('raiting', {name: 'Move from Main to Raiting'});
         }
 

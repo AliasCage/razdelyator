@@ -38,6 +38,12 @@ var Logo = new Phaser.Class({
             groundBar.destroy();
         });
 
+
+        this.load.audio('theme', [
+            'audio/DMX.ogg',
+            'audio/DMX.mp3'
+        ]);
+
         this.load.setBaseURL('img');
         this.load.image('intro', 'logo.png');
         this.load.image('raiting', 'raiting.png');
@@ -134,6 +140,11 @@ var Logo = new Phaser.Class({
     },
 
     create: function () {
+
+        if (!music) {
+            music = this.sound.add('theme');
+        }
+
         this.add.tileSprite(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
 
         var intro = this.add.sprite(midle_window, 0, 'intro').setOrigin(0.5, 0).setDepth(10);
@@ -155,28 +166,6 @@ var Logo = new Phaser.Class({
                     start_btn.destroy();
                     tutorial_btn.destroy();
                     raiting_btn.destroy();
-                    if(isInputUserMail){
-                        now1 = this.time.now - timerClear;
-                        now2 = this.time.now - timerAuto;
-                        now3 = this.time.now - timerAuto;
-                        now4 = this.time.now - timerAuto;
-                    }else{
-                        now1 = this.time.now;
-                        now2 = this.time.now;
-                        now3 = this.time.now;
-                        now4 = this.time.now;
-                    }
-                    now = this.time.now;
-                    slow_trash = false;
-                    one_trash = false;
-                    auto_trash = false;
-                    scoreDifficulty = this.time.now;
-                    intervalCreateTrash = 3000;
-                    speedTrash = 59;
-
-                    one_type = 0;
-                    auto_type = 0;
-
                     this.scene.start('mainSc', {name: 'Move from Logo to Main'});
                 }
             }, this)
