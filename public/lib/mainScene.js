@@ -1,3 +1,5 @@
+// import Coin from "./coin";
+
 var isPause = true;
 var isNeedDarknes = false;
 var switchToRaiting = false;
@@ -608,20 +610,8 @@ function clearGroup(g) {
 }
 
 var createCoin = function (x, y, points, scene) {
-    player_score += points;
-    var coin = scene.add.sprite(x, y, '+' + points).setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20);
-    scene.tweens.add({
-        targets: coin,
-        x: text_score.x,
-        y: text_score.y,
-        scaleX: 0.10,
-        scaleY: 0.10,
-        ease: 'Linear',
-        duration: 500,
-        delay: 300,
-        onComplete: function () {
-            coin.destroy();
-        },
+    new Coin(scene, x, y, points, function () {
+        player_score += points;
     });
 };
 
