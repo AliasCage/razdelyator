@@ -189,9 +189,9 @@ function createGridTable(game) {
         header: createRowItem(game,
             {
                 background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
-                id: game.add.text(0, 0, 'Место', {font: '22pt Ubuntu'}).setColor(DARK),
-                score: game.add.text(0, 0, 'Очки', {font: '22pt Ubuntu'}).setColor(DARK),
-                name: game.add.text(0, 0, 'Никнейм', {font: '22pt Ubuntu'}).setColor(DARK),
+                id: game.add.text(0, 0, 'Место', {font: '15pt Ubuntu'}).setColor(DARK),
+                score: game.add.text(0, 0, 'Очки', {font: '15pt Ubuntu'}).setColor(DARK),
+                name: game.add.text(0, 0, 'Никнейм', {font: '15pt Ubuntu'}).setColor(DARK),
                 height: 30,
             }
         ),
@@ -251,15 +251,15 @@ var createRowItem = function (scene, config) {
     }
     var id = GetValue(config, 'id', undefined);
     if (id === undefined) {
-        id = scene.add.text(0, 0, id, {font: '2vh  Ubuntu'}).setColor(DARK);
+        id = scene.add.text(0, 0, id, {font: '15pt Ubuntu'}).setColor(DARK);
     }
     var score = GetValue(config, 'score', undefined);
     if (score === undefined) {
-        score = scene.add.text(0, 0, score, {font: '2vh Ubuntu'}).setColor(DARK);
+        score = scene.add.text(0, 0, score, {font: '15pt Ubuntu'}).setColor(DARK);
     }
     var name = GetValue(config, 'name', undefined);
     if (name === undefined) {
-        name = scene.add.text(0, 0, name, {font: '2vh  Ubuntu'}).setColor(DARK);
+        name = scene.add.text(0, 0, name, {font: '15pt Ubuntu'}).setColor(DARK);
     }
     return scene.rexUI.add.sizer({
         width: GetValue(config, 'width', undefined),
