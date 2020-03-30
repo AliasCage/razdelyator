@@ -178,7 +178,6 @@ var Logo = new Phaser.Class({
                         now3 = this.time.now;
                         now4 = this.time.now;
                     }
-                    isPause = false;
                     intro.destroy();
                     start_btn.destroy();
                     tutorial_btn.destroy();

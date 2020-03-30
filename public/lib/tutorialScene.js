@@ -48,7 +48,6 @@ var Tutorial = new Phaser.Class({
                     now4 = this.time.now;
                 }
                 tut5.destroy();
-                isPause = false;
                 this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
             }, this);
         var tut4 = this.add.sprite(midle_window, 0, 'tut4')

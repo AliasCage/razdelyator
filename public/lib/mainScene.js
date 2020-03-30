@@ -55,6 +55,7 @@ const timerSlow = 45000;
 
 const batary_case_speed = 4500;
 var batary_counter = -1;
+var dialog;
 
 
 var MainSc = new Phaser.Class({
@@ -64,13 +65,11 @@ var MainSc = new Phaser.Class({
     initialize:
         function MainSc() {
             Phaser.Scene.call(this, {key: 'mainSc'});
-
         },
 
     init: function (data) {
         console.log(data.name);
         player_score = 0;
-
 
         now = this.time.now;
         slow_trash = false;
@@ -98,6 +97,8 @@ var MainSc = new Phaser.Class({
             progressBox.destroy();
             groundBar.destroy();
         });
+
+        this.load.scenePlugin('rexuiplugin', 'lib/rexuiplugin.min.js', 'rexUI', 'rexUI');
     },
 
     create: function () {
@@ -165,38 +166,22 @@ var MainSc = new Phaser.Class({
             targets: light_auto_on,
             scaleX: gsSubstrat,
             scaleY: gsSubstrat,
-            scaleY: gsSubstrat,
             ease: 'Linear',
             duration: 900,
             repeat: -1,
             yoyo: true
         });
-        var auto_off = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'auto_off')
+        this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'auto_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
         auto_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'auto_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", autoTrash, this);
         auto_on.visible = false;
 
-
-        /* light_clear_on = this.add.sprite( midle_window  + (bg_width / 3), window.innerHeight / 6, 'clear_on')
-             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff,0xffffff,0xffffff,0xffffff);
-         light_clear_on.visible = false;
-         this.tweens.add({
-             targets: light_clear_on,
-             scaleX: 0.55,
-             scaleY: 0.55,
-             ease: 'Linear',
-             duration: 800,
-             repeat: -1,
-             yoyo: true
-         });*/
-        var clear_off = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 6, 'clear_off')
+        this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 6, 'clear_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
         clear_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 6, 'clear_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", clearConveer, this);
         clear_on.visible = false;
-
-
 
         light_one_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
@@ -210,7 +195,7 @@ var MainSc = new Phaser.Class({
             repeat: -1,
             yoyo: true
         });
-        var one_off = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'one_off')
+        this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'one_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
         one_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'one_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", oneTrash, this);
@@ -238,12 +223,13 @@ var MainSc = new Phaser.Class({
         this.add.sprite(midle_window + side_middle, window.innerHeight * 0.875, 'menu_on')
             .setOrigin(0, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
-                isPause = true;
-                this.scene.start('logo', {name: 'Move from Main to Logo'});
+                if (!dialog) {
+                    createDialog.call(this);
+                }
             }, this);
 
         text_score = this.add.text(midle_window - side_middle * 1.6, window.innerHeight * 0.9, player_score, {
-            font: "3vw Ubuntu",
+            font: "4vw Ubuntu",
             fill: "#fff",
 
         }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true);
@@ -383,10 +369,13 @@ var MainSc = new Phaser.Class({
         this.physics.add.overlap(activeGroup, blue_bak, destoyBlueTrash, null, this);
         this.physics.add.overlap(activeGroup, grey_bak, destoyGreyTrash, null, this);
 
-
+        isPause = false;
     },
 
     update: function () {
+        if (isPause) {
+            return
+        }
         if (player_score > 5) {
             if (this.time.now - scoreDifficulty > intervalScoreDiff) {
                 speedTrash = speedTrash + 2;
@@ -443,7 +432,7 @@ var MainSc = new Phaser.Class({
         if (slow_trash) {
             interval = interval * 2;
         }
-        if (!isPause && this.time.now - now > interval) {
+        if (this.time.now - now > interval) {
             now = this.time.now;
             createAndDropObject.call(this);
         }
@@ -457,13 +446,13 @@ var MainSc = new Phaser.Class({
             });
         }
         //таймеры для скилов
-        if (!isPause && this.time.now - now1 > timerClear) {
+        if (this.time.now - now1 > timerClear) {
             clear_on.visible = true;
         }
-        if (!isPause && this.time.now - now2 > timerAuto && !auto_trash) {
+        if (this.time.now - now2 > timerAuto && !auto_trash) {
             auto_on.visible = true;
             now2 = this.time.now;
-        } else if (!isPause && this.time.now - now2 > timerAuto / 2 && auto_trash) {
+        } else if (this.time.now - now2 > timerAuto / 2 && auto_trash) {
             auto_trash = false;
             now2 = this.time.now;
             light_auto_on.visible = false;
@@ -495,6 +484,79 @@ var MainSc = new Phaser.Class({
 
     },
 });
+
+
+function createDialog() {
+    dialog = this.rexUI.add.dialog({
+        x: midle_window,
+        y: window.innerHeight * 0.5,
+
+        background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, COLOR_PRIMARY).setStrokeStyle(2, INACTIVE_COLOR),
+        content: this.add.text(0, 0, 'Выйти в меню?', {
+            font: '3vw Ubuntu'
+        }).setColor(DARK),
+        actions: [
+            createLabel(this, 'Да'),
+            createLabel(this, 'Нет')
+        ],
+
+        space: {
+            title: 25,
+            content: 25,
+            action: 15,
+
+            left: 20,
+            right: 20,
+            top: 20,
+            bottom: 20,
+        },
+
+        align: {
+            actions: 'center', // 'center'|'left'|'right'
+        },
+
+        expand: {
+            content: false, // Content is a pure text object
+        }
+    })
+        .on('button.click', function (button, groupName, index) {
+            if (index === 0) {
+                isPause = true;
+                this.scene.start('logo', {name: 'Move from Main to Logo'});
+            }
+            dialog.destroy();
+            dialog = undefined;
+        }, this)
+        .on('button.over', function (button, groupName, index) {
+            button.getElement('background').setStrokeStyle(1, INACTIVE_COLOR);
+        })
+        .on('button.out', function (button, groupName, index) {
+            button.getElement('background').setStrokeStyle();
+        })
+        .layout()
+        .popUp(500)
+        .setDepth(2);
+}
+
+var createLabel = function (scene, text) {
+    return scene.rexUI.add.label({
+        // width: 40,
+        // height: 40,
+
+        background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK),
+
+        text: scene.add.text(0, 0, text, {
+            font: '3vw Ubuntu'
+        }).setColor(DARK),
+
+        space: {
+            left: 10,
+            right: 10,
+            top: 10,
+            bottom: 10
+        }
+    });
+};
 
 function toxicality(accumulator) {
     accumulator.setTint(TOXIC_COLOR, TOXIC_COLOR, TOXIC_COLOR, TOXIC_COLOR);
