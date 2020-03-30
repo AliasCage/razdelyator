@@ -158,7 +158,7 @@ var MainSc = new Phaser.Class({
 
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
 
-        light_auto_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'substrat')
+        light_auto_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_auto_on.visible = false;
         this.tweens.add({
@@ -170,9 +170,9 @@ var MainSc = new Phaser.Class({
             repeat: -1,
             yoyo: true
         });
-        var auto_off = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'auto_off')
+        var auto_off = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'auto_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
-        auto_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'auto_on')
+        auto_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'auto_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", autoTrash, this);
         auto_on.visible = false;
 
@@ -196,7 +196,7 @@ var MainSc = new Phaser.Class({
         clear_on.visible = false;
 
 
-        light_one_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'substrat')
+        light_one_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_one_on.visible = false;
         this.tweens.add({
@@ -208,14 +208,14 @@ var MainSc = new Phaser.Class({
             repeat: -1,
             yoyo: true
         });
-        var one_off = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'one_off')
+        var one_off = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'one_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
-        one_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'one_on')
+        one_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'one_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", oneTrash, this);
         one_on.visible = false;
 
 
-        light_slow_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'substrat')
+        light_slow_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_slow_on.visible = false;
         this.tweens.add({
@@ -227,9 +227,9 @@ var MainSc = new Phaser.Class({
             repeat: -1,
             yoyo: true
         });
-        var slow_off = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'slow_off')
+        var slow_off = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'slow_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
-        slow_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'slow_on')
+        slow_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'slow_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", slowTrash, this);
         slow_on.visible = false;
 
