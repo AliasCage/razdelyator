@@ -50,17 +50,6 @@ var Raiting = new Phaser.Class({
         this.add.sprite(midle_window + side_middle, window.innerHeight * 0.875, 'menu_on')
             .setOrigin(0, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
-                if (isInputUserMail) {
-                    now1 = this.time.now - timerClear;
-                    now2 = this.time.now - timerAuto;
-                    now3 = this.time.now - timerAuto;
-                    now4 = this.time.now - timerAuto;
-                } else {
-                    now1 = this.time.now;
-                    now2 = this.time.now;
-                    now3 = this.time.now;
-                    now4 = this.time.now;
-                }
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
 

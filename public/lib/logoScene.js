@@ -167,6 +167,17 @@ var Logo = new Phaser.Class({
             .on("pointerup", function () {
                 start_btn.setScale(global_scale);
                 if (isPause) {
+                    if (isInputUserMail) {
+                        now1 = this.time.now - timerClear;
+                        now2 = this.time.now - timerAuto;
+                        now3 = this.time.now - timerAuto;
+                        now4 = this.time.now - timerAuto;
+                    } else {
+                        now1 = this.time.now;
+                        now2 = this.time.now;
+                        now3 = this.time.now;
+                        now4 = this.time.now;
+                    }
                     isPause = false;
                     intro.destroy();
                     start_btn.destroy();

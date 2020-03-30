@@ -36,6 +36,17 @@ var Tutorial = new Phaser.Class({
         var tut5 = this.add.sprite(midle_window, 0, 'tut5')
             .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
+                if (isInputUserMail) {
+                    now1 = this.time.now - timerClear;
+                    now2 = this.time.now - timerAuto;
+                    now3 = this.time.now - timerAuto;
+                    now4 = this.time.now - timerAuto;
+                } else {
+                    now1 = this.time.now;
+                    now2 = this.time.now;
+                    now3 = this.time.now;
+                    now4 = this.time.now;
+                }
                 tut5.destroy();
                 isPause = false;
                 this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
