@@ -90,15 +90,15 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     var height = GetValue(config, 'height', undefined);
 
     var background = scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, COLOR_PRIMARY);
-    var titleField = scene.add.text(0, 0, title,  {font: '3vh Ubuntu'}).setColor(DARK);
+    var titleField = scene.add.text(0, 0, title,  {font: '22pt Ubuntu'}).setColor(DARK);
     var userNameField = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
         text: scene.rexUI.add.BBCodeText(0, 0, username,{
-            fixedWidth: 150,
+            fixedWidth: 200,
             fixedHeight: 36,
             valign: 'center'
-        }).setColor(DARK).setFont('Ubuntu').setFontSize(40*global_scale),
+        }).setColor(DARK).setFont('22pt Ubuntu'),
 
         space: {top: 5, bottom: 5, left: 5, right: 5, icon: 10,}
     })
@@ -117,10 +117,10 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
         text: scene.rexUI.add.BBCodeText(0, 0, email, {
-            fixedWidth: 150,
+            fixedWidth: 200,
             fixedHeight: 36,
             valign: 'center'
-        }).setColor(DARK).setFont('Ubuntu').setFontSize(40*global_scale),
+        }).setColor(DARK).setFont('22pt Ubuntu'),
 
         space: {top: 5, bottom: 5, left: 5, right: 5, icon: 10,}
     })
@@ -141,7 +141,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, DARK),
         text: scene.add.text(0, 0, 'Cохранить результат?',{
-            font: '3vh Ubuntu'}).setColor(DARK),
+            font: '22pt Ubuntu'}).setColor(DARK),
         space: {top: 8, bottom: 8, left: 8, right: 8}
     })
         .setInteractive()
@@ -189,10 +189,10 @@ function createGridTable(game) {
         header: createRowItem(game,
             {
                 background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
-                id: game.add.text(0, 0, 'Место', {font: '2vh Ubuntu'}).setColor(DARK),
-                score: game.add.text(0, 0, 'Очки', {font: '2vh Ubuntu'}).setColor(DARK),
-                name: game.add.text(0, 0, 'Никнейм', {font: '2vh Ubuntu'}).setColor(DARK),
-                height: 30
+                id: game.add.text(0, 0, 'Место', {font: '22pt Ubuntu'}).setColor(DARK),
+                score: game.add.text(0, 0, 'Очки', {font: '22pt Ubuntu'}).setColor(DARK),
+                name: game.add.text(0, 0, 'Никнейм', {font: '22pt Ubuntu'}).setColor(DARK),
+                height: 30,
             }
         ),
 
@@ -251,15 +251,15 @@ var createRowItem = function (scene, config) {
     }
     var id = GetValue(config, 'id', undefined);
     if (id === undefined) {
-        id = scene.add.text(0, 0, id).setColor(DARK);
+        id = scene.add.text(0, 0, id, {font: '2vh  Ubuntu'}).setColor(DARK);
     }
     var score = GetValue(config, 'score', undefined);
     if (score === undefined) {
-        score = scene.add.text(0, 0, score).setColor(DARK);
+        score = scene.add.text(0, 0, score, {font: '2vh Ubuntu'}).setColor(DARK);
     }
     var name = GetValue(config, 'name', undefined);
     if (name === undefined) {
-        name = scene.add.text(0, 0, name).setColor(DARK);
+        name = scene.add.text(0, 0, name, {font: '2vh  Ubuntu'}).setColor(DARK);
     }
     return scene.rexUI.add.sizer({
         width: GetValue(config, 'width', undefined),

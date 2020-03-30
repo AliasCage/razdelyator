@@ -494,7 +494,7 @@ function createDialog() {
 
         background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, COLOR_PRIMARY).setStrokeStyle(2, INACTIVE_COLOR),
         content: this.add.text(0, 0, 'Выйти в меню?', {
-            font: '6vh Ubuntu'
+            font: '32pt Ubuntu'
         }).setColor(DARK),
         actions: [
             createLabel(this, 'Да'),
@@ -544,7 +544,7 @@ var createLabel = function (scene, text) {
         background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK),
 
         text: scene.add.text(0, 0, text, {
-            font: '6vh Ubuntu'
+            font: '32pt Ubuntu'
         }).setColor(DARK),
 
         space: {
