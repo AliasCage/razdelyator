@@ -2,12 +2,7 @@ var isPause = true;
 var isNeedDarknes = false;
 var switchToRaiting = false;
 var cursors;
-var now;
 
-var now1;
-var now2;
-var now3;
-var now4;
 var nowDifficulty;
 
 var player_score = 0;
@@ -60,33 +55,23 @@ const timerSlow = 45000;
 
 const batary_case_speed = 4500;
 var batary_counter = -1;
-var music;
+
 
 var MainSc = new Phaser.Class({
 
     Extends: Phaser.Scene,
 
     initialize:
-
         function MainSc() {
             Phaser.Scene.call(this, {key: 'mainSc'});
+
         },
 
     init: function (data) {
         console.log(data.name);
         player_score = 0;
 
-        if (isInputUserMail) {
-            now1 = this.time.now - timerClear;
-            now2 = this.time.now - timerAuto;
-            now3 = this.time.now - timerAuto;
-            now4 = this.time.now - timerAuto;
-        } else {
-            now1 = this.time.now;
-            now2 = this.time.now;
-            now3 = this.time.now;
-            now4 = this.time.now;
-        }
+
         now = this.time.now;
         slow_trash = false;
         one_trash = false;
@@ -101,6 +86,7 @@ var MainSc = new Phaser.Class({
 
 
     preload: function () {
+
         var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, window.innerWidth, window.innerHeight);
         var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7).fillRect(midle_window - 160, 270, 320, 50);
         var progressBar = this.add.graphics();
@@ -172,7 +158,7 @@ var MainSc = new Phaser.Class({
 
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
 
-        light_auto_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'auto_on')
+        light_auto_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_auto_on.visible = false;
         this.tweens.add({
@@ -210,7 +196,7 @@ var MainSc = new Phaser.Class({
         clear_on.visible = false;
 
 
-        light_one_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'one_on')
+        light_one_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_one_on.visible = false;
         this.tweens.add({
@@ -229,7 +215,7 @@ var MainSc = new Phaser.Class({
         one_on.visible = false;
 
 
-        light_slow_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'slow_on')
+        light_slow_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_slow_on.visible = false;
         this.tweens.add({
@@ -251,7 +237,17 @@ var MainSc = new Phaser.Class({
             .setOrigin(0, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
                 isPause = true;
-                music.stop();
+                if (isInputUserMail) {
+                    now1 = this.time.now - timerClear;
+                    now2 = this.time.now - timerAuto;
+                    now3 = this.time.now - timerAuto;
+                    now4 = this.time.now - timerAuto;
+                } else {
+                    now1 = this.time.now;
+                    now2 = this.time.now;
+                    now3 = this.time.now;
+                    now4 = this.time.now;
+                }
                 this.scene.start('logo', {name: 'Move from Main to Logo'});
             }, this);
 
@@ -396,7 +392,6 @@ var MainSc = new Phaser.Class({
         this.physics.add.overlap(activeGroup, grey_bak, destoyGreyTrash, null, this);
 
 
-        music.play();
     },
 
     update: function () {
@@ -449,7 +444,6 @@ var MainSc = new Phaser.Class({
             }
 
             isPause = true;
-            music.stop();
             this.scene.start('raiting', {name: 'Move from Main to Raiting'});
         }
 

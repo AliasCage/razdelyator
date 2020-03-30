@@ -4,6 +4,13 @@ const COLOR_DARK = 0xb1bfca;
 const TOXIC_COLOR = 0x01DF01;
 const INACTIVE_COLOR = 0x6b6b6b;
 
+var now;
+
+var now1;
+var now2;
+var now3;
+var now4;
+
 const midle_window = window.innerWidth / 2;
 var global_scale;
 var bg_width;
@@ -39,13 +46,10 @@ var Logo = new Phaser.Class({
         });
 
 
-        this.load.audio('theme', [
-            'audio/DMX.ogg',
-            'audio/DMX.mp3'
-        ]);
+
 
         this.load.setBaseURL('img');
-        this.load.image('intro', 'logo.png');
+        this.load.image('intro', 'intro.png');
         this.load.image('raiting', 'raiting.png');
         this.load.image('start', 'start.png');
         this.load.image('tutorial', 'tutorial.png');
@@ -70,6 +74,8 @@ var Logo = new Phaser.Class({
         this.load.image('a1', 'battary/a1.png');
         this.load.image('a2', 'battary/a2.png');
         this.load.image('a3', 'battary/a3.png');
+
+        this.load.image('substrat', 'btn/substrat.png');
 
         this.load.image('auto_off', 'btn/auto_off.png');
         this.load.image('auto_on', 'btn/auto_on.png');
@@ -135,15 +141,15 @@ var Logo = new Phaser.Class({
         this.load.image('tut1', 'tutorial/tut1.png');
         this.load.image('tut2', 'tutorial/tut2.png');
         this.load.image('tut3', 'tutorial/tut3.png');
+        this.load.image('tut4', 'tutorial/tut4.png');
+        this.load.image('tut5', 'tutorial/tut5.png');
 
         this.load.image('cell', 'cell.jpg');
     },
 
     create: function () {
 
-        if (!music) {
-            music = this.sound.add('theme');
-        }
+
 
         this.add.tileSprite(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
 
