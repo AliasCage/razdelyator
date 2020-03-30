@@ -373,6 +373,23 @@ var MainSc = new Phaser.Class({
     },
 
     update: function () {
+        //GameOver
+        if (switchToRaiting) {
+            switchToRaiting = false;
+            if (activeGroup) {
+                clearGroup(activeGroup);
+            }
+            if (toxicGroup) {
+                clearGroup(toxicGroup);
+            }
+            if (group) {
+                clearGroup(group);
+            }
+
+            isPause = true;
+            this.scene.start('raiting', {name: 'Move from Main to Raiting'});
+        }
+
         if (isPause) {
             return
         }
@@ -410,22 +427,6 @@ var MainSc = new Phaser.Class({
         }
         if (isNeedDarknes) {
             darkness.call(this);
-        }
-
-        if (switchToRaiting) {
-            switchToRaiting = false;
-            if (activeGroup) {
-                clearGroup(activeGroup);
-            }
-            if (toxicGroup) {
-                clearGroup(toxicGroup);
-            }
-            if (group) {
-                clearGroup(group);
-            }
-
-            isPause = true;
-            this.scene.start('raiting', {name: 'Move from Main to Raiting'});
         }
 
         var interval = intervalCreateTrash + (300 + Math.floor((1500 - 300) * Math.random()));
