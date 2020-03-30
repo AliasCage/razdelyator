@@ -165,6 +165,7 @@ var MainSc = new Phaser.Class({
             targets: light_auto_on,
             scaleX: gsSubstrat,
             scaleY: gsSubstrat,
+            scaleY: gsSubstrat,
             ease: 'Linear',
             duration: 900,
             repeat: -1,
@@ -242,9 +243,10 @@ var MainSc = new Phaser.Class({
             }, this);
 
         text_score = this.add.text(midle_window - side_middle * 1.6, window.innerHeight * 0.9, player_score, {
-            font: "32px Arial Black",
-            fill: "#fff"
-        }).setStroke('#00f', 3).setShadow(2, 2, "#333333", 2, true, true);
+            font: "3vw Ubuntu",
+            fill: "#fff",
+
+        }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true);
 
         this.physics.add.overlap(battary_case, group, function (s1, s2) {
             if (s2.type === 'acc') {

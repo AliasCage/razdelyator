@@ -53,7 +53,6 @@ var Raiting = new Phaser.Class({
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
 
-
         debugger
         if (player_score && player_score > 0) {
             var loginDialog = CreateLoginDialog(this, {
@@ -92,15 +91,16 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     var height = GetValue(config, 'height', undefined);
 
     var background = scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, COLOR_PRIMARY);
-    var titleField = scene.add.text(0, 0, title).setColor(DARK);
+    var titleField = scene.add.text(0, 0, title,  {font: "1vw Ubuntu"}).setColor(DARK);
     var userNameField = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
-        text: scene.rexUI.add.BBCodeText(0, 0, username, {
+        text: scene.rexUI.add.BBCodeText(0, 0, username,{
             fixedWidth: 150,
             fixedHeight: 36,
             valign: 'center'
-        }).setColor(DARK),
+        }).setColor(DARK).setFont("Ubuntu").setFontSize(40*global_scale),
+
         space: {top: 5, bottom: 5, left: 5, right: 5, icon: 10,}
     })
         .setInteractive()
@@ -121,7 +121,8 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
             fixedWidth: 150,
             fixedHeight: 36,
             valign: 'center'
-        }).setColor(DARK),
+        }).setColor(DARK).setFont("Ubuntu").setFontSize(40*global_scale),
+
         space: {top: 5, bottom: 5, left: 5, right: 5, icon: 10,}
     })
         .setInteractive()
@@ -140,7 +141,8 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     var loginButton = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, DARK),
-        text: scene.add.text(0, 0, 'Cохранить результат?').setColor(DARK),
+        text: scene.add.text(0, 0, 'Cохранить результат?',{
+            font: "1vw Ubuntu"}).setColor(DARK),
         space: {top: 8, bottom: 8, left: 8, right: 8}
     })
         .setInteractive()
@@ -188,9 +190,9 @@ function createGridTable(game) {
         header: createRowItem(game,
             {
                 background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
-                id: game.add.text(0, 0, 'Место').setColor(DARK),
-                score: game.add.text(0, 0, 'Очки').setColor(DARK),
-                name: game.add.text(0, 0, 'Никнейм').setColor(DARK),
+                id: game.add.text(0, 0, 'Место', {font: "2vw Ubuntu"}).setColor(DARK),
+                score: game.add.text(0, 0, 'Очки', {font: "2vw Ubuntu"}).setColor(DARK),
+                name: game.add.text(0, 0, 'Никнейм', {font: "2vw Ubuntu"}).setColor(DARK),
                 height: 30
             }
         ),
