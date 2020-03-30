@@ -536,14 +536,11 @@ function createDialog() {
         })
         .layout()
         .popUp(500)
-        .setDepth(2);
+        .setDepth(9);
 }
 
 var createLabel = function (scene, text) {
     return scene.rexUI.add.label({
-        // width: 40,
-        // height: 40,
-
         background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK),
 
         text: scene.add.text(0, 0, text, {
@@ -595,6 +592,7 @@ function setInactive(object) {
     object.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
 
     console.log(object.y);
+    //Level go to game over
     if (object.y < 0) {
         clearGroup(group);
         switchToRaiting = true;
