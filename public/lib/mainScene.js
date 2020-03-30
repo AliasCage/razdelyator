@@ -157,14 +157,14 @@ var MainSc = new Phaser.Class({
         });
 
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
-
+        var gsSubstrat = 1.35 * global_scale;
         light_auto_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_auto_on.visible = false;
         this.tweens.add({
             targets: light_auto_on,
-            scaleX: 0.65,
-            scaleY: 0.65,
+            scaleX: gsSubstrat,
+            scaleY: gsSubstrat,
             ease: 'Linear',
             duration: 900,
             repeat: -1,
@@ -196,13 +196,14 @@ var MainSc = new Phaser.Class({
         clear_on.visible = false;
 
 
+
         light_one_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_one_on.visible = false;
         this.tweens.add({
             targets: light_one_on,
-            scaleX: 0.65,
-            scaleY: 0.65,
+            scaleX: gsSubstrat,
+            scaleY: gsSubstrat,
             ease: 'Linear',
             duration: 900,
             repeat: -1,
@@ -220,8 +221,8 @@ var MainSc = new Phaser.Class({
         light_slow_on.visible = false;
         this.tweens.add({
             targets: light_slow_on,
-            scaleX: 0.65,
-            scaleY: 0.65,
+            scaleX: gsSubstrat,
+            scaleY: gsSubstrat,
             ease: 'Linear',
             duration: 900,
             repeat: -1,
@@ -237,17 +238,6 @@ var MainSc = new Phaser.Class({
             .setOrigin(0, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
                 isPause = true;
-                if (isInputUserMail) {
-                    now1 = this.time.now - timerClear;
-                    now2 = this.time.now - timerAuto;
-                    now3 = this.time.now - timerAuto;
-                    now4 = this.time.now - timerAuto;
-                } else {
-                    now1 = this.time.now;
-                    now2 = this.time.now;
-                    now3 = this.time.now;
-                    now4 = this.time.now;
-                }
                 this.scene.start('logo', {name: 'Move from Main to Logo'});
             }, this);
 
