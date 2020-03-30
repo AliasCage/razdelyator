@@ -229,7 +229,7 @@ var MainSc = new Phaser.Class({
             }, this);
 
         text_score = this.add.text(midle_window - side_middle * 1.6, window.innerHeight * 0.9, player_score, {
-            font: "4vw Ubuntu",
+            font: '6vh Ubuntu',
             fill: "#fff",
 
         }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true);
@@ -494,7 +494,7 @@ function createDialog() {
 
         background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, COLOR_PRIMARY).setStrokeStyle(2, INACTIVE_COLOR),
         content: this.add.text(0, 0, 'Выйти в меню?', {
-            font: '3vw Ubuntu'
+            font: '6vh Ubuntu'
         }).setColor(DARK),
         actions: [
             createLabel(this, 'Да'),
@@ -544,7 +544,7 @@ var createLabel = function (scene, text) {
         background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK),
 
         text: scene.add.text(0, 0, text, {
-            font: '3vw Ubuntu'
+            font: '6vh Ubuntu'
         }).setColor(DARK),
 
         space: {

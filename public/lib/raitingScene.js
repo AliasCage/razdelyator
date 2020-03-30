@@ -52,15 +52,14 @@ var Raiting = new Phaser.Class({
             .on("pointerup", function () {
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
-
         debugger
         if (player_score && player_score > 0) {
             var loginDialog = CreateLoginDialog(this, {
                 x: midle_window,
                 y: window.innerHeight * 0.8,
                 title: 'Ваши очки: ' + player_score,
-                username: 'username',
-                email: 'user@email.ru',
+                username: isInputUserMail ? userName : 'username',
+                email: isInputUserMail  ?userMail : 'user@email.ru',
             })
                 .on('login', function (username, email) {
                     print.text += `${username}:${email}\n`;
@@ -91,7 +90,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     var height = GetValue(config, 'height', undefined);
 
     var background = scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, COLOR_PRIMARY);
-    var titleField = scene.add.text(0, 0, title,  {font: "1vw Ubuntu"}).setColor(DARK);
+    var titleField = scene.add.text(0, 0, title,  {font: '3vh Ubuntu'}).setColor(DARK);
     var userNameField = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
@@ -99,7 +98,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
             fixedWidth: 150,
             fixedHeight: 36,
             valign: 'center'
-        }).setColor(DARK).setFont("Ubuntu").setFontSize(40*global_scale),
+        }).setColor(DARK).setFont('Ubuntu').setFontSize(40*global_scale),
 
         space: {top: 5, bottom: 5, left: 5, right: 5, icon: 10,}
     })
@@ -121,7 +120,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
             fixedWidth: 150,
             fixedHeight: 36,
             valign: 'center'
-        }).setColor(DARK).setFont("Ubuntu").setFontSize(40*global_scale),
+        }).setColor(DARK).setFont('Ubuntu').setFontSize(40*global_scale),
 
         space: {top: 5, bottom: 5, left: 5, right: 5, icon: 10,}
     })
@@ -142,7 +141,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, DARK),
         text: scene.add.text(0, 0, 'Cохранить результат?',{
-            font: "1vw Ubuntu"}).setColor(DARK),
+            font: '3vh Ubuntu'}).setColor(DARK),
         space: {top: 8, bottom: 8, left: 8, right: 8}
     })
         .setInteractive()
@@ -190,9 +189,9 @@ function createGridTable(game) {
         header: createRowItem(game,
             {
                 background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
-                id: game.add.text(0, 0, 'Место', {font: "2vw Ubuntu"}).setColor(DARK),
-                score: game.add.text(0, 0, 'Очки', {font: "2vw Ubuntu"}).setColor(DARK),
-                name: game.add.text(0, 0, 'Никнейм', {font: "2vw Ubuntu"}).setColor(DARK),
+                id: game.add.text(0, 0, 'Место', {font: '2vh Ubuntu'}).setColor(DARK),
+                score: game.add.text(0, 0, 'Очки', {font: '2vh Ubuntu'}).setColor(DARK),
+                name: game.add.text(0, 0, 'Никнейм', {font: '2vh Ubuntu'}).setColor(DARK),
                 height: 30
             }
         ),
@@ -353,6 +352,13 @@ function getRating() {
 
 function saveResult(name, email, score) {
     if (!database) {
+        if(name === 'username' || email === 'user@mail.ru')
+            isInputUserMail = false;
+        else{
+            isInputUserMail = true;
+            userMail = email;
+            userName = name;
+        }
         return;
     }
     isInputUserMail = true;

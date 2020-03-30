@@ -16,7 +16,13 @@ var global_scale;
 var bg_width;
 var conveer_width;
 var isInputUserMail = false;
+
+var userName;
+var userMail;
+
 var Logo = new Phaser.Class({
+
+
 
     Extends: Phaser.Scene,
 
