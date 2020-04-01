@@ -23,7 +23,6 @@ var userMail;
 var Logo = new Phaser.Class({
 
 
-
     Extends: Phaser.Scene,
 
     initialize:
@@ -52,9 +51,12 @@ var Logo = new Phaser.Class({
         });
 
 
-
-
         this.load.setBaseURL('img');
+        // this.load.svg('intro', 'intro.svg', {width: 540, height: 960});
+        //
+        // this.load.svg('raiting', 'raiting.svg', {width: 193, height: 54});
+        // this.load.svg('start', 'start.svg', {width: 132, height: 54});
+        // this.load.svg('tutorial', 'tutorial.svg', {width: 196, height: 54});
         this.load.image('intro', 'intro.png');
         this.load.image('raiting', 'raiting.png');
         this.load.image('start', 'start.png');
@@ -154,7 +156,6 @@ var Logo = new Phaser.Class({
     },
 
     create: function () {
-
 
 
         this.add.tileSprite(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');

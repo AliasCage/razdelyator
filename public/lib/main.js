@@ -11,9 +11,6 @@ var config = {
         arcade: {
         }
     },
-    audio: {
-        disableWebAudio: true
-    },
     scene: [Logo, MainSc, Raiting, Tutorial]
 };
 

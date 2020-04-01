@@ -523,6 +523,7 @@ function createDialog() {
         .on('button.click', function (button, groupName, index) {
             if (index === 0) {
                 isPause = true;
+                player_score = 0;
                 this.scene.start('logo', {name: 'Move from Main to Logo'});
             }
             dialog.destroy();
