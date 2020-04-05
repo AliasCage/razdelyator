@@ -21,16 +21,13 @@ var Raiting = new Phaser.Class({
     },
 
     preload: function () {
-        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, window.innerWidth, window.innerHeight);
-        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7).fillRect(midle_window - 160, 270, 320, 50);
+        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7)
+            .fillRect(midle_window - GLOBAL_WIDTH * 0.475, GLOBAL_HEIGHT * 0.9, GLOBAL_WIDTH * 0.95, 50);
         var progressBar = this.add.graphics();
         this.load.on('progress', function (value) {
-            progressBar.clear().fillStyle(COLOR_PRIMARY, 1).fillRect(midle_window + 10 - 150, 280, 300 * value - 10, 30);
-        });
-        this.load.on('complete', function () {
-            progressBar.destroy();
-            progressBox.destroy();
-            groundBar.destroy();
+            progressBar.clear().fillStyle(COLOR_PRIMARY, 1)
+                .fillRect(midle_window - GLOBAL_WIDTH * 0.45, GLOBAL_HEIGHT * 0.9 + 10, GLOBAL_WIDTH * 0.9 * value, 30);
         });
         this.load.on('complete', function () {
             progressBar.destroy();
@@ -43,11 +40,11 @@ var Raiting = new Phaser.Class({
     },
 
     create: function () {
-        this.add.tileSprite(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
+        this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
         this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0).setScale(global_scale);
 
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
-        this.add.sprite(midle_window + side_middle, window.innerHeight * 0.875, 'menu_on')
+        this.add.sprite(midle_window + side_middle, GLOBAL_HEIGHT * 0.875, 'menu_on')
             .setOrigin(0, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
@@ -56,7 +53,7 @@ var Raiting = new Phaser.Class({
         if (player_score && player_score > 0) {
             var loginDialog = CreateLoginDialog(this, {
                 x: midle_window,
-                y: window.innerHeight * 0.8,
+                y: GLOBAL_HEIGHT * 0.8,
                 title: 'Ваши очки: ' + player_score,
                 username: isInputUserMail ? userName : 'username',
                 email: isInputUserMail  ?userMail : 'user@email.ru',
@@ -168,9 +165,9 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
 function createGridTable(game) {
     return game.rexUI.add.gridTable({
         x: midle_window,
-        y: window.innerHeight * 0.05,
+        y: GLOBAL_HEIGHT * 0.05,
         width: bg_width * 0.9,
-        height: window.innerHeight * 0.8,
+        height: GLOBAL_HEIGHT * 0.8,
 
         scrollMode: 0,
 

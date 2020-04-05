@@ -86,11 +86,13 @@ var MainSc = new Phaser.Class({
 
     preload: function () {
 
-        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, window.innerWidth, window.innerHeight);
-        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7).fillRect(midle_window - 160, 270, 320, 50);
+        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7)
+            .fillRect(midle_window - GLOBAL_WIDTH * 0.475, GLOBAL_HEIGHT * 0.9, GLOBAL_WIDTH * 0.95, 50);
         var progressBar = this.add.graphics();
         this.load.on('progress', function (value) {
-            progressBar.clear().fillStyle(COLOR_PRIMARY, 1).fillRect(midle_window + 10 - 150, 280, 300 * value - 10, 30);
+            progressBar.clear().fillStyle(COLOR_PRIMARY, 1)
+                .fillRect(midle_window - GLOBAL_WIDTH * 0.45, GLOBAL_HEIGHT * 0.9 + 10, GLOBAL_WIDTH * 0.9 * value, 30);
         });
         this.load.on('complete', function () {
             progressBar.destroy();
@@ -122,23 +124,23 @@ var MainSc = new Phaser.Class({
             repeat: -1
         });
 
-        this.add.tileSprite(midle_window, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
+        this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
         this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0).setScale(global_scale);
 
-        blue_bak = this.physics.add.sprite(midle_window - bg_width * 0.5, window.innerHeight / 1.65, 'blue1')
+        blue_bak = this.physics.add.sprite(midle_window - bg_width * 0.5, GLOBAL_HEIGHT / 1.65, 'blue1')
             .setOrigin(-0.05, 1).setScale(global_scale);
-        this.physics.add.sprite(midle_window - bg_width * 0.5, window.innerHeight / 1.65, 'blue2')
+        this.physics.add.sprite(midle_window - bg_width * 0.5, GLOBAL_HEIGHT / 1.65, 'blue2')
             .setOrigin(-0.05, 0).setScale(global_scale).setDepth(9);
-        grey_bak = this.physics.add.sprite(midle_window + bg_width * 0.5, window.innerHeight / 1.65, 'grey1')
+        grey_bak = this.physics.add.sprite(midle_window + bg_width * 0.5, GLOBAL_HEIGHT / 1.65, 'grey1')
             .setOrigin(1.05, 1).setScale(global_scale);
-        this.physics.add.sprite(midle_window + bg_width * 0.5, window.innerHeight / 1.65, 'grey2')
+        this.physics.add.sprite(midle_window + bg_width * 0.5, GLOBAL_HEIGHT / 1.65, 'grey2')
             .setOrigin(1.05, 0).setScale(global_scale).setDepth(9);
 
         this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0).setScale(global_scale).play('conveer');
 
         this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
-            .setPosition(midle_window, window.innerHeight * 0.05).setDepth(1);
-        var battary_case = this.physics.add.sprite(midle_window + bg_width * 0.4, window.innerHeight * 0.05, 'battary_case')
+            .setPosition(midle_window, GLOBAL_HEIGHT * 0.05).setDepth(1);
+        var battary_case = this.physics.add.sprite(midle_window + bg_width * 0.4, GLOBAL_HEIGHT * 0.05, 'battary_case')
             .setOrigin(0.5, 0.5).setScale(global_scale).setDepth(2);
         this.tweens.add({
             targets: battary_case,
@@ -159,7 +161,7 @@ var MainSc = new Phaser.Class({
 
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
         var gsSubstrat = 1.35 * global_scale;
-        light_auto_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'substrat')
+        light_auto_on = this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 3, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_auto_on.visible = false;
         this.tweens.add({
@@ -171,19 +173,19 @@ var MainSc = new Phaser.Class({
             repeat: -1,
             yoyo: true
         });
-        this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'auto_off')
+        this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 3, 'auto_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
-        auto_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 3, 'auto_on')
+        auto_on = this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 3, 'auto_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", autoTrash, this);
         auto_on.visible = false;
 
-        this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 6, 'clear_off')
+        this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 6, 'clear_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
-        clear_on = this.add.sprite(midle_window + (bg_width / 3), window.innerHeight / 6, 'clear_on')
+        clear_on = this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 6, 'clear_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", clearConveer, this);
         clear_on.visible = false;
 
-        light_one_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'substrat')
+        light_one_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 6, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_one_on.visible = false;
         this.tweens.add({
@@ -195,14 +197,14 @@ var MainSc = new Phaser.Class({
             repeat: -1,
             yoyo: true
         });
-        this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'one_off')
+        this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 6, 'one_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
-        one_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 6, 'one_on')
+        one_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 6, 'one_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", oneTrash, this);
         one_on.visible = false;
 
 
-        light_slow_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'substrat')
+        light_slow_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 3, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_slow_on.visible = false;
         this.tweens.add({
@@ -214,13 +216,13 @@ var MainSc = new Phaser.Class({
             repeat: -1,
             yoyo: true
         });
-        var slow_off = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'slow_off')
+        var slow_off = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 3, 'slow_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
-        slow_on = this.add.sprite(midle_window - (bg_width / 3), window.innerHeight / 3, 'slow_on')
+        slow_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 3, 'slow_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", slowTrash, this);
         slow_on.visible = false;
 
-        this.add.sprite(midle_window + side_middle, window.innerHeight * 0.875, 'menu_on')
+        this.add.sprite(midle_window + side_middle, GLOBAL_HEIGHT * 0.875, 'menu_on')
             .setOrigin(0, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
                 if (!dialog) {
@@ -228,7 +230,7 @@ var MainSc = new Phaser.Class({
                 }
             }, this);
 
-        text_score = this.add.text(midle_window - side_middle * 1.6, window.innerHeight * 0.9, player_score, {
+        text_score = this.add.text(midle_window - side_middle * 1.6, GLOBAL_HEIGHT * 0.9, player_score, {
             font: '6vh Ubuntu',
             fill: "#fff",
 
@@ -248,8 +250,8 @@ var MainSc = new Phaser.Class({
             if (s2.type === 'blue') {
                 group.remove(s2);
                 destroyGroup.push(s2);
-                s2.setVelocity((s1.x - s2.x) / 2, s1.y - s2.y);
-                s2.setAngularVelocity(-50);
+                s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
+                s2.setAngularVelocity(-50 * DEVICE_SIZE_SPEED);
 
                 createCoin(s2.x + 50, s2.y - 50, 2, this);
             }
@@ -258,8 +260,8 @@ var MainSc = new Phaser.Class({
             if (s2.type === 'grey') {
                 group.remove(s2);
                 destroyGroup.push(s2);
-                s2.setVelocity((s1.x - s2.x) / 2, s1.y - s2.y);
-                s2.setAngularVelocity(50);
+                s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
+                s2.setAngularVelocity(50 * DEVICE_SIZE_SPEED);
 
                 createCoin(s2.x - 50, s2.y - 50, 1, this);
             }
@@ -289,20 +291,20 @@ var MainSc = new Phaser.Class({
             gameObject.body.enable = true;
             if (gameObject.x < (midle_window - conveer_width / 8)) {
                 if (gameObject.y < 100) {
-                    gameObject.setVelocity(200, 50);
+                    gameObject.setVelocity(200 * DEVICE_SIZE_SPEED, 50 * DEVICE_SIZE_SPEED);
                 } else {
-                    gameObject.setVelocity(200, -300);
+                    gameObject.setVelocity(200 * DEVICE_SIZE_SPEED, -300 * DEVICE_SIZE_SPEED);
                 }
-                gameObject.setAngularVelocity(-40);
+                gameObject.setAngularVelocity(-40 * DEVICE_SIZE_SPEED);
             } else if (gameObject.x > (midle_window + conveer_width / 8)) {
                 if (gameObject.y < 100) {
-                    gameObject.setVelocity(-200, 50);
+                    gameObject.setVelocity(-200 * DEVICE_SIZE_SPEED, 50 * DEVICE_SIZE_SPEED);
                 } else {
-                    gameObject.setVelocity(-200, -300);
+                    gameObject.setVelocity(-200 * DEVICE_SIZE_SPEED, -300 * DEVICE_SIZE_SPEED);
                 }
-                gameObject.setAngularVelocity(40);
+                gameObject.setAngularVelocity(40 * DEVICE_SIZE_SPEED);
             } else {
-                gameObject.setVelocityY(speedTrash + 150);
+                gameObject.setVelocityY((speedTrash + 150) * DEVICE_SIZE_SPEED);
             }
             gameObject.setGravityY(300);
             gameObject.setBounce(0.4);
@@ -333,7 +335,7 @@ var MainSc = new Phaser.Class({
         zone_right.setPosition(midle_window + conveer_width / 6, 0);
         this.physics.add.collider(zone_right, group);
 
-        var zone_bottom = this.physics.add.sprite(midle_window, window.innerHeight, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
+        var zone_bottom = this.physics.add.sprite(midle_window, GLOBAL_HEIGHT, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
         this.physics.add.overlap(zone_bottom, activeGroup, function (s1, s2) {
 
             activeGroup.remove(s2);
@@ -443,7 +445,7 @@ var MainSc = new Phaser.Class({
 
         if (slow_trash) {
             activeGroup.getChildren().forEach(function (trash) {
-                trash.setVelocityY(speedTrash / 2);
+                trash.setVelocityY(speedTrash * DEVICE_SIZE_SPEED / 2);
             });
         }
         //таймеры для скилов
@@ -490,7 +492,7 @@ var MainSc = new Phaser.Class({
 function createDialog() {
     dialog = this.rexUI.add.dialog({
         x: midle_window,
-        y: window.innerHeight * 0.5,
+        y: midle_window_h,
 
         background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, COLOR_PRIMARY).setStrokeStyle(2, INACTIVE_COLOR),
         content: this.add.text(0, 0, 'Выйти в меню?', {
@@ -589,7 +591,7 @@ function setInactive(object) {
     group.add(object);
     object.removeInteractive();
     object.body.allowdraggable = false;
-    object.setVelocityY(speedTrash + 350);
+    object.setVelocityY((speedTrash + 350) * DEVICE_SIZE_SPEED);
     object.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
 
     console.log(object.y);
@@ -669,7 +671,7 @@ function createAndDropObject() {
     obj.setCollideWorldBounds(true);
     if (!isPause) {
         obj.body.moves = true;
-        obj.setVelocityY(speedTrash);
+        obj.setVelocityY(speedTrash * DEVICE_SIZE_SPEED);
     } else {
         obj.body.moves = false;
     }
@@ -698,27 +700,27 @@ function autoTrash() {
 function destoyBlueTrash(bak, trash) {
     activeGroup.remove(trash);
     destroyGroup.push(trash);
-    trash.setVelocity((bak.x - trash.x) / 2, bak.y - trash.y);
-    trash.setAngularVelocity(-50);
+    trash.setVelocity((bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (bak.y - trash.y) * DEVICE_SIZE_SPEED);
+    trash.setAngularVelocity(-50 * DEVICE_SIZE_SPEED);
     createCoin(trash.x + 50, trash.y - 50, 2, this);
 }
 
 function destoyGreyTrash(bak, trash) {
     activeGroup.remove(trash);
     destroyGroup.push(trash);
-    trash.setVelocity((bak.x - trash.x) / 2, bak.y - trash.y);
-    trash.setAngularVelocity(50);
+    trash.setVelocity((bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (bak.y - trash.y) * DEVICE_SIZE_SPEED);
+    trash.setAngularVelocity(50 * DEVICE_SIZE_SPEED);
     createCoin(trash.x - 50, trash.y - 50, 1, this);
 }
 
 function autoSort() {
     activeGroup.getChildren().forEach(function (trash) {
         if (auto_type === 1 && trash.type === 'blue') {
-            trash.setVelocity((blue_bak.x - trash.x) / 2, blue_bak.y - trash.y);
-            trash.setAngularVelocity(-1);
+            trash.setVelocity((blue_bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (blue_bak.y - trash.y) * DEVICE_SIZE_SPEED);
+            trash.setAngularVelocity(-1 * DEVICE_SIZE_SPEED);
         } else if (auto_type === 2 && trash.type === 'grey') {
-            trash.setVelocity((grey_bak.x - trash.x) / 2, grey_bak.y - trash.y);
-            trash.setAngularVelocity(-1);
+            trash.setVelocity((grey_bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (grey_bak.y - trash.y) * DEVICE_SIZE_SPEED);
+            trash.setAngularVelocity(-1 * DEVICE_SIZE_SPEED);
         }
     });
 }
