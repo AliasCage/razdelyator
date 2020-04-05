@@ -16,7 +16,8 @@ var global_scale;
 var bg_width;
 var conveer_width;
 var isInputUserMail = false;
-
+var isFirstGameTraining = true;
+var isFirstGameTrainingDisplay = false;
 var userName;
 var userMail;
 

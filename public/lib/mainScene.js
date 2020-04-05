@@ -44,9 +44,14 @@ var intervalCreateTrash;
 
 var scoreDifficulty;
 
+var nowSkill1;
+var nowSkill2;
+var nowSkill3;
+var nowSkill4;
+var nowCreateTrash;
+var nowScoreDifficulty;
+
 const intervalScoreDiff = 2200;
-
-
 const timerClear = 90000;
 const timerAuto = 45000;
 const timerOne = 45000;
@@ -58,6 +63,8 @@ var batary_counter = -1;
 var dialog;
 
 
+var tutFirstGameTraining;
+
 var MainSc = new Phaser.Class({
 
     Extends: Phaser.Scene,
@@ -68,6 +75,7 @@ var MainSc = new Phaser.Class({
         },
 
     init: function (data) {
+
         console.log(data.name);
         player_score = 0;
 
@@ -86,6 +94,7 @@ var MainSc = new Phaser.Class({
 
     preload: function () {
 
+
         var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, window.innerWidth, window.innerHeight);
         var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7).fillRect(midle_window - 160, 270, 320, 50);
         var progressBar = this.add.graphics();
@@ -102,6 +111,7 @@ var MainSc = new Phaser.Class({
     },
 
     create: function () {
+
         cursors = this.input.keyboard.createCursorKeys();
         this.physics.world.checkCollision.up = false;
         this.anims.create({
@@ -121,6 +131,7 @@ var MainSc = new Phaser.Class({
             frameRate: 12,
             repeat: -1
         });
+
 
         this.add.tileSprite(midle_window, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
         this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0).setScale(global_scale);
@@ -370,6 +381,14 @@ var MainSc = new Phaser.Class({
         this.physics.add.overlap(activeGroup, grey_bak, destoyGreyTrash, null, this);
 
         isPause = false;
+
+        tutFirstGameTraining = this.add.sprite(midle_window, 0, 'tut4').setDepth(10)
+            .setOrigin(0.5, 0).setScale(global_scale).setInteractive().setVisible(true)
+            .on("pointerdown", function (pointer) {
+                tutFirstGameTraining.setVisible(false);
+            });
+
+
     },
 
     update: function () {
@@ -393,7 +412,7 @@ var MainSc = new Phaser.Class({
         if (isPause) {
             return
         }
-        if (player_score > 5) {
+        if (player_score > 5 && !tutFirstGameTraining.visible) {
             if (this.time.now - scoreDifficulty > intervalScoreDiff) {
                 speedTrash = speedTrash + 2;
                 if (intervalCreateTrash > 1000) {
@@ -433,10 +452,35 @@ var MainSc = new Phaser.Class({
         if (slow_trash) {
             interval = interval * 2;
         }
-        if (this.time.now - now > interval) {
+        if (this.time.now - now > interval && !tutFirstGameTraining.visible) {
             now = this.time.now;
             createAndDropObject.call(this);
+            if(tutFirstGameTraining.visible){
+                nowSkill1 = this.time.now - now1;
+                nowSkill2 = this.time.now - now2;
+                nowSkill3 = this.time.now - now3;
+                nowSkill4 = this.time.now - now4;
+                nowCreateTrash = this.time.now - now;
+                nowScoreDifficulty = this.time.now - scoreDifficulty;
+                activeGroup.getChildren().forEach(function (trash) {
+                    trash.setVelocityY(0);
+                });
+            }
         }
+
+        if (!isFirstGameTraining && !tutFirstGameTraining.visible && !isFirstGameTrainingDisplay) {
+            now = nowCreateTrash + this.time.now;
+            now1 = nowSkill1 + this.time.now;
+            now2 = nowSkill2 + this.time.now;
+            now3 = nowSkill3 + this.time.now;
+            now4 = nowSkill4 + this.time.now;
+            scoreDifficulty =  nowScoreDifficulty + this.time.now;
+            activeGroup.getChildren().forEach(function (trash) {
+                trash.setVelocityY(speedTrash);
+            });
+            isFirstGameTrainingDisplay = true;
+        }
+
         if (auto_trash) {
             autoSort();
         }
@@ -447,22 +491,22 @@ var MainSc = new Phaser.Class({
             });
         }
         //таймеры для скилов
-        if (this.time.now - now1 > timerClear) {
+        if (this.time.now - now1 > timerClear && !tutFirstGameTraining.visible) {
             clear_on.visible = true;
         }
-        if (this.time.now - now2 > timerAuto && !auto_trash) {
+        if (this.time.now - now2 > timerAuto && !auto_trash && !tutFirstGameTraining.visible) {
             auto_on.visible = true;
             now2 = this.time.now;
-        } else if (this.time.now - now2 > timerAuto / 2 && auto_trash) {
+        } else if (this.time.now - now2 > timerAuto / 2 && auto_trash && !tutFirstGameTraining.visible) {
             auto_trash = false;
             now2 = this.time.now;
             light_auto_on.visible = false;
             auto_type = 0;
         }
-        if ((this.time.now - now3 > timerOne) && !one_trash) {
+        if ((this.time.now - now3 > timerOne) && !one_trash && !tutFirstGameTraining.visible) {
             one_on.visible = true;
             now3 = this.time.now;
-        } else if ((this.time.now - now3 > timerOne / 2) && one_trash) {
+        } else if ((this.time.now - now3 > timerOne / 2) && one_trash && !tutFirstGameTraining.visible) {
             if (one_type === 1) {
                 grey_bak.setTint();
             }
@@ -474,10 +518,10 @@ var MainSc = new Phaser.Class({
             now3 = this.time.now;
             one_type = 0;
         }
-        if ((this.time.now - now4 > timerSlow) && !slow_trash) {
+        if ((this.time.now - now4 > timerSlow) && !slow_trash && !tutFirstGameTraining.visible) {
             slow_on.visible = true;
             now4 = this.time.now;
-        } else if ((this.time.now - now4 > timerSlow / 2) && slow_trash) {
+        } else if ((this.time.now - now4 > timerSlow / 2) && slow_trash && !tutFirstGameTraining.visible) {
             slow_trash = false;
             light_slow_on.visible = false;
             now4 = this.time.now;
@@ -644,6 +688,10 @@ function createAndDropObject() {
         }
     } else {
         if (number > 0.8 && batary_counter < 0) {
+            if (isFirstGameTraining) {
+                isFirstGameTraining = false;
+                tutFirstGameTraining.setVisible(true);
+            }
             trash = acc[Math.floor(Math.random() * acc.length)];
             trashType = 'acc';
             toxic = true;
@@ -658,6 +706,7 @@ function createAndDropObject() {
             batary_counter--;
         }
     }
+
     var diff = getRandomInt(-conveer_width / 8, conveer_width / 8);
     var obj = activeGroup.create(midle_window + diff, -20, trash).setDepth(0);
     obj.setSize(obj.width / 2, obj.height / 2);
@@ -665,6 +714,7 @@ function createAndDropObject() {
     obj.isToxic = toxic;
 
     obj.setScale(global_scale / 1.25);
+
     obj.setInteractive();
     obj.setCollideWorldBounds(true);
     if (!isPause) {
@@ -674,6 +724,8 @@ function createAndDropObject() {
         obj.body.moves = false;
     }
     this.input.setDraggable(obj);
+
+
     return obj;
 }
 
@@ -765,3 +817,4 @@ function oneTrash() {
     one_on.visible = false;
     now3 = this.time.now;
 }
+
