@@ -383,7 +383,7 @@ var MainSc = new Phaser.Class({
         isPause = false;
 
         tutFirstGameTraining = this.add.sprite(midle_window, 0, 'tut4').setDepth(10)
-            .setOrigin(0.5, 0).setScale(global_scale).setInteractive().setVisible(true)
+            .setOrigin(0.5, 0).setScale(global_scale).setInteractive().setVisible(false)
             .on("pointerdown", function (pointer) {
                 tutFirstGameTraining.setVisible(false);
             });
