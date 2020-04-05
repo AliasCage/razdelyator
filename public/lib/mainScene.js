@@ -455,7 +455,7 @@ var MainSc = new Phaser.Class({
         if (this.time.now - now > interval && !tutFirstGameTraining.visible) {
             now = this.time.now;
             createAndDropObject.call(this);
-            if(tutFirstGameTraining.visible){
+            if(tutFirstGameTraining.visible  ){
                 nowSkill1 = this.time.now - now1;
                 nowSkill2 = this.time.now - now2;
                 nowSkill3 = this.time.now - now3;

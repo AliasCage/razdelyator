@@ -45,21 +45,24 @@ var Raiting = new Phaser.Class({
     create: function () {
         this.add.tileSprite(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
         this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0).setScale(global_scale);
-
+        var loginDialog;
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
         this.add.sprite(midle_window + side_middle, window.innerHeight * 0.875, 'menu_on')
             .setOrigin(0, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
+                player_score = 0;
+                if (loginDialog)
+                    loginDialog.destroy();
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
         debugger
         if (player_score && player_score > 0) {
-            var loginDialog = CreateLoginDialog(this, {
+            loginDialog = CreateLoginDialog(this, {
                 x: midle_window,
                 y: window.innerHeight * 0.8,
                 title: 'Ваши очки: ' + player_score,
                 username: isInputUserMail ? userName : 'username',
-                email: isInputUserMail  ?userMail : 'user@email.ru',
+                email: isInputUserMail ? userMail : 'user@email.ru',
             })
                 .on('login', function (username, email) {
                     print.text += `${username}:${email}\n`;
@@ -90,11 +93,11 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     var height = GetValue(config, 'height', undefined);
 
     var background = scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, COLOR_PRIMARY);
-    var titleField = scene.add.text(0, 0, title,  {font: '22pt Ubuntu'}).setColor(DARK);
+    var titleField = scene.add.text(0, 0, title, {font: '22pt Ubuntu'}).setColor(DARK);
     var userNameField = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
-        text: scene.rexUI.add.BBCodeText(0, 0, username,{
+        text: scene.rexUI.add.BBCodeText(0, 0, username, {
             fixedWidth: 200,
             fixedHeight: 36,
             valign: 'center'
@@ -140,8 +143,9 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     var loginButton = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, DARK),
-        text: scene.add.text(0, 0, 'Cохранить результат?',{
-            font: '22pt Ubuntu'}).setColor(DARK),
+        text: scene.add.text(0, 0, 'Cохранить результат?', {
+            font: '22pt Ubuntu'
+        }).setColor(DARK),
         space: {top: 8, bottom: 8, left: 8, right: 8}
     })
         .setInteractive()
@@ -352,9 +356,9 @@ function getRating() {
 
 function saveResult(name, email, score) {
     if (!database) {
-        if(name === 'username' || email === 'user@mail.ru')
+        if (name === 'username' || email === 'user@mail.ru')
             isInputUserMail = false;
-        else{
+        else {
             isInputUserMail = true;
             userMail = email;
             userName = name;

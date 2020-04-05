@@ -4,6 +4,8 @@ const COLOR_DARK = 0xb1bfca;
 const TOXIC_COLOR = 0x01DF01;
 const INACTIVE_COLOR = 0x6b6b6b;
 
+var isFirstStartGame = true;
+
 var now;
 
 var now1;
@@ -174,7 +176,11 @@ var Logo = new Phaser.Class({
             .setDepth(11).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
                 start_btn.setScale(global_scale);
-                if (isPause) {
+                if (isFirstStartGame) {
+                    isFirstStartGame = false;
+                    console.log("tutr");
+                    this.scene.start('tutorial', {name: 'Move from Logo to Tutorial'});
+                } else if (isPause) {
                     if (isInputUserMail) {
                         now1 = this.time.now - timerClear;
                         now2 = this.time.now - timerAuto;
