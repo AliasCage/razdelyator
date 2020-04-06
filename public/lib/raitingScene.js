@@ -49,14 +49,14 @@ var Raiting = new Phaser.Class({
             .on("pointerup", function () {
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
-        debugger
+
         if (player_score && player_score > 0) {
             var loginDialog = CreateLoginDialog(this, {
                 x: midle_window,
-                y: GLOBAL_HEIGHT * 0.8,
+                y: GLOBAL_HEIGHT * 0.4,
                 title: 'Ваши очки: ' + player_score,
                 username: isInputUserMail ? userName : 'username',
-                email: isInputUserMail  ?userMail : 'user@email.ru',
+                email: isInputUserMail ? userMail : 'user@email.ru',
             })
                 .on('login', function (username, email) {
                     print.text += `${username}:${email}\n`;
@@ -87,42 +87,63 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     var height = GetValue(config, 'height', undefined);
 
     var background = scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, COLOR_PRIMARY);
-    var titleField = scene.add.text(0, 0, title,  {font: '22pt Ubuntu'}).setColor(DARK);
+    var titleField = scene.add.text(0, 0, title, {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK);
     var userNameField = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
-        text: scene.rexUI.add.BBCodeText(0, 0, username,{
-            fixedWidth: 200,
-            fixedHeight: 36,
+        text: scene.rexUI.add.BBCodeText(0, 0, username, {
+            fixedWidth: DEVICE_SIZE * 200,
+            fixedHeight: DEVICE_SIZE * 36,
             valign: 'center'
-        }).setColor(DARK).setFont('22pt Ubuntu'),
+        }).setColor(DARK).setFont(DEVICE_SIZE * 22 + 'pt Ubuntu'),
 
-        space: {top: 5, bottom: 5, left: 5, right: 5, icon: 10,}
+        space: {
+            top: DEVICE_SIZE * 5,
+            bottom: DEVICE_SIZE * 5,
+            left: DEVICE_SIZE * 5,
+            right: DEVICE_SIZE * 5,
+            icon: DEVICE_SIZE * 10,
+        }
     })
         .setInteractive()
         .on('pointerdown', function () {
+            debugger
+            if (username === 'username') {
+                username = '';
+            }
             var config = {
                 onTextChanged: function (textObject, text) {
                     username = text;
                     textObject.text = text;
                 }
             };
-            scene.rexUI.edit(userNameField.getElement('text'), config);
+            var edit = scene.rexUI.edit(userNameField.getElement('text'), config);
+            var dom = edit.inputText.node;
+            debugger
         });
 
     var emailField = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
         text: scene.rexUI.add.BBCodeText(0, 0, email, {
-            fixedWidth: 200,
-            fixedHeight: 36,
+            fixedWidth: DEVICE_SIZE * 200,
+            fixedHeight: DEVICE_SIZE * 36,
             valign: 'center'
-        }).setColor(DARK).setFont('22pt Ubuntu'),
+        }).setColor(DARK).setFont(DEVICE_SIZE * 22 + 'pt Ubuntu'),
 
-        space: {top: 5, bottom: 5, left: 5, right: 5, icon: 10,}
+        space: {
+            top: DEVICE_SIZE * 5,
+            bottom: DEVICE_SIZE * 5,
+            left: DEVICE_SIZE * 5,
+            right: DEVICE_SIZE * 5,
+            icon: DEVICE_SIZE * 10,
+        }
     })
         .setInteractive()
         .on('pointerdown', function () {
+            if (email === 'user@mail.ru') {
+                email = '';
+            }
             var config = {
                 type: 'email',
                 text: email,
@@ -137,9 +158,8 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     var loginButton = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, DARK),
-        text: scene.add.text(0, 0, 'Cохранить результат?',{
-            font: '22pt Ubuntu'}).setColor(DARK),
-        space: {top: 8, bottom: 8, left: 8, right: 8}
+        text: scene.add.text(0, 0, 'Cохранить результат?', {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK),
+        space: {top: DEVICE_SIZE * 8, bottom: DEVICE_SIZE * 8, left: DEVICE_SIZE * 8, right: DEVICE_SIZE * 8}
     })
         .setInteractive()
         .on('pointerdown', function () {
@@ -154,10 +174,23 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
         height: height,
     })
         .addBackground(background)
-        .add(titleField, 0, 'center', {top: 10, bottom: 10, left: 10, right: 10}, false)
-        .add(userNameField, 0, 'left', {bottom: 10, left: 10, right: 10}, true)
-        .add(emailField, 0, 'left', {bottom: 10, left: 10, right: 10}, true)
-        .add(loginButton, 0, 'center', {bottom: 10, left: 10, right: 10}, false)
+        .add(titleField, 0, 'center', {
+            top: DEVICE_SIZE * 10,
+            bottom: DEVICE_SIZE * 10,
+            left: DEVICE_SIZE * 10,
+            right: DEVICE_SIZE * 10
+        }, false)
+        .add(userNameField, 0, 'left', {
+            bottom: DEVICE_SIZE * 10,
+            left: DEVICE_SIZE * 10,
+            right: DEVICE_SIZE * 10
+        }, true)
+        .add(emailField, 0, 'left', {bottom: DEVICE_SIZE * 10, left: DEVICE_SIZE * 10, right: DEVICE_SIZE * 10}, true)
+        .add(loginButton, 0, 'center', {
+            bottom: DEVICE_SIZE * 10,
+            left: DEVICE_SIZE * 10,
+            right: DEVICE_SIZE * 10
+        }, false)
         .layout();
     return loginDialog;
 };
@@ -175,7 +208,7 @@ function createGridTable(game) {
 
         table: {
             cellWidth: undefined,
-            cellHeight: 50,
+            cellHeight: DEVICE_SIZE * 50,
             columns: 1,
             mask: {
                 padding: 2,
@@ -186,16 +219,16 @@ function createGridTable(game) {
         header: createRowItem(game,
             {
                 background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
-                id: game.add.text(0, 0, 'Место', {font: '15pt Ubuntu'}).setColor(DARK),
-                score: game.add.text(0, 0, 'Очки', {font: '15pt Ubuntu'}).setColor(DARK),
-                name: game.add.text(0, 0, 'Никнейм', {font: '15pt Ubuntu'}).setColor(DARK),
-                height: 30,
+                id: game.add.text(0, 0, 'Место', {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK),
+                score: game.add.text(0, 0, 'Очки', {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK),
+                name: game.add.text(0, 0, 'Никнейм', {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK),
+                height: DEVICE_SIZE * 30,
             }
         ),
 
         footer: game.rexUI.add.label({
             width: undefined,
-            height: 30,
+            height: DEVICE_SIZE * 10,
 
             background: game.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_DARK),
             // text: game.add.text(0, 0, user_top_place ? 'Ваше место: ' + user_top_place + ' счёт: ' + player_score : '').setColor(DARK),
@@ -219,11 +252,7 @@ function createGridTable(game) {
                 item = cell.item,
                 index = cell.index;
             if (cellContainer === null) {
-                debugger
                 cellContainer = createRowItem(scene);
-                console.log(cell.index + ': create new cell-container');
-            } else {
-                console.log(cell.index + ': reuse cell-container');
             }
 
             // Set properties from item value
@@ -238,7 +267,7 @@ function createGridTable(game) {
 }
 
 var createRowItem = function (scene, config) {
-    debugger
+
     var background = GetValue(config, 'background', undefined);
     if (background === undefined) {
         background = scene.add.sprite(0, 0, 'cell');
@@ -248,15 +277,15 @@ var createRowItem = function (scene, config) {
     }
     var id = GetValue(config, 'id', undefined);
     if (id === undefined) {
-        id = scene.add.text(0, 0, id, {font: '15pt Ubuntu'}).setColor(DARK);
+        id = scene.add.text(0, 0, id, {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK);
     }
     var score = GetValue(config, 'score', undefined);
     if (score === undefined) {
-        score = scene.add.text(0, 0, score, {font: '15pt Ubuntu'}).setColor(DARK);
+        score = scene.add.text(0, 0, score, {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK);
     }
     var name = GetValue(config, 'name', undefined);
     if (name === undefined) {
-        name = scene.add.text(0, 0, name, {font: '15pt Ubuntu'}).setColor(DARK);
+        name = scene.add.text(0, 0, name, {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK);
     }
     return scene.rexUI.add.sizer({
         width: GetValue(config, 'width', undefined),
@@ -270,7 +299,7 @@ var createRowItem = function (scene, config) {
             id,    // child
             0,                           // proportion, fixed width
             'center',                    // align vertically
-            {left: 10},                // padding
+            {left: DEVICE_SIZE * 10},                // padding
             false,                       // expand vertically
             'id'                         // map-key
         )
@@ -288,7 +317,7 @@ var createRowItem = function (scene, config) {
             score, // child
             0,                           // proportion, fixed width
             'center',                    // align vertically
-            {right: 10},               // padding
+            {right: DEVICE_SIZE * 10},               // padding
             false,                       // expand vertically
             'score'                      // map-key
         )
@@ -349,9 +378,9 @@ function getRating() {
 
 function saveResult(name, email, score) {
     if (!database) {
-        if(name === 'username' || email === 'user@mail.ru')
+        if (name === 'username' || email === 'user@mail.ru')
             isInputUserMail = false;
-        else{
+        else {
             isInputUserMail = true;
             userMail = email;
             userName = name;

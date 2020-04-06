@@ -174,7 +174,7 @@ var Logo = new Phaser.Class({
         var intro = this.add.sprite(midle_window, 0, 'intro').setOrigin(0.5, 0).setDepth(10);
         if (!global_scale) {
             global_scale = GLOBAL_HEIGHT / intro.height;
-            DEVICE_SIZE_SPEED = DEVICE_SIZE * global_scale
+            DEVICE_SIZE_SPEED = DEVICE_SIZE;
         }
         if (!bg_width) {
             bg_width = intro.width * global_scale;

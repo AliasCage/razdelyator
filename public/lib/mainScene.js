@@ -231,7 +231,7 @@ var MainSc = new Phaser.Class({
             }, this);
 
         text_score = this.add.text(midle_window - side_middle * 1.6, GLOBAL_HEIGHT * 0.9, player_score, {
-            font: '6vh Ubuntu',
+            font: DEVICE_SIZE * 6 + 'vh Ubuntu',
             fill: "#fff",
 
         }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true);
@@ -283,21 +283,21 @@ var MainSc = new Phaser.Class({
 
         this.input.on('dragend', function (pointer, gameObject, dragX, dragY) {
             activeGroup.remove(gameObject);
-            if (gameObject.y < 0) {
-                gameObject.setPosition(gameObject.x, 1);
+            if (gameObject.y < 2) {
+                gameObject.setPosition(gameObject.x, 2);
             }
             setInactive(gameObject, this);
             gameObject.body.moves = true;
             gameObject.body.enable = true;
             if (gameObject.x < (midle_window - conveer_width / 8)) {
-                if (gameObject.y < 100) {
+                if (gameObject.y < 305) {
                     gameObject.setVelocity(200 * DEVICE_SIZE_SPEED, 50 * DEVICE_SIZE_SPEED);
                 } else {
                     gameObject.setVelocity(200 * DEVICE_SIZE_SPEED, -300 * DEVICE_SIZE_SPEED);
                 }
                 gameObject.setAngularVelocity(-40 * DEVICE_SIZE_SPEED);
             } else if (gameObject.x > (midle_window + conveer_width / 8)) {
-                if (gameObject.y < 100) {
+                if (gameObject.y < 305) {
                     gameObject.setVelocity(-200 * DEVICE_SIZE_SPEED, 50 * DEVICE_SIZE_SPEED);
                 } else {
                     gameObject.setVelocity(-200 * DEVICE_SIZE_SPEED, -300 * DEVICE_SIZE_SPEED);
@@ -306,12 +306,8 @@ var MainSc = new Phaser.Class({
             } else {
                 gameObject.setVelocityY((speedTrash + 150) * DEVICE_SIZE_SPEED);
             }
-            gameObject.setGravityY(300);
+            gameObject.setGravityY(300 * DEVICE_SIZE_SPEED);
             gameObject.setBounce(0.4);
-        });
-
-        this.input.on('pointerdown', function (pointer) {
-            // var stop = conveer_anim.anims.stop('conveer');
         });
 
         var coliderGroupFunction = function (s1, s2) {
@@ -495,9 +491,7 @@ function createDialog() {
         y: midle_window_h,
 
         background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, COLOR_PRIMARY).setStrokeStyle(2, INACTIVE_COLOR),
-        content: this.add.text(0, 0, 'Выйти в меню?', {
-            font: '32pt Ubuntu'
-        }).setColor(DARK),
+        content: this.add.text(0, 0, 'Выйти в меню?', {font: DEVICE_SIZE * 32 + 'pt Ubuntu'}).setColor(DARK),
         actions: [
             createLabel(this, 'Да'),
             createLabel(this, 'Нет')
@@ -546,9 +540,7 @@ var createLabel = function (scene, text) {
     return scene.rexUI.add.label({
         background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK),
 
-        text: scene.add.text(0, 0, text, {
-            font: '32pt Ubuntu'
-        }).setColor(DARK),
+        text: scene.add.text(0, 0, text, {font: DEVICE_SIZE * 32 + 'pt Ubuntu'}).setColor(DARK),
 
         space: {
             left: 10,
@@ -575,7 +567,8 @@ function toxicality(accumulator) {
 
 function darkness() {
     isNeedDarknes = false;
-    var darknes = this.add.sprite(midle_window, 0, 'darknes').setOrigin(0.5, 0).setScale(1 / global_scale).setDepth(11);
+    var scale = DEVICE_SIZE === 1 ? 1 / (global_scale) : 4 * global_scale;
+    var darknes = this.add.sprite(midle_window, 0, 'darknes').setOrigin(0.5, 0).setScale(scale).setDepth(11);
     this.tweens.add({
         targets: darknes,
         alpha: 0,
