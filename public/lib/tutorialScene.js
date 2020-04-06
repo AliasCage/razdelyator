@@ -16,13 +16,13 @@ var Tutorial = new Phaser.Class({
     },
 
     preload: function () {
+        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7)
+            .fillRect(midle_window - GLOBAL_WIDTH * 0.475, GLOBAL_HEIGHT * 0.9, GLOBAL_WIDTH * 0.95, 50);
         var progressBar = this.add.graphics();
-        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, window.innerWidth, window.innerHeight);
-        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7).fillRect(midle_window - 160, 270, 320, 50);
         this.load.on('progress', function (value) {
-            progressBar.clear();
-            progressBar.fillStyle(COLOR_PRIMARY, 1);
-            progressBar.fillRect(midle_window + 10 - 150, 280, 300 * value - 10, 30);
+            progressBar.clear().fillStyle(COLOR_PRIMARY, 1)
+                .fillRect(midle_window - GLOBAL_WIDTH * 0.45, GLOBAL_HEIGHT * 0.9 + 10, GLOBAL_WIDTH * 0.9 * value, 30);
         });
         this.load.on('complete', function () {
             progressBar.destroy();
@@ -33,7 +33,7 @@ var Tutorial = new Phaser.Class({
 
     create: function () {
 
-        this.add.tileSprite(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
+        this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
 
         var tut5 = this.add.sprite(midle_window, 0, 'tut5')
             .setOrigin(0.5, 0).setScale(global_scale).setInteractive()

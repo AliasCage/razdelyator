@@ -21,16 +21,13 @@ var Raiting = new Phaser.Class({
     },
 
     preload: function () {
-        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, window.innerWidth, window.innerHeight);
-        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7).fillRect(midle_window - 160, 270, 320, 50);
+        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7)
+            .fillRect(midle_window - GLOBAL_WIDTH * 0.475, GLOBAL_HEIGHT * 0.9, GLOBAL_WIDTH * 0.95, 50);
         var progressBar = this.add.graphics();
         this.load.on('progress', function (value) {
-            progressBar.clear().fillStyle(COLOR_PRIMARY, 1).fillRect(midle_window + 10 - 150, 280, 300 * value - 10, 30);
-        });
-        this.load.on('complete', function () {
-            progressBar.destroy();
-            progressBox.destroy();
-            groundBar.destroy();
+            progressBar.clear().fillStyle(COLOR_PRIMARY, 1)
+                .fillRect(midle_window - GLOBAL_WIDTH * 0.45, GLOBAL_HEIGHT * 0.9 + 10, GLOBAL_WIDTH * 0.9 * value, 30);
         });
         this.load.on('complete', function () {
             progressBar.destroy();
@@ -43,11 +40,11 @@ var Raiting = new Phaser.Class({
     },
 
     create: function () {
-        this.add.tileSprite(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
+        this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
         this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0).setScale(global_scale);
         var loginDialog;
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
-        this.add.sprite(midle_window + side_middle, window.innerHeight * 0.875, 'menu_on')
+        this.add.sprite(midle_window + side_middle, GLOBAL_HEIGHT * 0.875, 'menu_on')
             .setOrigin(0, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
                 player_score = 0;
@@ -55,11 +52,11 @@ var Raiting = new Phaser.Class({
                     loginDialog.destroy();
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
-        debugger
+
         if (player_score && player_score > 0) {
             loginDialog = CreateLoginDialog(this, {
                 x: midle_window,
-                y: window.innerHeight * 0.8,
+                y: GLOBAL_HEIGHT * 0.4,
                 title: 'Ваши очки: ' + player_score,
                 username: isInputUserMail ? userName : 'username',
                 email: isInputUserMail ? userMail : 'user@email.ru',
@@ -93,20 +90,30 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     var height = GetValue(config, 'height', undefined);
 
     var background = scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, COLOR_PRIMARY);
-    var titleField = scene.add.text(0, 0, title, {font: '22pt Ubuntu'}).setColor(DARK);
+    var titleField = scene.add.text(0, 0, title, {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK);
     var userNameField = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
         text: scene.rexUI.add.BBCodeText(0, 0, username, {
-            fixedWidth: 200,
-            fixedHeight: 36,
+            fixedWidth: DEVICE_SIZE * 200,
+            fixedHeight: DEVICE_SIZE * 36,
             valign: 'center'
-        }).setColor(DARK).setFont('22pt Ubuntu'),
+        }).setColor(DARK).setFont(DEVICE_SIZE * 22 + 'pt Ubuntu'),
 
-        space: {top: 5, bottom: 5, left: 5, right: 5, icon: 10,}
+        space: {
+            top: DEVICE_SIZE * 5,
+            bottom: DEVICE_SIZE * 5,
+            left: DEVICE_SIZE * 5,
+            right: DEVICE_SIZE * 5,
+            icon: DEVICE_SIZE * 10,
+        }
     })
         .setInteractive()
         .on('pointerdown', function () {
+            debugger
+            if (username === 'username') {
+                username = '';
+            }
             var config = {
                 onTextChanged: function (textObject, text) {
                     username = text;
@@ -120,15 +127,24 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
         text: scene.rexUI.add.BBCodeText(0, 0, email, {
-            fixedWidth: 200,
-            fixedHeight: 36,
+            fixedWidth: DEVICE_SIZE * 200,
+            fixedHeight: DEVICE_SIZE * 36,
             valign: 'center'
-        }).setColor(DARK).setFont('22pt Ubuntu'),
+        }).setColor(DARK).setFont(DEVICE_SIZE * 22 + 'pt Ubuntu'),
 
-        space: {top: 5, bottom: 5, left: 5, right: 5, icon: 10,}
+        space: {
+            top: DEVICE_SIZE * 5,
+            bottom: DEVICE_SIZE * 5,
+            left: DEVICE_SIZE * 5,
+            right: DEVICE_SIZE * 5,
+            icon: DEVICE_SIZE * 10,
+        }
     })
         .setInteractive()
         .on('pointerdown', function () {
+            if (email === 'user@mail.ru') {
+                email = '';
+            }
             var config = {
                 type: 'email',
                 text: email,
@@ -143,10 +159,8 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     var loginButton = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, DARK),
-        text: scene.add.text(0, 0, 'Cохранить результат?', {
-            font: '22pt Ubuntu'
-        }).setColor(DARK),
-        space: {top: 8, bottom: 8, left: 8, right: 8}
+        text: scene.add.text(0, 0, 'Cохранить результат?', {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK),
+        space: {top: DEVICE_SIZE * 8, bottom: DEVICE_SIZE * 8, left: DEVICE_SIZE * 8, right: DEVICE_SIZE * 8}
     })
         .setInteractive()
         .on('pointerdown', function () {
@@ -161,10 +175,23 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
         height: height,
     })
         .addBackground(background)
-        .add(titleField, 0, 'center', {top: 10, bottom: 10, left: 10, right: 10}, false)
-        .add(userNameField, 0, 'left', {bottom: 10, left: 10, right: 10}, true)
-        .add(emailField, 0, 'left', {bottom: 10, left: 10, right: 10}, true)
-        .add(loginButton, 0, 'center', {bottom: 10, left: 10, right: 10}, false)
+        .add(titleField, 0, 'center', {
+            top: DEVICE_SIZE * 10,
+            bottom: DEVICE_SIZE * 10,
+            left: DEVICE_SIZE * 10,
+            right: DEVICE_SIZE * 10
+        }, false)
+        .add(userNameField, 0, 'left', {
+            bottom: DEVICE_SIZE * 10,
+            left: DEVICE_SIZE * 10,
+            right: DEVICE_SIZE * 10
+        }, true)
+        .add(emailField, 0, 'left', {bottom: DEVICE_SIZE * 10, left: DEVICE_SIZE * 10, right: DEVICE_SIZE * 10}, true)
+        .add(loginButton, 0, 'center', {
+            bottom: DEVICE_SIZE * 10,
+            left: DEVICE_SIZE * 10,
+            right: DEVICE_SIZE * 10
+        }, false)
         .layout();
     return loginDialog;
 };
@@ -172,9 +199,9 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
 function createGridTable(game) {
     return game.rexUI.add.gridTable({
         x: midle_window,
-        y: window.innerHeight * 0.05,
+        y: GLOBAL_HEIGHT * 0.05,
         width: bg_width * 0.9,
-        height: window.innerHeight * 0.8,
+        height: GLOBAL_HEIGHT * 0.8,
 
         scrollMode: 0,
 
@@ -182,7 +209,7 @@ function createGridTable(game) {
 
         table: {
             cellWidth: undefined,
-            cellHeight: 50,
+            cellHeight: DEVICE_SIZE * 50,
             columns: 1,
             mask: {
                 padding: 2,
@@ -193,16 +220,16 @@ function createGridTable(game) {
         header: createRowItem(game,
             {
                 background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
-                id: game.add.text(0, 0, 'Место', {font: '15pt Ubuntu'}).setColor(DARK),
-                score: game.add.text(0, 0, 'Очки', {font: '15pt Ubuntu'}).setColor(DARK),
-                name: game.add.text(0, 0, 'Никнейм', {font: '15pt Ubuntu'}).setColor(DARK),
-                height: 30,
+                id: game.add.text(0, 0, 'Место', {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK),
+                score: game.add.text(0, 0, 'Очки', {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK),
+                name: game.add.text(0, 0, 'Никнейм', {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK),
+                height: DEVICE_SIZE * 30,
             }
         ),
 
         footer: game.rexUI.add.label({
             width: undefined,
-            height: 30,
+            height: DEVICE_SIZE * 10,
 
             background: game.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_DARK),
             // text: game.add.text(0, 0, user_top_place ? 'Ваше место: ' + user_top_place + ' счёт: ' + player_score : '').setColor(DARK),
@@ -226,11 +253,7 @@ function createGridTable(game) {
                 item = cell.item,
                 index = cell.index;
             if (cellContainer === null) {
-                debugger
                 cellContainer = createRowItem(scene);
-                console.log(cell.index + ': create new cell-container');
-            } else {
-                console.log(cell.index + ': reuse cell-container');
             }
 
             // Set properties from item value
@@ -245,7 +268,7 @@ function createGridTable(game) {
 }
 
 var createRowItem = function (scene, config) {
-    debugger
+
     var background = GetValue(config, 'background', undefined);
     if (background === undefined) {
         background = scene.add.sprite(0, 0, 'cell');
@@ -255,15 +278,15 @@ var createRowItem = function (scene, config) {
     }
     var id = GetValue(config, 'id', undefined);
     if (id === undefined) {
-        id = scene.add.text(0, 0, id, {font: '15pt Ubuntu'}).setColor(DARK);
+        id = scene.add.text(0, 0, id, {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK);
     }
     var score = GetValue(config, 'score', undefined);
     if (score === undefined) {
-        score = scene.add.text(0, 0, score, {font: '15pt Ubuntu'}).setColor(DARK);
+        score = scene.add.text(0, 0, score, {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK);
     }
     var name = GetValue(config, 'name', undefined);
     if (name === undefined) {
-        name = scene.add.text(0, 0, name, {font: '15pt Ubuntu'}).setColor(DARK);
+        name = scene.add.text(0, 0, name, {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK);
     }
     return scene.rexUI.add.sizer({
         width: GetValue(config, 'width', undefined),
@@ -277,7 +300,7 @@ var createRowItem = function (scene, config) {
             id,    // child
             0,                           // proportion, fixed width
             'center',                    // align vertically
-            {left: 10},                // padding
+            {left: DEVICE_SIZE * 10},                // padding
             false,                       // expand vertically
             'id'                         // map-key
         )
@@ -295,7 +318,7 @@ var createRowItem = function (scene, config) {
             score, // child
             0,                           // proportion, fixed width
             'center',                    // align vertically
-            {right: 10},               // padding
+            {right: DEVICE_SIZE * 10},               // padding
             false,                       // expand vertically
             'score'                      // map-key
         )

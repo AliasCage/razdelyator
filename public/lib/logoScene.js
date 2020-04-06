@@ -13,8 +13,17 @@ var now2;
 var now3;
 var now4;
 
-const midle_window = window.innerWidth / 2;
+const DEVICE_SIZE = window.devicePixelRatio;
+
+const GLOBAL_WIDTH = window.innerWidth * window.devicePixelRatio;
+const GLOBAL_HEIGHT = window.innerHeight * window.devicePixelRatio;
+
+const midle_window = GLOBAL_WIDTH / 2;
+const midle_window_h = GLOBAL_HEIGHT / 2;
+
 var global_scale;
+var DEVICE_SIZE_SPEED;
+
 var bg_width;
 var conveer_width;
 var isInputUserMail = false;
@@ -40,11 +49,13 @@ var Logo = new Phaser.Class({
 
 
     preload: function () {
-        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, window.innerWidth, window.innerHeight);
-        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7).fillRect(midle_window - 160, 270, 320, 50);
+        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7)
+            .fillRect(midle_window - GLOBAL_WIDTH * 0.475, GLOBAL_HEIGHT * 0.9, GLOBAL_WIDTH * 0.95, 50);
         var progressBar = this.add.graphics();
         this.load.on('progress', function (value) {
-            progressBar.clear().fillStyle(COLOR_PRIMARY, 1).fillRect(midle_window + 10 - 150, 280, 300 * value - 10, 30);
+            progressBar.clear().fillStyle(COLOR_PRIMARY, 1)
+                .fillRect(midle_window - GLOBAL_WIDTH * 0.45, GLOBAL_HEIGHT * 0.9 + 10, GLOBAL_WIDTH * 0.9 * value, 30);
         });
 
         this.load.on('complete', function () {
@@ -161,18 +172,25 @@ var Logo = new Phaser.Class({
     create: function () {
 
 
-        this.add.tileSprite(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight, 'bg_tile');
+        this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
 
         var intro = this.add.sprite(midle_window, 0, 'intro').setOrigin(0.5, 0).setDepth(10);
-        global_scale = window.innerHeight / intro.height;
-        bg_width = intro.width * global_scale;
+        if (!global_scale) {
+            global_scale = GLOBAL_HEIGHT / intro.height;
+            DEVICE_SIZE_SPEED = DEVICE_SIZE;
+        }
+        if (!bg_width) {
+            bg_width = intro.width * global_scale;
+        }
         intro.setScale(global_scale);
 
         var conveer_anim = this.add.sprite(midle_window, 0, 'con1');
-        conveer_width = conveer_anim.width * global_scale;
+        if (!conveer_width) {
+            conveer_width = conveer_anim.width * global_scale;
+        }
         conveer_anim.destroy();
 
-        var start_btn = this.add.sprite(midle_window, window.innerHeight * 0.53, 'start').setOrigin(0.5, 0.5)
+        var start_btn = this.add.sprite(midle_window, GLOBAL_HEIGHT * 0.53, 'start').setOrigin(0.5, 0.5)
             .setDepth(11).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
                 start_btn.setScale(global_scale);
@@ -208,7 +226,7 @@ var Logo = new Phaser.Class({
             .on("pointerout", function () {
                 start_btn.setScale(global_scale);
             });
-        var tutorial_btn = this.add.sprite(midle_window, window.innerHeight * 0.605, 'tutorial').setOrigin(0.5, 0.5)
+        var tutorial_btn = this.add.sprite(midle_window, GLOBAL_HEIGHT * 0.605, 'tutorial').setOrigin(0.5, 0.5)
             .setDepth(11).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
                 tutorial_btn.setScale(global_scale);
@@ -224,7 +242,7 @@ var Logo = new Phaser.Class({
             .on("pointerout", function () {
                 tutorial_btn.setScale(global_scale);
             });
-        var raiting_btn = this.add.sprite(midle_window, window.innerHeight * 0.68, 'raiting').setOrigin(0.5, 0.5)
+        var raiting_btn = this.add.sprite(midle_window, GLOBAL_HEIGHT * 0.68, 'raiting').setOrigin(0.5, 0.5)
             .setDepth(11).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
                 raiting_btn.setScale(global_scale);
