@@ -47,10 +47,9 @@ var Raiting = new Phaser.Class({
         this.add.sprite(midle_window + side_middle, GLOBAL_HEIGHT * 0.875, 'menu_on')
             .setOrigin(0, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
-                player_score = 0;
                 if (loginDialog)
                     loginDialog.destroy();
-                this.scene.start('logo', {name: 'Move from Raiting to Logo'});
+                createDialog.call(this);
             }, this);
 
         if (player_score && player_score > 0) {

@@ -60,8 +60,6 @@ const timerSlow = 45000;
 
 const batary_case_speed = 4500;
 var batary_counter = -1;
-var dialog;
-
 
 var tutFirstGameTraining;
 
@@ -235,9 +233,7 @@ var MainSc = new Phaser.Class({
         this.add.sprite(midle_window + side_middle, GLOBAL_HEIGHT * 0.875, 'menu_on')
             .setOrigin(0, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
-                if (!dialog) {
-                    createDialog.call(this);
-                }
+                createDialog.call(this);
             }, this);
 
         text_score = this.add.text(midle_window - side_middle * 1.6, GLOBAL_HEIGHT * 0.9, player_score, {
@@ -452,7 +448,7 @@ var MainSc = new Phaser.Class({
         if (this.time.now - now > interval && !tutFirstGameTraining.visible) {
             now = this.time.now;
             createAndDropObject.call(this);
-            if(tutFirstGameTraining.visible  ){
+            if (tutFirstGameTraining.visible) {
                 nowSkill1 = this.time.now - now1;
                 nowSkill2 = this.time.now - now2;
                 nowSkill3 = this.time.now - now3;
@@ -471,7 +467,7 @@ var MainSc = new Phaser.Class({
             now2 = nowSkill2 + this.time.now;
             now3 = nowSkill3 + this.time.now;
             now4 = nowSkill4 + this.time.now;
-            scoreDifficulty =  nowScoreDifficulty + this.time.now;
+            scoreDifficulty = nowScoreDifficulty + this.time.now;
             activeGroup.getChildren().forEach(function (trash) {
                 trash.setVelocityY(speedTrash);
             });
@@ -526,73 +522,6 @@ var MainSc = new Phaser.Class({
 
     },
 });
-
-
-function createDialog() {
-    dialog = this.rexUI.add.dialog({
-        x: midle_window,
-        y: midle_window_h,
-
-        background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, COLOR_PRIMARY).setStrokeStyle(2, INACTIVE_COLOR),
-        content: this.add.text(0, 0, 'Выйти в меню?', {font: DEVICE_SIZE * 32 + 'pt Ubuntu'}).setColor(DARK),
-        actions: [
-            createLabel(this, 'Да'),
-            createLabel(this, 'Нет')
-        ],
-
-        space: {
-            title: 25,
-            content: 25,
-            action: 15,
-
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
-        },
-
-        align: {
-            actions: 'center', // 'center'|'left'|'right'
-        },
-
-        expand: {
-            content: false, // Content is a pure text object
-        }
-    })
-        .on('button.click', function (button, groupName, index) {
-            if (index === 0) {
-                isPause = true;
-                player_score = 0;
-                this.scene.start('logo', {name: 'Move from Main to Logo'});
-            }
-            dialog.destroy();
-            dialog = undefined;
-        }, this)
-        .on('button.over', function (button, groupName, index) {
-            button.getElement('background').setStrokeStyle(1, INACTIVE_COLOR);
-        })
-        .on('button.out', function (button, groupName, index) {
-            button.getElement('background').setStrokeStyle();
-        })
-        .layout()
-        .popUp(500)
-        .setDepth(9);
-}
-
-var createLabel = function (scene, text) {
-    return scene.rexUI.add.label({
-        background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK),
-
-        text: scene.add.text(0, 0, text, {font: DEVICE_SIZE * 32 + 'pt Ubuntu'}).setColor(DARK),
-
-        space: {
-            left: 10,
-            right: 10,
-            top: 10,
-            bottom: 10
-        }
-    });
-};
 
 function toxicality(accumulator) {
     accumulator.setTint(TOXIC_COLOR, TOXIC_COLOR, TOXIC_COLOR, TOXIC_COLOR);

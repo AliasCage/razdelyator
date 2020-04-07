@@ -31,6 +31,7 @@ var isFirstGameTraining = true;
 var isFirstGameTrainingDisplay = false;
 var userName;
 var userMail;
+var dialog;
 
 var Logo = new Phaser.Class({
 
@@ -260,3 +261,72 @@ var Logo = new Phaser.Class({
     },
 
 });
+
+function createDialog() {
+    if (dialog) {
+        return
+    }
+    dialog = this.rexUI.add.dialog({
+        x: midle_window,
+        y: midle_window_h,
+
+        background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, COLOR_PRIMARY).setStrokeStyle(2, INACTIVE_COLOR),
+        content: this.add.text(0, 0, 'Выйти в меню?', {font: DEVICE_SIZE * 32 + 'pt Ubuntu'}).setColor(DARK),
+        actions: [
+            createLabel(this, 'Да'),
+            createLabel(this, 'Нет')
+        ],
+
+        space: {
+            title: 25,
+            content: 25,
+            action: 15,
+
+            left: 20,
+            right: 20,
+            top: 20,
+            bottom: 20,
+        },
+
+        align: {
+            actions: 'center', // 'center'|'left'|'right'
+        },
+
+        expand: {
+            content: false, // Content is a pure text object
+        }
+    })
+        .on('button.click', function (button, groupName, index) {
+            if (index === 0) {
+                isPause = true;
+                player_score = 0;
+                this.scene.start('logo', {name: 'Move from Main to Logo'});
+            }
+            dialog.destroy();
+            dialog = undefined;
+        }, this)
+        .on('button.over', function (button, groupName, index) {
+            button.getElement('background').setStrokeStyle(1, INACTIVE_COLOR);
+        })
+        .on('button.out', function (button, groupName, index) {
+            button.getElement('background').setStrokeStyle();
+        })
+        .layout()
+        .popUp(500)
+        .setDepth(9);
+}
+
+var createLabel = function (scene, text) {
+    return scene.rexUI.add.label({
+        background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK),
+
+        text: scene.add.text(0, 0, text, {font: DEVICE_SIZE * 32 + 'pt Ubuntu'}).setColor(DARK),
+
+        space: {
+            left: 10,
+            right: 10,
+            top: 10,
+            bottom: 10
+        }
+    });
+};
