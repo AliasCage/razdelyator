@@ -115,6 +115,8 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
                 username = '';
             }
             var config = {
+                text: username,
+                fontSize: 'xxx-large',
                 onTextChanged: function (textObject, text) {
                     username = text;
                     textObject.text = text;
@@ -142,17 +144,20 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     })
         .setInteractive()
         .on('pointerdown', function () {
-            if (email === 'user@mail.ru') {
+            if (email === 'user@email.ru') {
                 email = '';
             }
             var config = {
                 type: 'email',
                 text: email,
+                fontSize: 'xxx-large',
                 onTextChanged: function (textObject, text) {
+                    debugger
                     email = text;
                     textObject.text = email;
                 }
             };
+            debugger
             scene.rexUI.edit(emailField.getElement('text'), config);
         });
 

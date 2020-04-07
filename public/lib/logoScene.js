@@ -66,11 +66,6 @@ var Logo = new Phaser.Class({
 
 
         this.load.setBaseURL('img');
-        // this.load.svg('intro', 'intro.svg', {width: 540, height: 960});
-        //
-        // this.load.svg('raiting', 'raiting.svg', {width: 193, height: 54});
-        // this.load.svg('start', 'start.svg', {width: 132, height: 54});
-        // this.load.svg('tutorial', 'tutorial.svg', {width: 196, height: 54});
         this.load.image('intro', 'intro.png');
         this.load.image('raiting', 'raiting.png');
         this.load.image('start', 'start.png');
@@ -247,7 +242,6 @@ var Logo = new Phaser.Class({
             .on("pointerup", function () {
                 raiting_btn.setScale(global_scale);
                 console.log("raiting");
-                debugger
                 this.scene.start('raiting', {name: 'Move from Logo to Raiting'});
             }, this)
             .on("pointerdown", function () {
@@ -262,6 +256,7 @@ var Logo = new Phaser.Class({
     },
 
     update: function () {
+        debugger
     },
 
 });

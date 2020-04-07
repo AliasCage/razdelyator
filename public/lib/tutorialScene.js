@@ -11,7 +11,6 @@ var Tutorial = new Phaser.Class({
         },
 
     init: function (data) {
-        debugger
         console.log(data.name);
     },
 
@@ -74,6 +73,7 @@ var Tutorial = new Phaser.Class({
                     tut3.destroy();
                     tut4.destroy();
                     tut5.destroy();
+                    isFirstStartGame = false;
                     this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
                 }
             }, this);
