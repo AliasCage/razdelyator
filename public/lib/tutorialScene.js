@@ -165,6 +165,16 @@ var Tutorial = new Phaser.Class({
                     tut2.visible = true;
                 }
             }, this);
+        this.add.text(midle_window + (conveer_width + (bg_width - conveer_width)) * 0.25, midle_window_h * 2 - midle_window_h/10,
+            'Пропустить', {font: DEVICE_SIZE * 19 + 'pt Ubuntu'}).setColor('#ffa500').setDepth(11).setInteractive().on("pointerdown", function (pointer) {
+                tut1.destroy();
+                tut2.destroy();
+                tut3.destroy();
+                tut4.destroy();
+                tut5.destroy();
+                this.scene.start('mainSc', {name: 'Move from Tutorial to MainScene'});
+                console.log("swiperight");
+        }, this);
     },
 
     update: function () {

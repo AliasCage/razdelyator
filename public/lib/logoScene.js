@@ -33,6 +33,10 @@ var userName;
 var userMail;
 var dialog;
 
+var soundpram;
+
+window.PhaserGlobal = { disableWebAudio: true };
+
 var Logo = new Phaser.Class({
 
 
@@ -163,10 +167,15 @@ var Logo = new Phaser.Class({
         this.load.image('tut5', 'tutorial/tut5.png');
 
         this.load.image('cell', 'cell.jpg');
+
+        this.load.audio('m',  ['sounds/audiopram.mp3', 'sounds/audiopram.ogg']);
     },
 
     create: function () {
 
+        soundpram = this.sound.add('m');
+        soundpram.loop = true;
+        soundpram.play();
 
         this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
 
