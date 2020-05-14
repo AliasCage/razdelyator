@@ -91,22 +91,7 @@ var MainSc = new Phaser.Class({
 
 
     preload: function () {
-
-
-        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
-        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7)
-            .fillRect(midle_window - GLOBAL_WIDTH * 0.475, GLOBAL_HEIGHT * 0.9, GLOBAL_WIDTH * 0.95, 50);
-        var progressBar = this.add.graphics();
-        this.load.on('progress', function (value) {
-            progressBar.clear().fillStyle(COLOR_PRIMARY, 1)
-                .fillRect(midle_window - GLOBAL_WIDTH * 0.45, GLOBAL_HEIGHT * 0.9 + 10, GLOBAL_WIDTH * 0.9 * value, 30);
-        });
-        this.load.on('complete', function () {
-            progressBar.destroy();
-            progressBox.destroy();
-            groundBar.destroy();
-        });
-
+        loader(this);
         this.load.scenePlugin('rexuiplugin', 'lib/rexuiplugin.min.js', 'rexUI', 'rexUI');
     },
 
@@ -248,7 +233,7 @@ var MainSc = new Phaser.Class({
                 destroyGroup.push(s2);
                 s2.destroy();
 
-                createCoin(s2.x - 50, s2.y + 50, 3, this);
+                new Coin(s2.x - 50, s2.y + 50, 3, this);
             }
         }, null, this);
 
@@ -259,7 +244,7 @@ var MainSc = new Phaser.Class({
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
                 s2.setAngularVelocity(-50 * DEVICE_SIZE_SPEED);
 
-                createCoin(s2.x + 50, s2.y - 50, 2, this);
+                new Coin(s2.x + 50, s2.y - 50, 2, this);
             }
         }, null, this);
         this.physics.add.overlap(grey_bak, group, function (s1, s2) {
@@ -269,7 +254,7 @@ var MainSc = new Phaser.Class({
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
                 s2.setAngularVelocity(50 * DEVICE_SIZE_SPEED);
 
-                createCoin(s2.x - 50, s2.y - 50, 1, this);
+                new Coin(s2.x - 50, s2.y - 50, 1, this);
             }
         }, null, this);
 
@@ -447,7 +432,7 @@ var MainSc = new Phaser.Class({
         }
         if (this.time.now - now > interval && !tutFirstGameTraining.visible) {
             now = this.time.now;
-            createAndDropObject.call(this);
+            new Trash(this);
             if (tutFirstGameTraining.visible) {
                 nowSkill1 = this.time.now - now1;
                 nowSkill2 = this.time.now - now2;
@@ -553,6 +538,8 @@ function darkness() {
 }
 
 function setInactive(object) {
+    debugger
+    object.setInactive();
     group.add(object);
     object.removeInteractive();
     object.body.allowdraggable = false;
@@ -575,88 +562,6 @@ function clearGroup(g) {
     });
 }
 
-var createCoin = function (x, y, points, scene) {
-    player_score += points;
-    var coin = scene.add.sprite(x, y, '+' + points).setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20);
-    scene.tweens.add({
-        targets: coin,
-        x: text_score.x,
-        y: text_score.y,
-        scaleX: 0.10,
-        scaleY: 0.10,
-        ease: 'Linear',
-        duration: 500,
-        delay: 300,
-        onComplete: function () {
-            coin.destroy();
-        },
-    });
-};
-
-function createAndDropObject() {
-    var trash;
-    var trashType;
-    var number = Math.random();
-    var toxic = false;
-    if (one_trash) {
-        if (one_type === 1) {
-            grey_bak.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
-            trash = blue[Math.floor(Math.random() * blue.length)];
-            trashType = 'blue';
-        }
-        if (one_type === 2) {
-            blue_bak.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
-            trash = grey[Math.floor(Math.random() * grey.length)];
-            trashType = 'grey';
-        }
-    } else {
-        if (number > 0.8 && batary_counter < 0) {
-            if (isFirstGameTraining) {
-                isFirstGameTraining = false;
-                tutFirstGameTraining.setVisible(true);
-            }
-            trash = acc[Math.floor(Math.random() * acc.length)];
-            trashType = 'acc';
-            toxic = true;
-            batary_counter = 1;
-        } else if (number > 0.4) {
-            trash = blue[Math.floor(Math.random() * blue.length)];
-            trashType = 'blue';
-            batary_counter--;
-        } else {
-            trash = grey[Math.floor(Math.random() * grey.length)];
-            trashType = 'grey';
-            batary_counter--;
-        }
-    }
-
-    var diff = getRandomInt(-conveer_width / 8, conveer_width / 8);
-    var obj = activeGroup.create(midle_window + diff, -20, trash).setDepth(0);
-    obj.setSize(obj.width / 2, obj.height / 2);
-    obj.type = trashType;
-    obj.isToxic = toxic;
-
-    obj.setScale(global_scale / 1.25);
-
-    obj.setInteractive();
-    obj.setCollideWorldBounds(true);
-    if (!isPause) {
-        obj.body.moves = true;
-        obj.setVelocityY(speedTrash * DEVICE_SIZE_SPEED);
-    } else {
-        obj.body.moves = false;
-    }
-    this.input.setDraggable(obj);
-
-    return obj;
-}
-
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 function autoTrash() {
     if (one_type === 0) {
         auto_type = getRandomInt(1, 2);
@@ -674,7 +579,7 @@ function destoyBlueTrash(bak, trash) {
     destroyGroup.push(trash);
     trash.setVelocity((bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (bak.y - trash.y) * DEVICE_SIZE_SPEED);
     trash.setAngularVelocity(-50 * DEVICE_SIZE_SPEED);
-    createCoin(trash.x + 50, trash.y - 50, 2, this);
+    new Coin(trash.x + 50, trash.y - 50, 2, this);
 }
 
 function destoyGreyTrash(bak, trash) {
@@ -682,7 +587,7 @@ function destoyGreyTrash(bak, trash) {
     destroyGroup.push(trash);
     trash.setVelocity((bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (bak.y - trash.y) * DEVICE_SIZE_SPEED);
     trash.setAngularVelocity(50 * DEVICE_SIZE_SPEED);
-    createCoin(trash.x - 50, trash.y - 50, 1, this);
+    new Coin(trash.x - 50, trash.y - 50, 1, this);
 }
 
 function autoSort() {

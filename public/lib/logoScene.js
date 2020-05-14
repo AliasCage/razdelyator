@@ -50,21 +50,7 @@ var Logo = new Phaser.Class({
 
 
     preload: function () {
-        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
-        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7)
-            .fillRect(midle_window - GLOBAL_WIDTH * 0.475, GLOBAL_HEIGHT * 0.9, GLOBAL_WIDTH * 0.95, 50);
-        var progressBar = this.add.graphics();
-        this.load.on('progress', function (value) {
-            progressBar.clear().fillStyle(COLOR_PRIMARY, 1)
-                .fillRect(midle_window - GLOBAL_WIDTH * 0.45, GLOBAL_HEIGHT * 0.9 + 10, GLOBAL_WIDTH * 0.9 * value, 30);
-        });
-
-        this.load.on('complete', function () {
-            progressBar.destroy();
-            progressBox.destroy();
-            groundBar.destroy();
-        });
-
+        loader(this);
 
         this.load.setBaseURL('img');
         this.load.image('intro', 'intro.png');
@@ -166,8 +152,6 @@ var Logo = new Phaser.Class({
     },
 
     create: function () {
-
-
         this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
 
         var intro = this.add.sprite(midle_window, 0, 'intro').setOrigin(0.5, 0).setDepth(10);
@@ -257,7 +241,7 @@ var Logo = new Phaser.Class({
     },
 
     update: function () {
-        debugger
+        // debugger
     },
 
 });
@@ -329,4 +313,27 @@ var createLabel = function (scene, text) {
             bottom: 10
         }
     });
+};
+
+var loader = function (scene) {
+    var groundBar = scene.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+    var progressBox = scene.add.graphics().fillStyle(COLOR_DARK, 0.7)
+        .fillRect(midle_window - GLOBAL_WIDTH * 0.475, GLOBAL_HEIGHT * 0.9, GLOBAL_WIDTH * 0.95, 50);
+    var progressBar = scene.add.graphics();
+    scene.load.on('progress', function (value) {
+        progressBar.clear().fillStyle(COLOR_PRIMARY, 1)
+            .fillRect(midle_window - GLOBAL_WIDTH * 0.45, GLOBAL_HEIGHT * 0.9 + 10, GLOBAL_WIDTH * 0.9 * value, 30);
+    });
+
+    scene.load.on('complete', function () {
+        progressBar.destroy();
+        progressBox.destroy();
+        groundBar.destroy();
+    });
+};
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 };
