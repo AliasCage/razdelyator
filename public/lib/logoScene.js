@@ -33,7 +33,7 @@ var userName;
 var userMail;
 var dialog;
 
-var soundpram;
+var soundpram = null;
 
 window.PhaserGlobal = { disableWebAudio: true };
 
@@ -168,14 +168,21 @@ var Logo = new Phaser.Class({
 
         this.load.image('cell', 'cell.jpg');
 
-        this.load.audio('m',  ['sounds/audiopram.mp3', 'sounds/audiopram.ogg']);
+        this.load.audio('m',  ['sounds/soundgame.mp3', 'sounds/soundgame.ogg']);
     },
 
     create: function () {
+        screen.orientation.lock('portrait');
+        if(soundpram === null){
+            soundpram = this.sound.add('m');
+            soundpram.loop = true;
+            soundpram.play({
+                loop: true,
+                volume: 0.2
+            });
+        }
 
-        soundpram = this.sound.add('m');
-        soundpram.loop = true;
-        soundpram.play();
+
 
         this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
 
@@ -266,10 +273,11 @@ var Logo = new Phaser.Class({
     },
 
     update: function () {
-        debugger
+
     },
 
 });
+
 
 function createDialog() {
     if (dialog) {

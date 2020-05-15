@@ -12,6 +12,11 @@ var activeGroup;
 var toxicGroup;
 var destroyGroup = [];
 
+var bonusSkill = null;
+var folowObject = null;
+var skillShadow;
+var skillMem= 0;
+
 var blue = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11', 'b12', 'b13', 'b14', 'b15', 'b16',
     'b17', 'b18', 'b19', 'b20'];
 var grey = ['g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7', 'g8', 'g9', 'g10', 'g11', 'g12', 'g13', 'g14', 'g15', 'g16',
@@ -246,9 +251,12 @@ var MainSc = new Phaser.Class({
             if (s2.type === 'acc') {
                 group.remove(s2);
                 destroyGroup.push(s2);
+                if(bonusSkill !== null){
+                    bonusSkill.destroy();
+                    folowObject = null;
+                }
                 s2.destroy();
-
-                createCoin(s2.x - 50, s2.y + 50, 3, this);
+                createCoin(s2.x - 50, s2.y + 50, 3, this, s2.hasSkillType);
             }
         }, null, this);
 
@@ -258,8 +266,11 @@ var MainSc = new Phaser.Class({
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
                 s2.setAngularVelocity(-50 * DEVICE_SIZE_SPEED);
-
-                createCoin(s2.x + 50, s2.y - 50, 2, this);
+                if(bonusSkill !== null){
+                    bonusSkill.destroy();
+                    folowObject = null;
+                }
+                createCoin(s2.x + 50, s2.y - 50, 2, this, s2.hasSkillType);
             }
         }, null, this);
         this.physics.add.overlap(grey_bak, group, function (s1, s2) {
@@ -268,8 +279,11 @@ var MainSc = new Phaser.Class({
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
                 s2.setAngularVelocity(50 * DEVICE_SIZE_SPEED);
-
-                createCoin(s2.x - 50, s2.y - 50, 1, this);
+                if(bonusSkill !== null){
+                    bonusSkill.destroy();
+                    folowObject = null;
+                }
+                createCoin(s2.x - 50, s2.y - 50, 1, this, s2.hasSkillType);
             }
         }, null, this);
 
@@ -285,7 +299,6 @@ var MainSc = new Phaser.Class({
             gameObject.body.enable = false;
             gameObject.setDepth(9);
         });
-
 
         this.input.on('dragend', function (pointer, gameObject, dragX, dragY) {
             activeGroup.remove(gameObject);
@@ -370,8 +383,8 @@ var MainSc = new Phaser.Class({
         };
         this.physics.add.overlap(activeGroup, group, coliderActiveGroup);
         this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup);
-        this.physics.add.overlap(activeGroup, blue_bak, destoyBlueTrash, null, this);
-        this.physics.add.overlap(activeGroup, grey_bak, destoyGreyTrash, null, this);
+        // this.physics.add.overlap(activeGroup, blue_bak, destoyBlueTrash, null, this);
+        // this.physics.add.overlap(activeGroup, grey_bak, destoyGreyTrash, null, this);
 
         isPause = false;
 
@@ -405,6 +418,7 @@ var MainSc = new Phaser.Class({
         if (isPause) {
             return
         }
+        // Увеличение скорости падения мусора, уменьшение интервала создания мусора
         if (player_score > 5 && !tutFirstGameTraining.visible) {
             if (this.time.now - scoreDifficulty > intervalScoreDiff) {
                 speedTrash = speedTrash + 2;
@@ -423,6 +437,7 @@ var MainSc = new Phaser.Class({
             switchToRaiting = true;
             isPause = true;
         }
+        // Изменения очков
         text_score.text = player_score;
         if (Array.isArray(destroyGroup) && destroyGroup.length) {
             var shift = destroyGroup.shift();
@@ -441,18 +456,22 @@ var MainSc = new Phaser.Class({
             darkness.call(this);
         }
 
-        var interval = intervalCreateTrash + (300 + Math.floor((1500 - 300) * Math.random()));
+        var interval = intervalCreateTrash*3 + (300 + Math.floor((1500 - 300) * Math.random()));
+        // Изменение интервала создания мусора в два раза реже
         if (slow_trash) {
             interval = interval * 2;
         }
+        // Создание мусора
         if (this.time.now - now > interval && !tutFirstGameTraining.visible) {
             now = this.time.now;
-            createAndDropObject.call(this);
+            var obj = createAndDropObject.call(this);
+            if(obj.hasSkillType !== null){
+                console.log (obj.hasSkillType);
+                console.log('sssssssssss');
+                folowObject = obj;
+                bonusSkill = this.add.sprite(obj.x+100, obj.y+100, obj.hasSkillType+'_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.5);
+            }
             if (tutFirstGameTraining.visible) {
-                nowSkill1 = this.time.now - now1;
-                nowSkill2 = this.time.now - now2;
-                nowSkill3 = this.time.now - now3;
-                nowSkill4 = this.time.now - now4;
                 nowCreateTrash = this.time.now - now;
                 nowScoreDifficulty = this.time.now - scoreDifficulty;
                 activeGroup.getChildren().forEach(function (trash) {
@@ -461,45 +480,50 @@ var MainSc = new Phaser.Class({
             }
         }
 
+        if(bonusSkill !== null) {
+            if(folowObject!==null){
+                this.tweens.add({
+                    targets: bonusSkill,
+                    x: folowObject.x + 90,
+                    y: folowObject.y - 90,
+                    ease: 'Linear',
+                    duration: 0.1,
+                    delay: 0.1,
+                });
+            }else{
+                bonusSkill.destroy();
+            }
+
+
+        }
         if (!isFirstGameTraining && !tutFirstGameTraining.visible && !isFirstGameTrainingDisplay) {
             now = nowCreateTrash + this.time.now;
-            now1 = nowSkill1 + this.time.now;
-            now2 = nowSkill2 + this.time.now;
-            now3 = nowSkill3 + this.time.now;
-            now4 = nowSkill4 + this.time.now;
             scoreDifficulty = nowScoreDifficulty + this.time.now;
             activeGroup.getChildren().forEach(function (trash) {
                 trash.setVelocityY(speedTrash);
             });
             isFirstGameTrainingDisplay = true;
         }
-
+        //Автосортровка
         if (auto_trash) {
             autoSort();
         }
-
+        //Уменьшение скорости падения мусора
         if (slow_trash) {
             activeGroup.getChildren().forEach(function (trash) {
                 trash.setVelocityY(speedTrash * DEVICE_SIZE_SPEED / 2);
             });
         }
-        //таймеры для скилов
-        if (this.time.now - now1 > timerClear && !tutFirstGameTraining.visible) {
-            clear_on.visible = true;
-        }
-        if (this.time.now - now2 > timerAuto && !auto_trash && !tutFirstGameTraining.visible) {
-            auto_on.visible = true;
-            now2 = this.time.now;
-        } else if (this.time.now - now2 > timerAuto / 2 && auto_trash && !tutFirstGameTraining.visible) {
+        //таймеры для работы скилов
+
+        if (this.time.now - now2 > timerAuto / 2 && auto_trash && !tutFirstGameTraining.visible) {
             auto_trash = false;
             now2 = this.time.now;
             light_auto_on.visible = false;
             auto_type = 0;
         }
-        if ((this.time.now - now3 > timerOne) && !one_trash && !tutFirstGameTraining.visible) {
-            one_on.visible = true;
-            now3 = this.time.now;
-        } else if ((this.time.now - now3 > timerOne / 2) && one_trash && !tutFirstGameTraining.visible) {
+
+        if ((this.time.now - now3 > timerOne / 2) && one_trash && !tutFirstGameTraining.visible) {
             if (one_type === 1) {
                 grey_bak.setTint();
             }
@@ -511,15 +535,12 @@ var MainSc = new Phaser.Class({
             now3 = this.time.now;
             one_type = 0;
         }
-        if ((this.time.now - now4 > timerSlow) && !slow_trash && !tutFirstGameTraining.visible) {
-            slow_on.visible = true;
-            now4 = this.time.now;
-        } else if ((this.time.now - now4 > timerSlow / 2) && slow_trash && !tutFirstGameTraining.visible) {
+
+        if ((this.time.now - now4 > timerSlow / 2) && slow_trash && !tutFirstGameTraining.visible) {
             slow_trash = false;
             light_slow_on.visible = false;
             now4 = this.time.now;
         }
-
     },
 });
 
@@ -553,6 +574,9 @@ function darkness() {
 }
 
 function setInactive(object) {
+    if(bonusSkill !== null)
+    bonusSkill.destroy();
+    folowObject = null;
     group.add(object);
     object.removeInteractive();
     object.body.allowdraggable = false;
@@ -575,7 +599,8 @@ function clearGroup(g) {
     });
 }
 
-var createCoin = function (x, y, points, scene) {
+var createCoin = function (x, y, points, scene, skill) {
+    folowObject = null;
     player_score += points;
     var coin = scene.add.sprite(x, y, '+' + points).setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20);
     scene.tweens.add({
@@ -591,13 +616,44 @@ var createCoin = function (x, y, points, scene) {
             coin.destroy();
         },
     });
+    if(skill !== null){
+        skillShadow = scene.add.sprite(x, y, skill+'_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.5);
+        scene.tweens.add({
+            targets: skillShadow,
+            x: eval(skill+'_on').x,
+            y: eval(skill+'_on').y,
+            scaleX: 0.10,
+            scaleY: 0.10,
+            ease: 'Linear',
+            duration: 500,
+            onComplete: function () {
+                skillShadow.destroy();
+                eval(skill+'_on').visible = true;
+            },
+        });
+    }
 };
 
 function createAndDropObject() {
     var trash;
     var trashType;
+    var trashSkillType = null;
     var number = Math.random();
     var toxic = false;
+    if(Math.random() > 0.1){
+        var skillType = Math.random();
+        if(skillType > 0.7){
+            trashSkillType = 'auto';
+        }
+        else if(skillType > 0.55){
+            trashSkillType = 'slow';
+        }
+        else if(skillType > 0.35){
+            trashSkillType = 'clear';
+        }else{
+            trashSkillType = 'one';
+        }
+    }
     if (one_trash) {
         if (one_type === 1) {
             grey_bak.setTint(INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR, INACTIVE_COLOR);
@@ -635,9 +691,8 @@ function createAndDropObject() {
     obj.setSize(obj.width / 2, obj.height / 2);
     obj.type = trashType;
     obj.isToxic = toxic;
-
+    obj.hasSkillType = trashSkillType;
     obj.setScale(global_scale / 1.25);
-
     obj.setInteractive();
     obj.setCollideWorldBounds(true);
     if (!isPause) {
@@ -669,21 +724,38 @@ function autoTrash() {
     now2 = this.time.now;
 }
 
-function destoyBlueTrash(bak, trash) {
-    activeGroup.remove(trash);
-    destroyGroup.push(trash);
-    trash.setVelocity((bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (bak.y - trash.y) * DEVICE_SIZE_SPEED);
-    trash.setAngularVelocity(-50 * DEVICE_SIZE_SPEED);
-    createCoin(trash.x + 50, trash.y - 50, 2, this);
-}
+// function destoyBlueTrash(bak, trash) {
+//     if(bonusSkill !== null){
+//         bonusSkill.destroy();
+//         folowObject = null;
+//     }
+//     activeGroup.remove(trash);
+//     destroyGroup.push(trash);
+//     trash.setVelocity((bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (bak.y - trash.y) * DEVICE_SIZE_SPEED);
+//     trash.setAngularVelocity(-50 * DEVICE_SIZE_SPEED);
+//     if(trash.hasSkillType !== null){
+//         skillOperation(trash.hasSkillType, trash.x, trash.y);
+//     }
+//     createCoin(trash.x + 50, trash.y - 50, 2, this);
+//
+// }
 
-function destoyGreyTrash(bak, trash) {
-    activeGroup.remove(trash);
-    destroyGroup.push(trash);
-    trash.setVelocity((bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (bak.y - trash.y) * DEVICE_SIZE_SPEED);
-    trash.setAngularVelocity(50 * DEVICE_SIZE_SPEED);
-    createCoin(trash.x - 50, trash.y - 50, 1, this);
-}
+// function destoyGreyTrash(bak, trash) {
+//     if(bonusSkill !== null){
+//         bonusSkill.destroy();
+//         folowObject = null;
+//     }
+//     activeGroup.remove(trash);
+//     destroyGroup.push(trash);
+//     trash.setVelocity((bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (bak.y - trash.y) * DEVICE_SIZE_SPEED);
+//     trash.setAngularVelocity(50 * DEVICE_SIZE_SPEED);
+//     if(trash.hasSkillType !== null){
+//         skillOperation(trash.hasSkillType, trash.x, trash.y);
+//     }
+//     createCoin(trash.x - 50, trash.y - 50, 1, this);
+//
+// }
+
 
 function autoSort() {
     activeGroup.getChildren().forEach(function (trash) {

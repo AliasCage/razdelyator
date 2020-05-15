@@ -165,7 +165,7 @@ var Tutorial = new Phaser.Class({
                     tut2.visible = true;
                 }
             }, this);
-        this.add.text(midle_window + (conveer_width + (bg_width - conveer_width)) * 0.25, midle_window_h * 2 - midle_window_h/10,
+        this.add.text(midle_window - tut1.width /2 + DEVICE_SIZE * 19 * 2, midle_window_h * 2 - DEVICE_SIZE * 19 * 2,
             'Пропустить', {font: DEVICE_SIZE * 19 + 'pt Ubuntu'}).setColor('#ffa500').setDepth(11).setInteractive().on("pointerdown", function (pointer) {
                 tut1.destroy();
                 tut2.destroy();
