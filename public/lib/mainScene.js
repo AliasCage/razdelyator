@@ -5,6 +5,8 @@ var cursors;
 
 var nowDifficulty;
 
+var scoreMultiplier = 0;
+var scoreMultiplierDis = 1;
 var player_score = 0;
 var text_score;
 var group;
@@ -247,8 +249,15 @@ var MainSc = new Phaser.Class({
 
         }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true);
 
+        // scoreMultiplierDis = this.add.text(text_score.x + text_score.width + text_score.width * 1.5, text_score.y + text_score.height/3, null, {
+        //     font: DEVICE_SIZE * 3 + 'vh Ubuntu',
+        //     fill: "#fff",
+        //
+        // }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(false);
+
         this.physics.add.overlap(battary_case, group, function (s1, s2) {
             if (s2.type === 'acc') {
+                scoreMultiplier++;
                 group.remove(s2);
                 destroyGroup.push(s2);
                 if(bonusSkill !== null){
@@ -257,11 +266,15 @@ var MainSc = new Phaser.Class({
                 }
                 s2.destroy();
                 createCoin(s2.x - 50, s2.y + 50, 3, this, s2.hasSkillType);
+            }else{
+                scoreMultiplier = 0;
+                scoreMultiplierDis = 1;
             }
         }, null, this);
 
         this.physics.add.overlap(blue_bak, group, function (s1, s2) {
             if (s2.type === 'blue') {
+                scoreMultiplier++;
                 group.remove(s2);
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
@@ -271,10 +284,47 @@ var MainSc = new Phaser.Class({
                     folowObject = null;
                 }
                 createCoin(s2.x + 50, s2.y - 50, 2, this, s2.hasSkillType);
+            }else{
+                scoreMultiplier = 0;
+                scoreMultiplierDis = 1;
+            }
+        }, null, this);
+        this.physics.add.overlap(blue_bak, activeGroup, function (s1, s2) {
+            if (s2.type === 'blue' && auto_trash) {
+                scoreMultiplier++;
+                activeGroup.remove(s2);
+                destroyGroup.push(s2);
+                s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
+                s2.setAngularVelocity(-50 * DEVICE_SIZE_SPEED);
+                if(bonusSkill !== null){
+                    bonusSkill.destroy();
+                    folowObject = null;
+                }
+                createCoin(s2.x + 50, s2.y - 50, 2, this, s2.hasSkillType);
+            }else{
+                scoreMultiplier = 0;
+                scoreMultiplierDis = 1;
+            }
+        }, null, this);
+        this.physics.add.overlap(grey_bak, activeGroup, function (s1, s2) {
+            if (s2.type === 'grey' && auto_trash) {
+                scoreMultiplier++;
+                activeGroup.remove(s2);
+                destroyGroup.push(s2);
+                s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
+                s2.setAngularVelocity(-50 * DEVICE_SIZE_SPEED);
+                if(bonusSkill !== null){
+                    bonusSkill.destroy();
+                    folowObject = null;
+                }
+                createCoin(s2.x - 50, s2.y - 50, 2, this, s2.hasSkillType);
+            }else{
+                scoreMultiplier = 0;
             }
         }, null, this);
         this.physics.add.overlap(grey_bak, group, function (s1, s2) {
             if (s2.type === 'grey') {
+                scoreMultiplier++;
                 group.remove(s2);
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
@@ -284,6 +334,8 @@ var MainSc = new Phaser.Class({
                     folowObject = null;
                 }
                 createCoin(s2.x - 50, s2.y - 50, 1, this, s2.hasSkillType);
+            }else{
+                scoreMultiplier = 0;
             }
         }, null, this);
 
@@ -383,7 +435,7 @@ var MainSc = new Phaser.Class({
         };
         this.physics.add.overlap(activeGroup, group, coliderActiveGroup);
         this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup);
-        // this.physics.add.overlap(activeGroup, blue_bak, destoyBlueTrash, null, this);
+
         // this.physics.add.overlap(activeGroup, grey_bak, destoyGreyTrash, null, this);
 
         isPause = false;
@@ -395,9 +447,11 @@ var MainSc = new Phaser.Class({
             });
 
 
+
     },
 
     update: function () {
+
         //GameOver
         if (switchToRaiting) {
             switchToRaiting = false;
@@ -439,6 +493,13 @@ var MainSc = new Phaser.Class({
         }
         // Изменения очков
         text_score.text = player_score;
+
+        if(Math.floor(scoreMultiplier/5)>4){
+            var t = Math.floor(scoreMultiplier/5)>14 ? 'x5': Math.floor(scoreMultiplier/5)>9 ? 'x3' : 'x2';
+            text_score.text = text_score.text + t;
+            scoreMultiplierDis = Math.floor(scoreMultiplier/5)>14 ? 5: Math.floor(scoreMultiplier/5)>9 ? 3 : 2;
+        }
+
         if (Array.isArray(destroyGroup) && destroyGroup.length) {
             var shift = destroyGroup.shift();
             this.tweens.add({
@@ -493,8 +554,6 @@ var MainSc = new Phaser.Class({
             }else{
                 bonusSkill.destroy();
             }
-
-
         }
         if (!isFirstGameTraining && !tutFirstGameTraining.visible && !isFirstGameTrainingDisplay) {
             now = nowCreateTrash + this.time.now;
@@ -575,7 +634,7 @@ function darkness() {
 
 function setInactive(object) {
     if(bonusSkill !== null)
-    bonusSkill.destroy();
+        bonusSkill.destroy();
     folowObject = null;
     group.add(object);
     object.removeInteractive();
@@ -601,7 +660,12 @@ function clearGroup(g) {
 
 var createCoin = function (x, y, points, scene, skill) {
     folowObject = null;
-    player_score += points;
+    if(scoreMultiplier !== 0){
+        player_score  += points * scoreMultiplierDis;
+    }
+    else{
+        player_score += points;
+    }
     var coin = scene.add.sprite(x, y, '+' + points).setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20);
     scene.tweens.add({
         targets: coin,
@@ -702,7 +766,6 @@ function createAndDropObject() {
         obj.body.moves = false;
     }
     this.input.setDraggable(obj);
-
     return obj;
 }
 
@@ -723,39 +786,6 @@ function autoTrash() {
     light_auto_on.visible = true;
     now2 = this.time.now;
 }
-
-// function destoyBlueTrash(bak, trash) {
-//     if(bonusSkill !== null){
-//         bonusSkill.destroy();
-//         folowObject = null;
-//     }
-//     activeGroup.remove(trash);
-//     destroyGroup.push(trash);
-//     trash.setVelocity((bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (bak.y - trash.y) * DEVICE_SIZE_SPEED);
-//     trash.setAngularVelocity(-50 * DEVICE_SIZE_SPEED);
-//     if(trash.hasSkillType !== null){
-//         skillOperation(trash.hasSkillType, trash.x, trash.y);
-//     }
-//     createCoin(trash.x + 50, trash.y - 50, 2, this);
-//
-// }
-
-// function destoyGreyTrash(bak, trash) {
-//     if(bonusSkill !== null){
-//         bonusSkill.destroy();
-//         folowObject = null;
-//     }
-//     activeGroup.remove(trash);
-//     destroyGroup.push(trash);
-//     trash.setVelocity((bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (bak.y - trash.y) * DEVICE_SIZE_SPEED);
-//     trash.setAngularVelocity(50 * DEVICE_SIZE_SPEED);
-//     if(trash.hasSkillType !== null){
-//         skillOperation(trash.hasSkillType, trash.x, trash.y);
-//     }
-//     createCoin(trash.x - 50, trash.y - 50, 1, this);
-//
-// }
-
 
 function autoSort() {
     activeGroup.getChildren().forEach(function (trash) {
