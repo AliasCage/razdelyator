@@ -299,10 +299,10 @@ function createDialog() {
         y: midle_window_h,
 
         background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, COLOR_PRIMARY).setStrokeStyle(2, INACTIVE_COLOR),
-        content: this.add.text(0, 0, 'Выйти в меню?', {font: DEVICE_SIZE * 32 + 'pt Ubuntu'}).setColor(DARK),
+        content: this.add.text(0, 0, 'Пауза', {font: DEVICE_SIZE * 32 + 'pt Ubuntu'}).setColor(DARK),
         actions: [
-            createLabel(this, 'Да'),
-            createLabel(this, 'Нет')
+            createLabel(this, 'Выйти в меню'),
+            createLabel(this, 'Продолжить')
         ],
 
         space: {
@@ -325,11 +325,21 @@ function createDialog() {
         }
     })
         .on('button.click', function (button, groupName, index) {
+            pauseMenu = false;
             if (index === 0) {
                 isPause = true;
                 player_score = 0;
                 this.scene.start('logo', {name: 'Move from Main to Logo'});
+            }else{
+                activeGroup.getChildren().forEach(function (trash) {
+                    trash.setVelocityY(speedTrash * DEVICE_SIZE_SPEED);
+                });
+                group.getChildren().forEach(function (trash) {
+                    trash.setVelocityY((speedTrash + 350) * DEVICE_SIZE_SPEED);
+                });
             }
+            tweensBattaryCase.resume();
+            pauseCon.visible = false;
             dialog.destroy();
             dialog = undefined;
         }, this)
