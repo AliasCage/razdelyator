@@ -168,12 +168,18 @@ var Logo = new Phaser.Class({
 
         this.load.image('cell', 'cell.jpg');
 
-        this.load.audio('m',  ['sounds/soundgame.mp3', 'sounds/soundgame.ogg']);
+        this.load.audio('m', ['sounds/soundgame.mp3', 'sounds/soundgame.ogg']);
+
+        this.load.video('tut_video_1', 'tut_1.mp4', 'loadeddata', false, true);
+        // this.load.video('tut_video_2', 'tut_2.mp4', 'loadeddata', false, true);
+        // this.load.video('tut_video_3', 'tut_3.mp4', 'loadeddata', false, true);
+        // this.load.video('tut_video_4', 'tut_4.mp4', 'loadeddata', false, true);
+        // this.load.video('tut_video_5', 'tut_5.mp4', 'loadeddata', false, true);
+        // this.load.video('tut_video_6', 'tut_6.mp4', 'loadeddata', false, true);
     },
 
     create: function () {
-        screen.orientation.lock('portrait');
-        if(soundpram === null){
+        if (soundpram === null) {
             soundpram = this.sound.add('m');
             soundpram.loop = true;
             soundpram.play({
@@ -181,7 +187,6 @@ var Logo = new Phaser.Class({
                 volume: 0.2
             });
         }
-
 
 
         this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');

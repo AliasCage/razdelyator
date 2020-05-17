@@ -38,41 +38,21 @@ var Tutorial = new Phaser.Class({
             .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
-                if (isInputUserMail) {
-                    now1 = this.time.now - timerClear;
-                    now2 = this.time.now - timerAuto;
-                    now3 = this.time.now - timerAuto;
-                    now4 = this.time.now - timerAuto;
-                } else {
-                    now1 = this.time.now;
-                    now2 = this.time.now;
-                    now3 = this.time.now;
-                    now4 = this.time.now;
-                }
+                updateTime();
 
                 //todo:refactoring
-                upX = pointer.x;
-                upY = pointer.y;
+                saveActivePosition(pointer);
                 if (upX < downX - threshold) {
-                    tut1.destroy();
-                    tut2.destroy();
-                    tut3.destroy();
-                    tut4.destroy();
-                    tut5.destroy();
+                    destroyAll();
                     this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
                     console.log("swipeleft");
                 } else if (upX > downX + threshold) {
-                    tut4.visible = true;
-                    tut5.visible = false;
+                    switchVisible(tut5, tut4);
                     console.log("swiperight");
                 } else if (upY < downY - threshold || upY > downY + threshold) {
                     console.log("swipedown|up");
                 } else {
-                    tut1.destroy();
-                    tut2.destroy();
-                    tut3.destroy();
-                    tut4.destroy();
-                    tut5.destroy();
+                    destroyAll();
                     isFirstStartGame = false;
                     this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
                 }
@@ -81,100 +61,99 @@ var Tutorial = new Phaser.Class({
             .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
-                upX = pointer.x;
-                upY = pointer.y;
+                saveActivePosition(pointer);
                 if (upX < downX - threshold) {
-                    tut4.visible = false;
-                    tut5.visible = true;
+                    switchVisible(tut4, tut5);
                     console.log("swipeleft");
                 } else if (upX > downX + threshold) {
-                    tut4.visible = false;
-                    tut3.visible = true;
+                    switchVisible(tut4, tut3);
                     console.log("swiperight");
                 } else if (upY < downY - threshold || upY > downY + threshold) {
                     console.log("swipedown|up");
                 } else {
-                    tut4.visible = false;
-                    tut5.visible = true;
+                    switchVisible(tut4, tut5);
                 }
             });
         var tut3 = this.add.sprite(midle_window, 0, 'tut3')
             .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
-                upX = pointer.x;
-                upY = pointer.y;
+                saveActivePosition(pointer);
                 if (upX < downX - threshold) {
-                    tut3.visible = false;
-                    tut4.visible = true;
+                    switchVisible(tut3, tut4);
                     console.log("swipeleft");
                 } else if (upX > downX + threshold) {
-                    tut3.visible = false;
-                    tut2.visible = true;
+                    switchVisible(tut3, tut2);
                     console.log("swiperight");
                 } else if (upY < downY - threshold || upY > downY + threshold) {
                     console.log("swipedown|up");
                 } else {
-                    tut3.visible = false;
-                    tut4.visible = true;
+                    switchVisible(tut3, tut4);
                 }
             });
         var tut2 = this.add.sprite(midle_window, 0, 'tut2')
             .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
-                upX = pointer.x;
-                upY = pointer.y;
+                saveActivePosition(pointer);
                 if (upX < downX - threshold) {
-                    tut2.visible = false;
-                    tut3.visible = true;
+                    switchVisible(tut2, tut3);
                     console.log("swipeleft");
                 } else if (upX > downX + threshold) {
-                    tut2.visible = false;
-                    tut1.visible = true;
+                    tut1.play(true, 1);
+                    switchVisible(tut2, tut1);
                     console.log("swiperight");
                 } else if (upY < downY - threshold || upY > downY + threshold) {
                     console.log("swipedown|up");
                 } else {
-                    tut2.visible = false;
-                    tut3.visible = true;
+                    switchVisible(tut2, tut3);
                 }
             });
-        var tut1 = this.add.sprite(midle_window, 0, 'tut1')
-            .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
+
+        //todo: Заменить всё на видео как тут
+        var tut1 = this.add.video(midle_window, midle_window_h, 'tut_video_1');
+        var VIDEO_SCALE = conveer_width / tut1.width;
+        tut1.setLoop(true)
+            .setPlaybackRate(0.75)
+            .play(true)
+            .setInteractive()
+            .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
-                upX = pointer.x;
-                upY = pointer.y;
+                saveActivePosition(pointer);
                 if (upX < downX - threshold) {
-                    tut1.visible = false;
-                    tut2.visible = true;
+                    tut1.stop();
+                    switchVisible(tut1, tut2);
                     console.log("swipeleft");
                 } else if (upX > downX + threshold) {
-                    tut1.destroy();
-                    tut2.destroy();
-                    tut3.destroy();
-                    tut4.destroy();
-                    tut5.destroy();
+                    destroyAll();
                     this.scene.start('logo', {name: 'Move from Tutorial to Logo'});
                     console.log("swiperight");
                 } else if (upY < downY - threshold || upY > downY + threshold) {
                     console.log("swipedown|up");
                 } else {
-                    tut1.visible = false;
-                    tut2.visible = true;
+                    tut1.stop();
+                    switchVisible(tut1, tut2);
                 }
             }, this);
-        this.add.text(midle_window - tut1.width /2 + DEVICE_SIZE * 19 * 2, midle_window_h * 2 - DEVICE_SIZE * 19 * 2,
-            'Пропустить', {font: DEVICE_SIZE * 19 + 'pt Ubuntu'}).setColor('#ffa500').setDepth(11).setInteractive().on("pointerdown", function (pointer) {
-                tut1.destroy();
-                tut2.destroy();
-                tut3.destroy();
-                tut4.destroy();
-                tut5.destroy();
+        this.add.text(midle_window + conveer_width * 0.45, midle_window_h / 10,
+            'Пропустить обучение', {font: DEVICE_SIZE * 19 + 'pt Ubuntu'})
+            .setOrigin(1, 0.5)
+            .setColor('#ffa500')
+            .setDepth(11)
+            .setInteractive()
+            .on("pointerdown", function () {
+                destroyAll();
                 this.scene.start('mainSc', {name: 'Move from Tutorial to MainScene'});
-                console.log("swiperight");
-        }, this);
+            }, this);
+
+        var destroyAll = function () {
+            tut1.destroy();
+            tut2.destroy();
+            tut3.destroy();
+            tut4.destroy();
+            tut5.destroy();
+        };
     },
 
     update: function () {
@@ -182,8 +161,32 @@ var Tutorial = new Phaser.Class({
     },
 });
 
+var switchVisible = function (visible_OFF, visible_ON) {
+    visible_OFF.visible = false;
+    visible_ON.visible = true;
+};
+
 var savePosition = function (pointer) {
     downX = pointer.x;
     downY = pointer.y;
+};
+
+var saveActivePosition = function (pointer) {
+    upX = pointer.x;
+    upY = pointer.y;
+};
+
+var updateTime = function () {
+    if (isInputUserMail) {
+        now1 = this.time.now - timerClear;
+        now2 = this.time.now - timerAuto;
+        now3 = this.time.now - timerAuto;
+        now4 = this.time.now - timerAuto;
+    } else {
+        now1 = this.time.now;
+        now2 = this.time.now;
+        now3 = this.time.now;
+        now4 = this.time.now;
+    }
 };
 
