@@ -49,7 +49,7 @@ var Raiting = new Phaser.Class({
             .on("pointerup", function () {
                 if (loginDialog)
                     loginDialog.destroy();
-                createDialog.call(this);
+                this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
 
         if (player_score && player_score > 0) {

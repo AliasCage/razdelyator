@@ -3,8 +3,6 @@ var isNeedDarknes = false;
 var switchToRaiting = false;
 var cursors;
 
-var nowDifficulty;
-
 var scoreMultiplier = 0;
 var scoreMultiplierDis = 1;
 var player_score = 0;
@@ -17,7 +15,6 @@ var destroyGroup = [];
 var bonusSkill = null;
 var folowObject = null;
 var skillShadow;
-var skillMem= 0;
 
 var blue = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11', 'b12', 'b13', 'b14', 'b15', 'b16',
     'b17', 'b18', 'b19', 'b20'];
@@ -34,7 +31,6 @@ var auto_on;
 var one_on;
 var slow_on;
 
-var light_clear_on;
 var light_auto_on;
 var light_one_on;
 var light_slow_on;
@@ -51,10 +47,6 @@ var intervalCreateTrash;
 
 var scoreDifficulty;
 
-var nowSkill1;
-var nowSkill2;
-var nowSkill3;
-var nowSkill4;
 var nowCreateTrash;
 var nowScoreDifficulty;
 
@@ -64,12 +56,14 @@ const timerAuto = 45000;
 const timerOne = 45000;
 const timerSlow = 45000;
 
-
 const batary_case_speed = 4500;
 var batary_counter = -1;
 
 var tutFirstGameTraining;
 
+var pauseMenu = false;
+var pauseCon;
+var tweensBattaryCase;
 var MainSc = new Phaser.Class({
 
     Extends: Phaser.Scene,
@@ -84,6 +78,7 @@ var MainSc = new Phaser.Class({
         console.log(data.name);
         player_score = 0;
 
+        scoreMultiplier = null;
         now = this.time.now;
         slow_trash = false;
         one_trash = false;
@@ -153,11 +148,13 @@ var MainSc = new Phaser.Class({
 
         this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0).setScale(global_scale).play('conveer');
 
+        pauseCon = this.add.sprite(midle_window, 0, 'con1').setOrigin(0.5, 0).setScale(global_scale).setVisible(false);
+
         this.physics.add.sprite(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
             .setPosition(midle_window, GLOBAL_HEIGHT * 0.05).setDepth(1);
         var battary_case = this.physics.add.sprite(midle_window + bg_width * 0.4, GLOBAL_HEIGHT * 0.05, 'battary_case')
             .setOrigin(0.5, 0.5).setScale(global_scale).setDepth(2);
-        this.tweens.add({
+        tweensBattaryCase =  this.tweens.add({
             targets: battary_case,
             x: midle_window - bg_width * 0.4,
             ease: 'Linear',
@@ -176,7 +173,7 @@ var MainSc = new Phaser.Class({
 
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
         var gsSubstrat = 1.35 * global_scale;
-        light_auto_on = this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 3, 'substrat')
+        light_auto_on = this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 3.14, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_auto_on.visible = false;
         this.tweens.add({
@@ -189,18 +186,18 @@ var MainSc = new Phaser.Class({
             yoyo: true
         });
         this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 3, 'auto_off')
-            .setOrigin(0.5, 0.5).setScale(global_scale);
+             .setOrigin(0.5, 0.5).setScale(global_scale);
         auto_on = this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 3, 'auto_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", autoTrash, this);
-        auto_on.visible = false;
+        auto_on.visible = isInputUserMail;
 
         this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 6, 'clear_off')
             .setOrigin(0.5, 0.5).setScale(global_scale);
         clear_on = this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 6, 'clear_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", clearConveer, this);
-        clear_on.visible = false;
+        clear_on.visible = isInputUserMail;
 
-        light_one_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 6, 'substrat')
+        light_one_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 6.5, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_one_on.visible = false;
         this.tweens.add({
@@ -216,10 +213,10 @@ var MainSc = new Phaser.Class({
             .setOrigin(0.5, 0.5).setScale(global_scale);
         one_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 6, 'one_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", oneTrash, this);
-        one_on.visible = false;
+        one_on.visible = isInputUserMail;
 
 
-        light_slow_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 3, 'substrat')
+        light_slow_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 3.14, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_slow_on.visible = false;
         this.tweens.add({
@@ -235,11 +232,16 @@ var MainSc = new Phaser.Class({
             .setOrigin(0.5, 0.5).setScale(global_scale);
         slow_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 3, 'slow_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", slowTrash, this);
-        slow_on.visible = false;
+        slow_on.visible = isInputUserMail;
 
         this.add.sprite(midle_window + side_middle, GLOBAL_HEIGHT * 0.875, 'menu_on')
             .setOrigin(0, 0).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
+                tweensBattaryCase.pause();
+                pauseCon.visible = true;
+                nowCreateTrash  = now;
+                nowScoreDifficulty = scoreDifficulty;
+                pauseMenu = true;
                 createDialog.call(this);
             }, this);
 
@@ -249,11 +251,6 @@ var MainSc = new Phaser.Class({
 
         }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true);
 
-        // scoreMultiplierDis = this.add.text(text_score.x + text_score.width + text_score.width * 1.5, text_score.y + text_score.height/3, null, {
-        //     font: DEVICE_SIZE * 3 + 'vh Ubuntu',
-        //     fill: "#fff",
-        //
-        // }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(false);
 
         this.physics.add.overlap(battary_case, group, function (s1, s2) {
             if (s2.type === 'acc') {
@@ -443,10 +440,15 @@ var MainSc = new Phaser.Class({
         tutFirstGameTraining = this.add.sprite(midle_window, 0, 'tut4').setDepth(10)
             .setOrigin(0.5, 0).setScale(global_scale).setInteractive().setVisible(false)
             .on("pointerdown", function (pointer) {
+                isFirstGameTrainingDisplay = true;
+                activeGroup.getChildren().forEach(function (trash) {
+                    trash.setVelocityY(speedTrash * DEVICE_SIZE_SPEED);
+                });
+                group.getChildren().forEach(function (trash) {
+                    trash.setVelocityY((speedTrash + 350) * DEVICE_SIZE_SPEED);
+                });
                 tutFirstGameTraining.setVisible(false);
             });
-
-
 
     },
 
@@ -469,11 +471,28 @@ var MainSc = new Phaser.Class({
             this.scene.start('raiting', {name: 'Move from Main to Raiting'});
         }
 
-        if (isPause) {
+
+        if (isPause || pauseMenu || tutFirstGameTraining.visible) {
+            isPausePast = true;
+            activeGroup.getChildren().forEach(function (trash) {
+            trash.setVelocityY(0);
+        });
+            group.getChildren().forEach(function (trash) {
+                trash.setVelocityY(0);
+            });
             return
         }
+        if(isPausePast){
+            now2 = this.time.now - now2;
+            now3 = this.time.now - now3;
+            now4 = this.time.now - now4;
+            now = this.time.now - nowCreateTrash;
+            scoreDifficulty = this.time.now - nowScoreDifficulty;
+            isPausePast = false;
+        }
+
         // Увеличение скорости падения мусора, уменьшение интервала создания мусора
-        if (player_score > 5 && !tutFirstGameTraining.visible) {
+        if (player_score > 5) {
             if (this.time.now - scoreDifficulty > intervalScoreDiff) {
                 speedTrash = speedTrash + 2;
                 if (intervalCreateTrash > 1000) {
@@ -494,8 +513,8 @@ var MainSc = new Phaser.Class({
         // Изменения очков
         text_score.text = player_score;
 
-        if(Math.floor(scoreMultiplier/5)>4){
-            var t = Math.floor(scoreMultiplier/5)>14 ? 'x5': Math.floor(scoreMultiplier/5)>9 ? 'x3' : 'x2';
+        if(scoreMultiplier>4){
+            var t = scoreMultiplier>14 ? 'x5':scoreMultiplier>9 ? 'x3' : 'x2';
             text_score.text = text_score.text + t;
             scoreMultiplierDis = Math.floor(scoreMultiplier/5)>14 ? 5: Math.floor(scoreMultiplier/5)>9 ? 3 : 2;
         }
@@ -517,27 +536,20 @@ var MainSc = new Phaser.Class({
             darkness.call(this);
         }
 
-        var interval = intervalCreateTrash*3 + (300 + Math.floor((1500 - 300) * Math.random()));
+        var interval = intervalCreateTrash + (300 + Math.floor((1500 - 300) * Math.random()));
         // Изменение интервала создания мусора в два раза реже
         if (slow_trash) {
             interval = interval * 2;
         }
+
         // Создание мусора
-        if (this.time.now - now > interval && !tutFirstGameTraining.visible) {
+        if (this.time.now - now > interval) {
             now = this.time.now;
             var obj = createAndDropObject.call(this);
             if(obj.hasSkillType !== null){
                 console.log (obj.hasSkillType);
-                console.log('sssssssssss');
                 folowObject = obj;
-                bonusSkill = this.add.sprite(obj.x+100, obj.y+100, obj.hasSkillType+'_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.5);
-            }
-            if (tutFirstGameTraining.visible) {
-                nowCreateTrash = this.time.now - now;
-                nowScoreDifficulty = this.time.now - scoreDifficulty;
-                activeGroup.getChildren().forEach(function (trash) {
-                    trash.setVelocityY(0);
-                });
+                bonusSkill = this.add.sprite(obj.x, obj.y, obj.hasSkillType+'_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.5);
             }
         }
 
@@ -545,8 +557,8 @@ var MainSc = new Phaser.Class({
             if(folowObject!==null){
                 this.tweens.add({
                     targets: bonusSkill,
-                    x: folowObject.x + 90,
-                    y: folowObject.y - 90,
+                    x: folowObject.x + DEVICE_SIZE * 17,
+                    y: folowObject.y - DEVICE_SIZE * 17,
                     ease: 'Linear',
                     duration: 0.1,
                     delay: 0.1,
@@ -554,14 +566,6 @@ var MainSc = new Phaser.Class({
             }else{
                 bonusSkill.destroy();
             }
-        }
-        if (!isFirstGameTraining && !tutFirstGameTraining.visible && !isFirstGameTrainingDisplay) {
-            now = nowCreateTrash + this.time.now;
-            scoreDifficulty = nowScoreDifficulty + this.time.now;
-            activeGroup.getChildren().forEach(function (trash) {
-                trash.setVelocityY(speedTrash);
-            });
-            isFirstGameTrainingDisplay = true;
         }
         //Автосортровка
         if (auto_trash) {
@@ -574,15 +578,14 @@ var MainSc = new Phaser.Class({
             });
         }
         //таймеры для работы скилов
-
-        if (this.time.now - now2 > timerAuto / 2 && auto_trash && !tutFirstGameTraining.visible) {
+        if (this.time.now - now2 > timerAuto / 2 && auto_trash) {
             auto_trash = false;
             now2 = this.time.now;
             light_auto_on.visible = false;
             auto_type = 0;
         }
 
-        if ((this.time.now - now3 > timerOne / 2) && one_trash && !tutFirstGameTraining.visible) {
+        if ((this.time.now - now3 > timerOne / 2) && one_trash) {
             if (one_type === 1) {
                 grey_bak.setTint();
             }
@@ -595,7 +598,7 @@ var MainSc = new Phaser.Class({
             one_type = 0;
         }
 
-        if ((this.time.now - now4 > timerSlow / 2) && slow_trash && !tutFirstGameTraining.visible) {
+        if ((this.time.now - now4 > timerSlow / 2) && slow_trash ) {
             slow_trash = false;
             light_slow_on.visible = false;
             now4 = this.time.now;
@@ -704,7 +707,7 @@ function createAndDropObject() {
     var trashSkillType = null;
     var number = Math.random();
     var toxic = false;
-    if(Math.random() > 0.1){
+    if(Math.random() > 0.7){
         var skillType = Math.random();
         if(skillType > 0.7){
             trashSkillType = 'auto';
@@ -733,6 +736,8 @@ function createAndDropObject() {
         if (number > 0.8 && batary_counter < 0) {
             if (isFirstGameTraining) {
                 isFirstGameTraining = false;
+                nowCreateTrash  = now;
+                nowScoreDifficulty = scoreDifficulty;
                 tutFirstGameTraining.setVisible(true);
             }
             trash = acc[Math.floor(Math.random() * acc.length)];
@@ -776,6 +781,7 @@ function getRandomInt(min, max) {
 }
 
 function autoTrash() {
+    createNotify('auto', this);
     if (one_type === 0) {
         auto_type = getRandomInt(1, 2);
     } else {
@@ -800,6 +806,7 @@ function autoSort() {
 }
 
 function clearConveer() {
+    createNotify('clear', this);
     group.clear(true);
     group.getChildren().forEach(function (trash) {
         if (trash.type !== 'acc') {
@@ -824,6 +831,7 @@ function clearConveer() {
 }
 
 function slowTrash() {
+    createNotify('slow', this);
     slow_trash = true;
     slow_on.visible = false;
     light_slow_on.visible = true;
@@ -831,6 +839,7 @@ function slowTrash() {
 }
 
 function oneTrash() {
+    createNotify('one', this);
     if (auto_type === 0) {
         one_type = getRandomInt(1, 2);
     } else {
@@ -840,4 +849,23 @@ function oneTrash() {
     light_one_on.visible = true;
     one_on.visible = false;
     now3 = this.time.now;
+}
+
+function createNotify(typeSkill, scene) {
+    var s = scene.add.sprite(midle_window, midle_window_h * 0.5, typeSkill+'_notify')
+        .setOrigin(0.5, 0.5).setScale(global_scale).setDepth(2);
+    scene.tweens.add({
+        targets: s,
+        x: midle_window,
+        y: midle_window_h * 0.5,
+        scaleX: 0.5,
+        scaleY: 0.5,
+        ease: 'Linear',
+        duration: 500,
+        delay: 300,
+        onComplete: function () {
+            s.destroy();
+        },
+    });
+
 }
