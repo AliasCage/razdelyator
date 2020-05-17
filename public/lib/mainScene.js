@@ -60,7 +60,7 @@ const batary_case_speed = 4500;
 var batary_counter = -1;
 
 var tutFirstGameTraining;
-
+var isPausePast = false;
 var pauseMenu = false;
 var pauseCon;
 var tweensBattaryCase;
@@ -248,7 +248,7 @@ var MainSc = new Phaser.Class({
         text_score = this.add.text(midle_window - side_middle * 1.6, GLOBAL_HEIGHT * 0.9, player_score, {
             font: DEVICE_SIZE * 6 + 'vh Ubuntu',
             fill: "#fff",
-
+            align: 'center',
         }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true);
 
 
