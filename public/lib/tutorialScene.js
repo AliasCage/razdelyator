@@ -147,6 +147,20 @@ var Tutorial = new Phaser.Class({
                 this.scene.start('mainSc', {name: 'Move from Tutorial to MainScene'});
             }, this);
 
+        this.add.text(midle_window + conveer_width * 0.45, midle_window_h *1.9,
+            '<- Свайп\n' +
+            '    Далее', {font: DEVICE_SIZE * 19 + 'pt Ubuntu'})
+            .setOrigin(1, 0.5)
+            .setColor('#ffa500')
+            .setDepth(11);
+
+        this.add.text(midle_window - conveer_width * 0.45, midle_window_h *1.9,
+            'Свайп ->\n' +
+            'Назад', {font: DEVICE_SIZE * 19 + 'pt Ubuntu'})
+            .setOrigin(0, 0.5)
+            .setColor('#ffa500')
+            .setDepth(11);
+
         var destroyAll = function () {
             tut1.destroy();
             tut2.destroy();
