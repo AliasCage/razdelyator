@@ -3,6 +3,7 @@ const COLOR_PRIMARY = 0xe3f2fd;
 const COLOR_DARK = 0xb1bfca;
 const TOXIC_COLOR = 0x01DF01;
 const INACTIVE_COLOR = 0x6b6b6b;
+const RED_COLOR = 0xe65c5c;//a64646
 
 var isFirstStartGame = true;
 
@@ -216,23 +217,14 @@ var Logo = new Phaser.Class({
         var start_btn = this.add.sprite(midle_window, GLOBAL_HEIGHT * 0.53, 'start').setOrigin(0.5, 0.5)
             .setDepth(11).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
+
                 start_btn.setScale(global_scale);
                 if (isFirstStartGame) {
                     isFirstStartGame = false;
                     console.log("tutr");
                     this.scene.start('tutorial', {name: 'Move from Logo to Tutorial'});
-                } else if (isPause) {
-                    if (isInputUserMail) {
-                        now1 = this.time.now - timerClear;
-                        now2 = this.time.now - timerAuto;
-                        now3 = this.time.now - timerAuto;
-                        now4 = this.time.now - timerAuto;
-                    } else {
-                        now1 = this.time.now;
-                        now2 = this.time.now;
-                        now3 = this.time.now;
-                        now4 = this.time.now;
-                    }
+                } else {
+                    debugger
                     intro.destroy();
                     start_btn.destroy();
                     tutorial_btn.destroy();
@@ -327,7 +319,7 @@ function createDialog() {
         .on('button.click', function (button, groupName, index) {
             pauseMenu = false;
             if (index === 0) {
-                isPause = true;
+                isPause = false;
                 player_score = 0;
                 this.scene.start('logo', {name: 'Move from Main to Logo'});
             }else{
@@ -338,6 +330,8 @@ function createDialog() {
                     trash.setVelocityY((speedTrash + 350) * DEVICE_SIZE_SPEED);
                 });
             }
+
+            isPausePast = false;
             tweensBattaryCase.resume();
             pauseCon.visible = false;
             dialog.destroy();

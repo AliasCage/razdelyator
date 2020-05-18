@@ -78,7 +78,7 @@ var MainSc = new Phaser.Class({
         console.log(data.name);
         player_score = 0;
 
-        scoreMultiplier = null;
+        scoreMultiplier = 0;
         now = this.time.now;
         slow_trash = false;
         one_trash = false;
@@ -93,8 +93,6 @@ var MainSc = new Phaser.Class({
 
 
     preload: function () {
-
-
         var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
         var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7)
             .fillRect(midle_window - GLOBAL_WIDTH * 0.475, GLOBAL_HEIGHT * 0.9, GLOBAL_WIDTH * 0.95, 50);
@@ -239,8 +237,8 @@ var MainSc = new Phaser.Class({
             .on("pointerup", function () {
                 tweensBattaryCase.pause();
                 pauseCon.visible = true;
-                nowCreateTrash  = now;
-                nowScoreDifficulty = scoreDifficulty;
+                nowCreateTrash  = this.time.now - now;
+                nowScoreDifficulty = this.time.now - scoreDifficulty;
                 pauseMenu = true;
                 createDialog.call(this);
             }, this);
@@ -452,7 +450,6 @@ var MainSc = new Phaser.Class({
     },
 
     update: function () {
-
         //GameOver
         if (switchToRaiting) {
             switchToRaiting = false;
@@ -482,14 +479,18 @@ var MainSc = new Phaser.Class({
             return
         }
         if(isPausePast){
-            now2 = this.time.now - now2;
-            now3 = this.time.now - now3;
-            now4 = this.time.now - now4;
+            // debugger
+            now2 = this.time.now + now2;
+            // debugger
+            now3 = this.time.now + now3;
+            // debugger
+            now4 = this.time.now + now4;
+            // debugger
             now = this.time.now - nowCreateTrash;
+            // debugger
             scoreDifficulty = this.time.now - nowScoreDifficulty;
             isPausePast = false;
         }
-
         // Увеличение скорости падения мусора, уменьшение интервала создания мусора
         if (player_score > 5) {
             if (this.time.now - scoreDifficulty > intervalScoreDiff) {
@@ -504,14 +505,15 @@ var MainSc = new Phaser.Class({
         }
 
         //На экране очень много мусора, но экран не засорён
+
         if ((toxicGroup.getChildren().length + group.getChildren().length) > 150) {
             clearGroup(group);
             switchToRaiting = true;
             isPause = true;
         }
+
         // Изменения очков
         text_score.text = player_score;
-
         if(scoreMultiplier>4){
             var t = scoreMultiplier>14 ? 'x5':scoreMultiplier>9 ? 'x3' : 'x2';
             text_score.text = text_score.text + t;
@@ -706,9 +708,9 @@ function createAndDropObject() {
     var trashSkillType = null;
     var number = Math.random();
     var toxic = false;
-    if(Math.random() > 0.7){
+    if(Math.random() > 0.75 && folowObject===null){
         var skillType = Math.random();
-        if(skillType > 0.7){
+        if(skillType > 0.7 ){
             trashSkillType = 'auto';
         }
         else if(skillType > 0.55){
@@ -735,8 +737,8 @@ function createAndDropObject() {
         if (number > 0.8 && batary_counter < 0) {
             if (isFirstGameTraining) {
                 isFirstGameTraining = false;
-                nowCreateTrash  = now;
-                nowScoreDifficulty = scoreDifficulty;
+                nowCreateTrash  = this.time.now - now;
+                nowScoreDifficulty = this.time.now - scoreDifficulty;
                 tutFirstGameTraining.setVisible(true);
             }
             trash = acc[Math.floor(Math.random() * acc.length)];

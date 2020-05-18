@@ -2,6 +2,9 @@ var rating = [];
 var rating_loaded = false;
 var table;
 
+var isBadWordInUsername = false;
+var loginButton;
+var isBadWordInput;
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 var Raiting = new Phaser.Class({
@@ -68,6 +71,7 @@ var Raiting = new Phaser.Class({
                 })
                 .popUp(500).setDepth(10);
         }
+
     },
 
     update: function () {
@@ -98,7 +102,6 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
             fixedHeight: DEVICE_SIZE * 36,
             valign: 'center'
         }).setColor(DARK).setFont(DEVICE_SIZE * 22 + 'pt Ubuntu'),
-
         space: {
             top: DEVICE_SIZE * 5,
             bottom: DEVICE_SIZE * 5,
@@ -109,7 +112,6 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     })
         .setInteractive()
         .on('pointerdown', function () {
-            debugger
             if (username === 'username') {
                 username = '';
             }
@@ -119,6 +121,20 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
                 onTextChanged: function (textObject, text) {
                     username = text;
                     textObject.text = text;
+                    isBadWordInput.visible = false;
+                    loginButton.visible = true;
+                    isBadWordInUsername = false;
+                    listBad.forEach(function (badWord) {
+                        if(!isBadWordInUsername){
+                            if (username.indexOf(badWord) !== -1){
+                                isBadWordInUsername = true;
+                                loginButton.visible = false;
+                                isBadWordInput.visible = true;
+                            }else{
+                                isBadWordInUsername = false;
+                            }
+                        }
+                    });
                 }
             };
             scene.rexUI.edit(userNameField.getElement('text'), config);
@@ -160,7 +176,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
             scene.rexUI.edit(emailField.getElement('text'), config);
         });
 
-    var loginButton = scene.rexUI.add.label({
+    loginButton = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, DARK),
         text: scene.add.text(0, 0, 'Cохранить результат?', {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK),
@@ -168,8 +184,19 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     })
         .setInteractive()
         .on('pointerdown', function () {
+            if(isBadWordInUsername){
+
+                return;
+            }
             loginDialog.emit('login', username, email);
         });
+    isBadWordInput = scene.rexUI.add.label({
+        orientation: 'x',
+        background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, RED_COLOR),
+        text: scene.add.text(0, 0, 'Недопустимое значение!', {font: DEVICE_SIZE * 22 + 'pt Ubuntu', fill: '#e3f2fd'}),
+        space: {top: DEVICE_SIZE * 8, bottom: DEVICE_SIZE * 8, left: DEVICE_SIZE * 8, right: DEVICE_SIZE * 8}
+    });
+    isBadWordInput.visible = false;
 
     var loginDialog = scene.rexUI.add.sizer({
         orientation: 'y',
@@ -191,11 +218,17 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
             right: DEVICE_SIZE * 10
         }, true)
         .add(emailField, 0, 'left', {bottom: DEVICE_SIZE * 10, left: DEVICE_SIZE * 10, right: DEVICE_SIZE * 10}, true)
+        .add(isBadWordInput, 0, 'center', {
+            bottom: DEVICE_SIZE * 10,
+            left: DEVICE_SIZE * 10,
+            right: DEVICE_SIZE * 10
+        }, false)
         .add(loginButton, 0, 'center', {
             bottom: DEVICE_SIZE * 10,
             left: DEVICE_SIZE * 10,
             right: DEVICE_SIZE * 10
         }, false)
+
         .layout();
     return loginDialog;
 };
