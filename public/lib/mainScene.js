@@ -89,6 +89,20 @@ var MainSc = new Phaser.Class({
 
         one_type = 0;
         auto_type = 0;
+
+        activeGroup = this.physics.add.group();
+        toxicGroup = this.physics.add.group({
+            collideWorldBounds: true
+        });
+        group = this.physics.add.group({
+            collideWorldBounds: true
+        });
+        text_score = this.add.text(midle_window - (conveer_width + (bg_width - conveer_width)) * 0.25 * 1.6, GLOBAL_HEIGHT * 0.9, player_score, {
+            font: DEVICE_SIZE * 6 + 'vh Ubuntu',
+            fill: "#fff",
+        }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(false);
+
+        debugger
     },
 
 
@@ -161,13 +175,7 @@ var MainSc = new Phaser.Class({
             yoyo: true
         });
 
-        activeGroup = this.physics.add.group();
-        toxicGroup = this.physics.add.group({
-            collideWorldBounds: true
-        });
-        group = this.physics.add.group({
-            collideWorldBounds: true
-        });
+
 
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
         var gsSubstrat = 1.35 * global_scale;
@@ -446,7 +454,7 @@ var MainSc = new Phaser.Class({
                 });
                 tutFirstGameTraining.setVisible(false);
             });
-
+        debugger
     },
 
     update: function () {
@@ -505,8 +513,8 @@ var MainSc = new Phaser.Class({
         }
 
         //На экране очень много мусора, но экран не засорён
-
-        if ((toxicGroup.getChildren().length + group.getChildren().length) > 150) {
+debugger
+        if (toxicGroup.getChildren() && group.getChildren() && (toxicGroup.getChildren().length + group.getChildren().length) > 150) {
             clearGroup(group);
             switchToRaiting = true;
             isPause = true;

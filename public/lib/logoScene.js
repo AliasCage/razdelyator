@@ -330,7 +330,6 @@ function createDialog() {
                     trash.setVelocityY((speedTrash + 350) * DEVICE_SIZE_SPEED);
                 });
             }
-
             isPausePast = false;
             tweensBattaryCase.resume();
             pauseCon.visible = false;
