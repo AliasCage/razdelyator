@@ -64,7 +64,11 @@ var isPausePast = false;
 var pauseMenu = false;
 var pauseCon;
 var tweensBattaryCase;
+
+var multiplierScoreInput;
+
 var MainSc = new Phaser.Class({
+
 
     Extends: Phaser.Scene,
 
@@ -102,7 +106,6 @@ var MainSc = new Phaser.Class({
             fill: "#fff",
         }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(false);
 
-        debugger
     },
 
 
@@ -454,7 +457,7 @@ var MainSc = new Phaser.Class({
                 });
                 tutFirstGameTraining.setVisible(false);
             });
-        debugger
+
     },
 
     update: function () {
@@ -513,7 +516,7 @@ var MainSc = new Phaser.Class({
         }
 
         //На экране очень много мусора, но экран не засорён
-debugger
+
         if (toxicGroup.getChildren() && group.getChildren() && (toxicGroup.getChildren().length + group.getChildren().length) > 150) {
             clearGroup(group);
             switchToRaiting = true;
@@ -523,10 +526,17 @@ debugger
         // Изменения очков
         text_score.text = player_score;
         if(scoreMultiplier>4){
+            if(multiplierScoreInput)
+                multiplierScoreInput.destroy();
             var t = scoreMultiplier>14 ? 'x5':scoreMultiplier>9 ? 'x3' : 'x2';
-            text_score.text = text_score.text + t;
+            var v = text_score.getBounds();
+            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height/3, t, {
+                font: DEVICE_SIZE * 3 + 'vh Ubuntu',
+                fill: "#fff",
+            }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
             scoreMultiplierDis = Math.floor(scoreMultiplier/5)>14 ? 5: Math.floor(scoreMultiplier/5)>9 ? 3 : 2;
-        }
+        }else if(multiplierScoreInput)
+            multiplierScoreInput.destroy();
 
         if (Array.isArray(destroyGroup) && destroyGroup.length) {
             var shift = destroyGroup.shift();
@@ -588,6 +598,7 @@ debugger
         }
         //таймеры для работы скилов
         if (this.time.now - now2 > timerAuto / 2 && auto_trash) {
+            debugger
             auto_trash = false;
             now2 = this.time.now;
             light_auto_on.visible = false;
@@ -800,6 +811,7 @@ function autoTrash() {
     auto_on.visible = false;
     light_auto_on.visible = true;
     now2 = this.time.now;
+    debugger
 }
 
 function autoSort() {
