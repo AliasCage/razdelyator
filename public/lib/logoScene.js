@@ -291,10 +291,10 @@ function createDialog() {
         y: midle_window_h,
 
         background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, COLOR_PRIMARY).setStrokeStyle(2, INACTIVE_COLOR),
-        content: this.add.text(0, 0, 'Пауза', {font: DEVICE_SIZE * 32 + 'pt Ubuntu'}).setColor(DARK),
+        content: this.add.text(0, 0, 'Пауза', {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK),
         actions: [
-            createLabel(this, 'Выйти в меню'),
-            createLabel(this, 'Продолжить')
+            createLabel(this, 'Выйти?'),
+            createLabel(this, 'Продолжить?')
         ],
 
         space: {
@@ -309,7 +309,8 @@ function createDialog() {
         },
 
         align: {
-            actions: 'center', // 'center'|'left'|'right'
+            actions: 'center'// 'center'|'left'|'right'
+
         },
 
         expand: {
@@ -345,13 +346,16 @@ function createDialog() {
         .layout()
         .popUp(500)
         .setDepth(9);
+
 }
 
 var createLabel = function (scene, text) {
     return scene.rexUI.add.label({
         background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK),
 
-        text: scene.add.text(0, 0, text, {font: DEVICE_SIZE * 32 + 'pt Ubuntu'}).setColor(DARK),
+        text: scene.add.text(0, 0, text, {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK),
+
+
 
         space: {
             left: 10,
@@ -361,3 +365,72 @@ var createLabel = function (scene, text) {
         }
     });
 };
+
+/*var createDialog = function (scene, config) {
+    var x = GetValue(config, 'x', 0);
+    var y = GetValue(config, 'y', 0);
+    var width = GetValue(config, 'width', undefined);
+    var height = GetValue(config, 'height', undefined);
+
+    var background = scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, COLOR_PRIMARY);
+    var titleField = scene.add.text(0, 0, 'Пауза', {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK);
+
+    var goToMenu = scene.rexUI.add.label({
+        orientation: 'x',
+        background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, DARK),
+        text: scene.add.text(0, 0, 'Продолжить?', {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK),
+        space: {top: DEVICE_SIZE * 8, bottom: DEVICE_SIZE * 8, left: DEVICE_SIZE * 8, right: DEVICE_SIZE * 8}
+    })
+        .setInteractive()
+        .on('pointerdown', function () {
+            activeGroup.getChildren().forEach(function (trash) {
+                trash.setVelocityY(speedTrash * DEVICE_SIZE_SPEED);
+            });
+            group.getChildren().forEach(function (trash) {
+                trash.setVelocityY((speedTrash + 350) * DEVICE_SIZE_SPEED);
+            });
+            isPausePast = false;
+            tweensBattaryCase.resume();
+            pauseCon.visible = false;
+            pauseDialog.destroy();
+            pauseDialog = undefined;
+        });
+    var continueToPlay = scene.rexUI.add.label({
+        orientation: 'x',
+        background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, DARK),
+        text: scene.add.text(0, 0, 'Выйти?', {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK),
+        space: {top: DEVICE_SIZE * 8, bottom: DEVICE_SIZE * 8, left: DEVICE_SIZE * 8, right: DEVICE_SIZE * 8}
+    }).setInteractive()
+        .on('pointerdown', function () {
+            isPause = false;
+            player_score = 0;
+            scene.start('logo', {name: 'Move from Main to Logo'});
+        });
+
+    var pauseDialog = scene.rexUI.add.sizer({
+        orientation: 'y',
+        x: x,
+        y: y,
+        width: width,
+        height: height,
+    })
+        .addBackground(background)
+        .add(titleField, 0, 'center', {
+            top: DEVICE_SIZE * 10,
+            bottom: DEVICE_SIZE * 10,
+            left: DEVICE_SIZE * 10,
+            right: DEVICE_SIZE * 10
+        }, false)
+        .add(continueToPlay, 0, 'center', {
+            bottom: DEVICE_SIZE * 10,
+            left: DEVICE_SIZE * 10,
+            right: DEVICE_SIZE * 10
+        }, false)
+        .add(goToMenu, 0, 'center', {
+            bottom: DEVICE_SIZE * 10,
+            left: DEVICE_SIZE * 10,
+            right: DEVICE_SIZE * 10
+        }, false)
+        .layout();
+    return loginDialog;
+};*/
