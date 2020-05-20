@@ -36,7 +36,7 @@ var dialog;
 
 var soundpram = null;
 
-window.PhaserGlobal = { disableWebAudio: true };
+window.PhaserGlobal = {disableWebAudio: true};
 
 var Logo = new Phaser.Class({
 
@@ -273,6 +273,13 @@ var Logo = new Phaser.Class({
             .on("pointerout", function () {
                 raiting_btn.setScale(global_scale);
             });
+
+        this.scale.on('orientationchange', function (orientation) {
+            if (orientation === Phaser.Scale.PORTRAIT) {
+            //    todo: блочить при повороте
+            } else if (orientation === Phaser.Scale.LANDSCAPE) {
+            }
+        });
     },
 
     update: function () {
@@ -293,8 +300,8 @@ function createDialog() {
         background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, COLOR_PRIMARY).setStrokeStyle(2, INACTIVE_COLOR),
         content: this.add.text(0, 0, 'Пауза', {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK),
         actions: [
-            createLabel(this, 'Выйти?'),
-            createLabel(this, 'Продолжить?')
+            createLabel(this, 'Выйти'),
+            createLabel(this, 'Продолжить')
         ],
 
         space: {
