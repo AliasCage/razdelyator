@@ -4,7 +4,7 @@ const COLOR_DARK = 0xb1bfca;
 const TOXIC_COLOR = 0x01DF01;
 const INACTIVE_COLOR = 0x6b6b6b;
 const RED_COLOR = 0xe65c5c;//a64646
-
+const GREEN_COLOR=0x7ced68;
 var isFirstStartGame = true;
 
 var now;

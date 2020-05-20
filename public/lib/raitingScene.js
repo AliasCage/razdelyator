@@ -185,7 +185,6 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
         .setInteractive()
         .on('pointerdown', function () {
             if(isBadWordInUsername){
-
                 return;
             }
             loginDialog.emit('login', username, email);
