@@ -67,6 +67,8 @@ var tweensBattaryCase;
 
 var multiplierScoreInput;
 
+var gameObjectDraggenNow;
+
 var MainSc = new Phaser.Class({
 
 
@@ -346,6 +348,9 @@ var MainSc = new Phaser.Class({
 
         this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
             //На пк попытка вынести мусор за пределы поля
+            if(!gameObjectDraggenNow){
+                gameObjectDraggenNow = gameObject;
+            }
             if ((midle_window + bg_width * 0.5) < dragX || (midle_window - bg_width * 0.5) > dragX) {
                 gameObject.body.moves = true;
             } else {
@@ -358,6 +363,9 @@ var MainSc = new Phaser.Class({
         });
 
         this.input.on('dragend', function (pointer, gameObject, dragX, dragY) {
+            if(gameObjectDraggenNow){
+                gameObjectDraggenNow = undefined;
+            }
             activeGroup.remove(gameObject);
             if (gameObject.y < 2) {
                 gameObject.setPosition(gameObject.x, 2);
@@ -385,6 +393,7 @@ var MainSc = new Phaser.Class({
             gameObject.setGravityY(300 * DEVICE_SIZE_SPEED);
             gameObject.setBounce(0.4);
         });
+
 
         var coliderGroupFunction = function (s1, s2) {
             if (!s1.body.moves) {
@@ -623,6 +632,27 @@ var MainSc = new Phaser.Class({
             light_slow_on.visible = false;
             now4 = this.time.now;
         }
+        if (gameObjectDraggenNow && (checkOverlap(gameObjectDraggenNow, grey_bak) || checkOverlap(gameObjectDraggenNow, blue_bak)))
+        {
+           if(gameObjectDraggenNow.type === 'grey'){
+               debugger
+               gameObjectDraggenNow.setTint(GREEN_COLOR,GREEN_COLOR,GREEN_COLOR,GREEN_COLOR);
+           }else{
+               gameObjectDraggenNow.setTint(RED_COLOR,RED_COLOR,RED_COLOR,RED_COLOR);
+           }
+        }else if(gameObjectDraggenNow){
+            gameObjectDraggenNow.setTint();
+        }
+        if (gameObjectDraggenNow && checkOverlap(gameObjectDraggenNow, blue_bak))
+        {
+            if(gameObjectDraggenNow.type === 'blue'){
+                debugger
+                gameObjectDraggenNow.setTint(GREEN_COLOR,GREEN_COLOR,GREEN_COLOR,GREEN_COLOR);
+            }else{
+                gameObjectDraggenNow.setTint(RED_COLOR,RED_COLOR,RED_COLOR,RED_COLOR);
+            }
+        }
+
     },
 });
 
@@ -889,4 +919,14 @@ function createNotify(typeSkill, scene) {
         },
     });
 
+}
+function checkOverlap(spriteA, spriteB) {
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+    return !(
+        boundsA.right <= boundsB.x ||
+        boundsA.bottom <= boundsB.y ||
+        boundsA.x >= boundsB.right ||
+        boundsA.y >= boundsB.bottom
+    );
 }

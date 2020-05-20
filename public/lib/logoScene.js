@@ -169,7 +169,7 @@ var Logo = new Phaser.Class({
 
         this.load.image('cell', 'cell.jpg');
 
-        this.load.audio('m', ['sounds/soundgame.mp3', 'sounds/soundgame.ogg']);
+        this.load.audio('m', ['sounds/sound.mp3', 'sounds/sound.ogg']);
 
         this.load.video('tut_video_1', 'tut_1.mp4', 'loadeddata', false, true);
         // this.load.video('tut_video_2', 'tut_2.mp4', 'loadeddata', false, true);
