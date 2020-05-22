@@ -396,6 +396,7 @@ var MainSc = new Phaser.Class({
 
 
         var coliderGroupFunction = function (s1, s2) {
+            scoreMultiplier = 0;
             if (!s1.body.moves) {
                 s2.body.moves = false;
                 if (s2.type === 'acc' && s2.active) {

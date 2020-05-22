@@ -55,7 +55,7 @@ var Raiting = new Phaser.Class({
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
 
-        // if (player_score && player_score > 0) {
+         if (player_score && player_score > 0) {
             loginDialog = CreateLoginDialog(this, {
                 x: midle_window,
                 y: GLOBAL_HEIGHT * 0.4,
@@ -70,7 +70,7 @@ var Raiting = new Phaser.Class({
                     loginDialog.destroy();
                 })
                 .popUp(500).setDepth(10);
-        // }
+         }
 
     },
 
