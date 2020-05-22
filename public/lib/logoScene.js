@@ -172,6 +172,7 @@ var Logo = new Phaser.Class({
         this.load.video('tut_video_5', 'tutorial/tut_5.mp4', 'loadeddata', false, true);
         this.load.video('tut_video_6', 'tutorial/tut_6.mp4', 'loadeddata', false, true);
         this.load.video('tut_video_7', 'tutorial/tut_7.mp4', 'loadeddata', false, true);
+        this.load.image('tut4', 'tutorial/tut4.png');
 
         this.load.image('auto_notify', 'btn/auto_notify.png');
         this.load.image('one_notify', 'btn/one_notify.png');

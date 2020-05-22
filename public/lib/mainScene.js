@@ -436,6 +436,7 @@ var MainSc = new Phaser.Class({
         });
 
         var coliderActiveGroup = function (s1, s2) {
+            scoreMultiplier = 1;
             if (!auto_trash || auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue') {
                 if (!s2.body.allowdraggable && !s2.active) {
                     activeGroup.remove(s1);
@@ -454,12 +455,8 @@ var MainSc = new Phaser.Class({
 
         isPause = false;
 
-        tutFirstGameTraining = this.add.video(midle_window, midle_window_h, 'tut_video_5').setVisible(false);
-        VIDEO_SCALE = conveer_width / tutFirstGameTraining.width;
-        tutFirstGameTraining.setLoop(true)
-            .setPlaybackRate(0.75)
-            .setInteractive()
-            .setScale(VIDEO_SCALE)
+        tutFirstGameTraining = this.add.sprite(midle_window, 0, 'tut4').setDepth(10)
+            .setOrigin(0.5, 0).setScale(global_scale).setInteractive().setVisible(false)
             .on("pointerdown", function (pointer) {
                 isFirstGameTrainingDisplay = true;
                 activeGroup.getChildren().forEach(function (trash) {
@@ -468,7 +465,6 @@ var MainSc = new Phaser.Class({
                 group.getChildren().forEach(function (trash) {
                     trash.setVelocityY((speedTrash + 350) * DEVICE_SIZE_SPEED);
                 });
-                tutFirstGameTraining.play(false);
                 tutFirstGameTraining.setVisible(false);
             });
 
@@ -559,7 +555,7 @@ var MainSc = new Phaser.Class({
                 scaleX: 0.10,
                 scaleY: 0.10,
                 ease: 'Linear',
-                duration: 500,
+                duration: 50 * DEVICE_SIZE_SPEED,
                 onComplete: function () {
                     shift.destroy();
                 },
@@ -582,7 +578,7 @@ var MainSc = new Phaser.Class({
             if(obj.hasSkillType !== null){
                 console.log (obj.hasSkillType);
                 folowObject = obj;
-                bonusSkill = this.add.sprite(obj.x, obj.y, obj.hasSkillType+'_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.5);
+                bonusSkill = this.add.sprite(obj.x, obj.y, obj.hasSkillType+'_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.8);
             }
         }
 
@@ -590,8 +586,8 @@ var MainSc = new Phaser.Class({
             if(folowObject!==null){
                 this.tweens.add({
                     targets: bonusSkill,
-                    x: folowObject.x + DEVICE_SIZE * 17,
-                    y: folowObject.y - DEVICE_SIZE * 17,
+                    x: folowObject.x + DEVICE_SIZE * 15,
+                    y: folowObject.y - DEVICE_SIZE * 15,
                     ease: 'Linear',
                     duration: 0.1,
                     delay: 0.1,
@@ -794,7 +790,6 @@ function createAndDropObject() {
                 nowCreateTrash  = this.time.now - now;
                 nowScoreDifficulty = this.time.now - scoreDifficulty;
                 tutFirstGameTraining.setVisible(true);
-                tutFirstGameTraining.play(true);
             }
             trash = acc[Math.floor(Math.random() * acc.length)];
             trashType = 'acc';

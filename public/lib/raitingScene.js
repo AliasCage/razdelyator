@@ -55,7 +55,7 @@ var Raiting = new Phaser.Class({
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
 
-        if (player_score && player_score > 0) {
+        // if (player_score && player_score > 0) {
             loginDialog = CreateLoginDialog(this, {
                 x: midle_window,
                 y: GLOBAL_HEIGHT * 0.4,
@@ -70,7 +70,7 @@ var Raiting = new Phaser.Class({
                     loginDialog.destroy();
                 })
                 .popUp(500).setDepth(10);
-        }
+        // }
 
     },
 
@@ -126,7 +126,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
                     isBadWordInUsername = false;
                     listBad.forEach(function (badWord) {
                         if(!isBadWordInUsername){
-                            if (username.indexOf(badWord) !== -1){
+                            if (username.toLowerCase().indexOf(badWord) !== -1){
                                 isBadWordInUsername = true;
                                 loginButton.visible = false;
                                 isBadWordInput.visible = true;
@@ -415,16 +415,15 @@ function getRating() {
 
 function saveResult(name, email, score) {
     if (!database) {
-        if (name === 'username' || email === 'user@mail.ru')
-            isInputUserMail = false;
-        else {
-            isInputUserMail = true;
-            userMail = email;
-            userName = name;
-        }
         return;
     }
-    isInputUserMail = true;
+    if (name === 'username' || email === 'user@mail.ru')
+        isInputUserMail = false;
+    else {
+        isInputUserMail = true;
+        userMail = email;
+        userName = name;
+    }
     var ref = database.ref("base");
     var postsRef = ref.child("raiting");
     var newPostRef = postsRef.push();
