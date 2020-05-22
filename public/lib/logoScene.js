@@ -161,22 +161,17 @@ var Logo = new Phaser.Class({
         this.load.image('g19', 'trash/grey/19.png');
         this.load.image('g20', 'trash/grey/20.png');
 
-        this.load.image('tut1', 'tutorial/tut1.png');
-        this.load.image('tut2', 'tutorial/tut2.png');
-        this.load.image('tut3', 'tutorial/tut3.png');
-        this.load.image('tut4', 'tutorial/tut4.png');
-        this.load.image('tut5', 'tutorial/tut5.png');
-
         this.load.image('cell', 'cell.jpg');
 
         this.load.audio('m', ['sounds/sound.mp3', 'sounds/sound.ogg']);
 
-        this.load.video('tut_video_1', 'tut_1.mp4', 'loadeddata', false, true);
-        // this.load.video('tut_video_2', 'tut_2.mp4', 'loadeddata', false, true);
-        // this.load.video('tut_video_3', 'tut_3.mp4', 'loadeddata', false, true);
-        // this.load.video('tut_video_4', 'tut_4.mp4', 'loadeddata', false, true);
-        // this.load.video('tut_video_5', 'tut_5.mp4', 'loadeddata', false, true);
-        // this.load.video('tut_video_6', 'tut_6.mp4', 'loadeddata', false, true);
+        this.load.video('tut_video_1', 'tutorial/tut_1.mp4', 'loadeddata', false, true);
+        this.load.video('tut_video_2', 'tutorial/tut_2.mp4', 'loadeddata', false, true);
+        this.load.video('tut_video_3', 'tutorial/tut_3.mp4', 'loadeddata', false, true);
+        this.load.video('tut_video_4', 'tutorial/tut_4.mp4', 'loadeddata', false, true);
+        this.load.video('tut_video_5', 'tutorial/tut_5.mp4', 'loadeddata', false, true);
+        this.load.video('tut_video_6', 'tutorial/tut_6.mp4', 'loadeddata', false, true);
+        this.load.video('tut_video_7', 'tutorial/tut_7.mp4', 'loadeddata', false, true);
 
         this.load.image('auto_notify', 'btn/auto_notify.png');
         this.load.image('one_notify', 'btn/one_notify.png');

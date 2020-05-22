@@ -285,7 +285,7 @@ var MainSc = new Phaser.Class({
                 group.remove(s2);
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
-                s2.setAngularVelocity(-50 * DEVICE_SIZE_SPEED);
+                s2.setAngularVelocity(-5 * DEVICE_SIZE_SPEED);
                 if(bonusSkill !== null){
                     bonusSkill.destroy();
                     folowObject = null;
@@ -302,7 +302,7 @@ var MainSc = new Phaser.Class({
                 activeGroup.remove(s2);
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
-                s2.setAngularVelocity(-50 * DEVICE_SIZE_SPEED);
+                s2.setAngularVelocity(-5 * DEVICE_SIZE_SPEED);
                 if(bonusSkill !== null){
                     bonusSkill.destroy();
                     folowObject = null;
@@ -319,7 +319,7 @@ var MainSc = new Phaser.Class({
                 activeGroup.remove(s2);
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
-                s2.setAngularVelocity(-50 * DEVICE_SIZE_SPEED);
+                s2.setAngularVelocity(-5 * DEVICE_SIZE_SPEED);
                 if(bonusSkill !== null){
                     bonusSkill.destroy();
                     folowObject = null;
@@ -335,7 +335,7 @@ var MainSc = new Phaser.Class({
                 group.remove(s2);
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
-                s2.setAngularVelocity(50 * DEVICE_SIZE_SPEED);
+                s2.setAngularVelocity(-5 * DEVICE_SIZE_SPEED);
                 if(bonusSkill !== null){
                     bonusSkill.destroy();
                     folowObject = null;
@@ -454,8 +454,12 @@ var MainSc = new Phaser.Class({
 
         isPause = false;
 
-        tutFirstGameTraining = this.add.sprite(midle_window, 0, 'tut4').setDepth(10)
-            .setOrigin(0.5, 0).setScale(global_scale).setInteractive().setVisible(false)
+        tutFirstGameTraining = this.add.video(midle_window, midle_window_h, 'tut_video_5').setVisible(false);
+        VIDEO_SCALE = conveer_width / tut5.width;
+        tutFirstGameTraining.setLoop(true)
+            .setPlaybackRate(0.75)
+            .setInteractive()
+            .setScale(VIDEO_SCALE)
             .on("pointerdown", function (pointer) {
                 isFirstGameTrainingDisplay = true;
                 activeGroup.getChildren().forEach(function (trash) {
@@ -464,6 +468,7 @@ var MainSc = new Phaser.Class({
                 group.getChildren().forEach(function (trash) {
                     trash.setVelocityY((speedTrash + 350) * DEVICE_SIZE_SPEED);
                 });
+                tutFirstGameTraining.play(false);
                 tutFirstGameTraining.setVisible(false);
             });
 
@@ -789,6 +794,7 @@ function createAndDropObject() {
                 nowCreateTrash  = this.time.now - now;
                 nowScoreDifficulty = this.time.now - scoreDifficulty;
                 tutFirstGameTraining.setVisible(true);
+                tutFirstGameTraining.play(true);
             }
             trash = acc[Math.floor(Math.random() * acc.length)];
             trashType = 'acc';

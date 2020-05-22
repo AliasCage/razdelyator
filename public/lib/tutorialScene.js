@@ -34,69 +34,150 @@ var Tutorial = new Phaser.Class({
 
         this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
 
-        var tut5 = this.add.sprite(midle_window, 0, 'tut5')
-            .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
+        var tut7 = this.add.video(midle_window, midle_window_h, 'tut_video_7');
+        var VIDEO_SCALE = conveer_width / tut7.width;
+        tut7.setLoop(true)
+            .setPlaybackRate(0.75)
+            .setInteractive()
+            .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
-                updateTime();
-
                 //todo:refactoring
                 saveActivePosition(pointer);
                 if (upX < downX - threshold) {
+                    debugger
                     destroyAll();
                     this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
                     console.log("swipeleft");
                 } else if (upX > downX + threshold) {
-                    switchVisible(tut5, tut4);
+                    tut6.play(true);
+                    switchVisible(tut7, tut6);
                     console.log("swiperight");
                 } else if (upY < downY - threshold || upY > downY + threshold) {
                     console.log("swipedown|up");
                 } else {
+                    debugger
                     destroyAll();
                     isFirstStartGame = false;
                     this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
                 }
             }, this);
-        var tut4 = this.add.sprite(midle_window, 0, 'tut4')
-            .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
+        var tut6 = this.add.video(midle_window, midle_window_h, 'tut_video_6');
+        VIDEO_SCALE = conveer_width / tut6.width;
+        tut6.setLoop(true)
+            .setPlaybackRate(0.75)
+            .setInteractive()
+            .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
                 saveActivePosition(pointer);
                 if (upX < downX - threshold) {
+                    tut6.stop();
+                    tut7.play(true);
+                    switchVisible(tut6, tut7);
+                    console.log("swipeleft");
+                } else if (upX > downX + threshold) {
+                    tut5.play(true);
+                    switchVisible(tut6, tut5);
+                    console.log("swiperight");
+                } else if (upY < downY - threshold || upY > downY + threshold) {
+                    console.log("swipedown|up");
+                } else {
+                    tut6.stop();
+                    tut7.play(true);
+                    switchVisible(tut6, tut7);
+                }
+            });
+        var tut5 = this.add.video(midle_window, midle_window_h, 'tut_video_5');
+        VIDEO_SCALE = conveer_width / tut5.width;
+        tut5.setLoop(true)
+            .setPlaybackRate(0.75)
+            .setInteractive()
+            .setScale(VIDEO_SCALE)
+            .on('pointerdown', savePosition)
+            .on("pointerup", function (pointer) {
+                saveActivePosition(pointer);
+                if (upX < downX - threshold) {
+                    tut5.stop();
+                    tut6.play(true);
+                    switchVisible(tut5, tut6);
+                    console.log("swipeleft");
+                } else if (upX > downX + threshold) {
+                    tut4.play(true);
+                    switchVisible(tut5, tut4);
+                    console.log("swiperight");
+                } else if (upY < downY - threshold || upY > downY + threshold) {
+                    console.log("swipedown|up");
+                } else {
+                    tut5.stop();
+                    tut6.play(true);
+                    switchVisible(tut5, tut6);
+                }
+            });
+        var tut4 = this.add.video(midle_window, midle_window_h, 'tut_video_4');
+        VIDEO_SCALE = conveer_width / tut4.width;
+        tut4.setLoop(true)
+            .setPlaybackRate(0.75)
+            .setInteractive()
+            .setScale(VIDEO_SCALE)
+            .on('pointerdown', savePosition)
+            .on("pointerup", function (pointer) {
+                saveActivePosition(pointer);
+                if (upX < downX - threshold) {
+                    tut4.stop();
+                    tut5.play(true);
                     switchVisible(tut4, tut5);
                     console.log("swipeleft");
                 } else if (upX > downX + threshold) {
+                    tut3.play(true);
                     switchVisible(tut4, tut3);
                     console.log("swiperight");
                 } else if (upY < downY - threshold || upY > downY + threshold) {
                     console.log("swipedown|up");
                 } else {
+                    tut4.stop();
+                    tut5.play(true);
                     switchVisible(tut4, tut5);
                 }
             });
-        var tut3 = this.add.sprite(midle_window, 0, 'tut3')
-            .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
+        var tut3 = this.add.video(midle_window, midle_window_h, 'tut_video_3');
+        VIDEO_SCALE = conveer_width / tut3.width;
+        tut3.setLoop(true)
+            .setPlaybackRate(0.75)
+            .setInteractive()
+            .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
                 saveActivePosition(pointer);
                 if (upX < downX - threshold) {
+                    tut3.stop();
+                    tut4.play(true);
                     switchVisible(tut3, tut4);
                     console.log("swipeleft");
                 } else if (upX > downX + threshold) {
+                    tut2.play(true);
                     switchVisible(tut3, tut2);
                     console.log("swiperight");
                 } else if (upY < downY - threshold || upY > downY + threshold) {
                     console.log("swipedown|up");
                 } else {
+                    tut3.stop();
+                    tut4.play(true);
                     switchVisible(tut3, tut4);
                 }
             });
-        var tut2 = this.add.sprite(midle_window, 0, 'tut2')
-            .setOrigin(0.5, 0).setScale(global_scale).setInteractive()
+        var tut2 = this.add.video(midle_window, midle_window_h, 'tut_video_2');
+        VIDEO_SCALE = conveer_width / tut2.width;
+        tut2.setLoop(true)
+            .setPlaybackRate(0.75)
+            .setInteractive()
+            .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
                 saveActivePosition(pointer);
                 if (upX < downX - threshold) {
+                    tut2.stop();
+                    tut3.play(true);
                     switchVisible(tut2, tut3);
                     console.log("swipeleft");
                 } else if (upX > downX + threshold) {
@@ -106,13 +187,15 @@ var Tutorial = new Phaser.Class({
                 } else if (upY < downY - threshold || upY > downY + threshold) {
                     console.log("swipedown|up");
                 } else {
+                    tut2.stop();
+                    tut3.play(true);
                     switchVisible(tut2, tut3);
                 }
             });
 
         //todo: Заменить всё на видео как тут
         var tut1 = this.add.video(midle_window, midle_window_h, 'tut_video_1');
-        var VIDEO_SCALE = conveer_width / tut1.width;
+        VIDEO_SCALE = conveer_width / tut1.width;
         tut1.setLoop(true)
             .setPlaybackRate(0.75)
             .play(true)
@@ -123,6 +206,7 @@ var Tutorial = new Phaser.Class({
                 saveActivePosition(pointer);
                 if (upX < downX - threshold) {
                     tut1.stop();
+                    tut2.play(true);
                     switchVisible(tut1, tut2);
                     console.log("swipeleft");
                 } else if (upX > downX + threshold) {
@@ -133,6 +217,7 @@ var Tutorial = new Phaser.Class({
                     console.log("swipedown|up");
                 } else {
                     tut1.stop();
+                    tut2.play(true);
                     switchVisible(tut1, tut2);
                 }
             }, this);
@@ -190,17 +275,17 @@ var saveActivePosition = function (pointer) {
     upY = pointer.y;
 };
 
-var updateTime = function () {
-    if (isInputUserMail) {
-        now1 = this.time.now - timerClear;
-        now2 = this.time.now - timerAuto;
-        now3 = this.time.now - timerAuto;
-        now4 = this.time.now - timerAuto;
-    } else {
-        now1 = this.time.now;
-        now2 = this.time.now;
-        now3 = this.time.now;
-        now4 = this.time.now;
-    }
-};
+// var updateTime = function () {
+//     if (isInputUserMail) {
+//         now1 = this.time.now - timerClear;
+//         now2 = this.time.now - timerAuto;
+//         now3 = this.time.now - timerAuto;
+//         now4 = this.time.now - timerAuto;
+//     } else {
+//         now1 = this.time.now;
+//         now2 = this.time.now;
+//         now3 = this.time.now;
+//         now4 = this.time.now;
+//     }
+// };
 
