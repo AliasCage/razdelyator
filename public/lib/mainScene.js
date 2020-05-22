@@ -455,7 +455,7 @@ var MainSc = new Phaser.Class({
         isPause = false;
 
         tutFirstGameTraining = this.add.video(midle_window, midle_window_h, 'tut_video_5').setVisible(false);
-        VIDEO_SCALE = conveer_width / tut5.width;
+        VIDEO_SCALE = conveer_width / tutFirstGameTraining.width;
         tutFirstGameTraining.setLoop(true)
             .setPlaybackRate(0.75)
             .setInteractive()
