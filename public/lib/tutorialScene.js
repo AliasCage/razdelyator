@@ -28,6 +28,14 @@ var Tutorial = new Phaser.Class({
             progressBox.destroy();
             groundBar.destroy();
         });
+
+
+        this.load.video('tut_video_2', 'tutorial/tut_2.mp4', 'loadeddata', false, true);
+        this.load.video('tut_video_3', 'tutorial/tut_3.mp4', 'loadeddata', false, true);
+        this.load.video('tut_video_4', 'tutorial/tut_4.mp4', 'loadeddata', false, true);
+        this.load.video('tut_video_5', 'tutorial/tut_5.mp4', 'loadeddata', false, true);
+        this.load.video('tut_video_6', 'tutorial/tut_6.mp4', 'loadeddata', false, true);
+        this.load.video('tut_video_7', 'tutorial/tut_7.mp4', 'loadeddata', false, true);
     },
 
     create: function () {
