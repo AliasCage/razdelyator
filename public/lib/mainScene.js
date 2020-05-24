@@ -579,7 +579,7 @@ var MainSc = new Phaser.Class({
             if(obj.hasSkillType !== null){
                 console.log (obj.hasSkillType);
                 folowObject = obj;
-                bonusSkill = this.add.sprite(obj.x, obj.y, obj.hasSkillType+'_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.8);
+                bonusSkill = this.add.sprite(obj.x, obj.y, obj.hasSkillType+'_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.85);
             }
         }
 
@@ -587,11 +587,11 @@ var MainSc = new Phaser.Class({
             if(folowObject!==null){
                 this.tweens.add({
                     targets: bonusSkill,
-                    x: folowObject.x + DEVICE_SIZE * 15,
-                    y: folowObject.y - DEVICE_SIZE * 15,
+                    x: folowObject.x + DEVICE_SIZE * 12,
+                    y: folowObject.y - DEVICE_SIZE * 12,
                     ease: 'Linear',
-                    duration: 0.1,
-                    delay: 0.1,
+                    duration: 0.001,
+                    delay: 0.001,
                 });
             }else{
                 bonusSkill.destroy();
@@ -759,7 +759,7 @@ function createAndDropObject() {
     var trashSkillType = null;
     var number = Math.random();
     var toxic = false;
-    if(Math.random() > 0.75 && folowObject===null){
+    if(Math.random() > 0.85 && folowObject===null){
         var skillType = Math.random();
         if(skillType > 0.7 ){
             trashSkillType = 'auto';
