@@ -209,19 +209,20 @@ var Logo = new Phaser.Class({
         var start_btn = this.add.sprite(midle_window, GLOBAL_HEIGHT * 0.53, 'start').setOrigin(0.5, 0.5)
             .setDepth(11).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
-
-                start_btn.setScale(global_scale);
-                if (isFirstStartGame) {
-                    isFirstStartGame = false;
-                    console.log("tutr");
-                    this.scene.start('tutorial', {name: 'Move from Logo to Tutorial'});
-                } else {
-                    debugger
-                    intro.destroy();
-                    start_btn.destroy();
-                    tutorial_btn.destroy();
-                    raiting_btn.destroy();
-                    this.scene.start('mainSc', {name: 'Move from Logo to Main'});
+                if(!bg_clone.visible) {
+                    start_btn.setScale(global_scale);
+                    if (isFirstStartGame) {
+                        isFirstStartGame = false;
+                        console.log("tutr");
+                        this.scene.start('tutorial', {name: 'Move from Logo to Tutorial'});
+                    } else {
+                        debugger
+                        intro.destroy();
+                        start_btn.destroy();
+                        tutorial_btn.destroy();
+                        raiting_btn.destroy();
+                        this.scene.start('mainSc', {name: 'Move from Logo to Main'});
+                    }
                 }
             }, this)
             .on("pointerdown", function () {
@@ -236,9 +237,11 @@ var Logo = new Phaser.Class({
         var tutorial_btn = this.add.sprite(midle_window, GLOBAL_HEIGHT * 0.605, 'tutorial').setOrigin(0.5, 0.5)
             .setDepth(11).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
-                tutorial_btn.setScale(global_scale);
-                console.log("tutr");
-                this.scene.start('tutorial', {name: 'Move from Logo to Tutorial'});
+                if(!bg_clone.visible) {
+                    tutorial_btn.setScale(global_scale);
+                    console.log("tutr");
+                    this.scene.start('tutorial', {name: 'Move from Logo to Tutorial'});
+                }
             }, this)
             .on("pointerdown", function () {
                 tutorial_btn.setScale(global_scale * 1.3);
@@ -252,9 +255,11 @@ var Logo = new Phaser.Class({
         var raiting_btn = this.add.sprite(midle_window, GLOBAL_HEIGHT * 0.68, 'raiting').setOrigin(0.5, 0.5)
             .setDepth(11).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
-                raiting_btn.setScale(global_scale);
-                console.log("raiting");
-                this.scene.start('raiting', {name: 'Move from Logo to Raiting'});
+                if(!bg_clone.visible){
+                    raiting_btn.setScale(global_scale);
+                    console.log("raiting");
+                    this.scene.start('raiting', {name: 'Move from Logo to Raiting'});
+                }
             }, this)
             .on("pointerdown", function () {
                 raiting_btn.setScale(global_scale * 1.3);

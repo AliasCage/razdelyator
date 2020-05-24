@@ -71,7 +71,21 @@ var Raiting = new Phaser.Class({
                 })
                 .popUp(500).setDepth(10);
          }
-
+        var bg_clone = this.add.sprite(midle_window, 0, 'bg_clone').setOrigin(0.5, 0).setDepth(20).setScale(global_scale);
+        var rotate = this.add.sprite(midle_window, midle_window_h, 'rotate').setOrigin(0.5, 0.5).setDepth(21).setScale(3 * global_scale);
+        bg_clone.visible = false;
+        rotate.visible = false;
+        this.scale.on('orientationchange', function (orientation) {
+            if (orientation === 'portrait-primary') {
+                bg_clone.visible = false;
+                rotate.visible = false;
+            } else if (orientation === 'landscape-primary' || orientation === 'landscape-secondary') {
+                bg_clone.visible = true;
+                rotate.visible = true;
+            } else {
+                alert(orientation)
+            }
+        });
     },
 
     update: function () {

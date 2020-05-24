@@ -53,23 +53,25 @@ var Tutorial = new Phaser.Class({
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
                 //todo:refactoring
-                saveActivePosition(pointer);
-                if (upX < downX - threshold) {
-                    debugger
-                    destroyAll();
-                    this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
-                    console.log("swipeleft");
-                } else if (upX > downX + threshold) {
-                    tut6.play(true);
-                    switchVisible(tut7, tut6);
-                    console.log("swiperight");
-                } else if (upY < downY - threshold || upY > downY + threshold) {
-                    console.log("swipedown|up");
-                } else {
-                    debugger
-                    destroyAll();
-                    isFirstStartGame = false;
-                    this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
+                if(!rotate.visible) {
+                    saveActivePosition(pointer);
+                    if (upX < downX - threshold) {
+                        debugger
+                        destroyAll();
+                        this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
+                        console.log("swipeleft");
+                    } else if (upX > downX + threshold) {
+                        tut6.play(true);
+                        switchVisible(tut7, tut6);
+                        console.log("swiperight");
+                    } else if (upY < downY - threshold || upY > downY + threshold) {
+                        console.log("swipedown|up");
+                    } else {
+                        debugger
+                        destroyAll();
+                        isFirstStartGame = false;
+                        this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
+                    }
                 }
             }, this);
         var tut6 = this.add.video(midle_window, midle_window_h, 'tut_video_6');
@@ -80,22 +82,24 @@ var Tutorial = new Phaser.Class({
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
-                saveActivePosition(pointer);
-                if (upX < downX - threshold) {
-                    tut6.stop();
-                    tut7.play(true);
-                    switchVisible(tut6, tut7);
-                    console.log("swipeleft");
-                } else if (upX > downX + threshold) {
-                    tut5.play(true);
-                    switchVisible(tut6, tut5);
-                    console.log("swiperight");
-                } else if (upY < downY - threshold || upY > downY + threshold) {
-                    console.log("swipedown|up");
-                } else {
-                    tut6.stop();
-                    tut7.play(true);
-                    switchVisible(tut6, tut7);
+                if(!rotate.visible) {
+                    saveActivePosition(pointer);
+                    if (upX < downX - threshold) {
+                        tut6.stop();
+                        tut7.play(true);
+                        switchVisible(tut6, tut7);
+                        console.log("swipeleft");
+                    } else if (upX > downX + threshold) {
+                        tut5.play(true);
+                        switchVisible(tut6, tut5);
+                        console.log("swiperight");
+                    } else if (upY < downY - threshold || upY > downY + threshold) {
+                        console.log("swipedown|up");
+                    } else {
+                        tut6.stop();
+                        tut7.play(true);
+                        switchVisible(tut6, tut7);
+                    }
                 }
             });
         var tut5 = this.add.video(midle_window, midle_window_h, 'tut_video_5');
@@ -106,22 +110,24 @@ var Tutorial = new Phaser.Class({
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
-                saveActivePosition(pointer);
-                if (upX < downX - threshold) {
-                    tut5.stop();
-                    tut6.play(true);
-                    switchVisible(tut5, tut6);
-                    console.log("swipeleft");
-                } else if (upX > downX + threshold) {
-                    tut4.play(true);
-                    switchVisible(tut5, tut4);
-                    console.log("swiperight");
-                } else if (upY < downY - threshold || upY > downY + threshold) {
-                    console.log("swipedown|up");
-                } else {
-                    tut5.stop();
-                    tut6.play(true);
-                    switchVisible(tut5, tut6);
+                if(!rotate.visible) {
+                    saveActivePosition(pointer);
+                    if (upX < downX - threshold) {
+                        tut5.stop();
+                        tut6.play(true);
+                        switchVisible(tut5, tut6);
+                        console.log("swipeleft");
+                    } else if (upX > downX + threshold) {
+                        tut4.play(true);
+                        switchVisible(tut5, tut4);
+                        console.log("swiperight");
+                    } else if (upY < downY - threshold || upY > downY + threshold) {
+                        console.log("swipedown|up");
+                    } else {
+                        tut5.stop();
+                        tut6.play(true);
+                        switchVisible(tut5, tut6);
+                    }
                 }
             });
         var tut4 = this.add.video(midle_window, midle_window_h, 'tut_video_4');
@@ -132,22 +138,24 @@ var Tutorial = new Phaser.Class({
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
-                saveActivePosition(pointer);
-                if (upX < downX - threshold) {
-                    tut4.stop();
-                    tut5.play(true);
-                    switchVisible(tut4, tut5);
-                    console.log("swipeleft");
-                } else if (upX > downX + threshold) {
-                    tut3.play(true);
-                    switchVisible(tut4, tut3);
-                    console.log("swiperight");
-                } else if (upY < downY - threshold || upY > downY + threshold) {
-                    console.log("swipedown|up");
-                } else {
-                    tut4.stop();
-                    tut5.play(true);
-                    switchVisible(tut4, tut5);
+                if(!rotate.visible) {
+                    saveActivePosition(pointer);
+                    if (upX < downX - threshold) {
+                        tut4.stop();
+                        tut5.play(true);
+                        switchVisible(tut4, tut5);
+                        console.log("swipeleft");
+                    } else if (upX > downX + threshold) {
+                        tut3.play(true);
+                        switchVisible(tut4, tut3);
+                        console.log("swiperight");
+                    } else if (upY < downY - threshold || upY > downY + threshold) {
+                        console.log("swipedown|up");
+                    } else {
+                        tut4.stop();
+                        tut5.play(true);
+                        switchVisible(tut4, tut5);
+                    }
                 }
             });
         var tut3 = this.add.video(midle_window, midle_window_h, 'tut_video_3');
@@ -158,22 +166,24 @@ var Tutorial = new Phaser.Class({
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
-                saveActivePosition(pointer);
-                if (upX < downX - threshold) {
-                    tut3.stop();
-                    tut4.play(true);
-                    switchVisible(tut3, tut4);
-                    console.log("swipeleft");
-                } else if (upX > downX + threshold) {
-                    tut2.play(true);
-                    switchVisible(tut3, tut2);
-                    console.log("swiperight");
-                } else if (upY < downY - threshold || upY > downY + threshold) {
-                    console.log("swipedown|up");
-                } else {
-                    tut3.stop();
-                    tut4.play(true);
-                    switchVisible(tut3, tut4);
+                if(!rotate.visible) {
+                    saveActivePosition(pointer);
+                    if (upX < downX - threshold) {
+                        tut3.stop();
+                        tut4.play(true);
+                        switchVisible(tut3, tut4);
+                        console.log("swipeleft");
+                    } else if (upX > downX + threshold) {
+                        tut2.play(true);
+                        switchVisible(tut3, tut2);
+                        console.log("swiperight");
+                    } else if (upY < downY - threshold || upY > downY + threshold) {
+                        console.log("swipedown|up");
+                    } else {
+                        tut3.stop();
+                        tut4.play(true);
+                        switchVisible(tut3, tut4);
+                    }
                 }
             });
         var tut2 = this.add.video(midle_window, midle_window_h, 'tut_video_2');
@@ -184,22 +194,24 @@ var Tutorial = new Phaser.Class({
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
-                saveActivePosition(pointer);
-                if (upX < downX - threshold) {
-                    tut2.stop();
-                    tut3.play(true);
-                    switchVisible(tut2, tut3);
-                    console.log("swipeleft");
-                } else if (upX > downX + threshold) {
-                    tut1.play(true, 1);
-                    switchVisible(tut2, tut1);
-                    console.log("swiperight");
-                } else if (upY < downY - threshold || upY > downY + threshold) {
-                    console.log("swipedown|up");
-                } else {
-                    tut2.stop();
-                    tut3.play(true);
-                    switchVisible(tut2, tut3);
+                if(!rotate.visible) {
+                    saveActivePosition(pointer);
+                    if (upX < downX - threshold) {
+                        tut2.stop();
+                        tut3.play(true);
+                        switchVisible(tut2, tut3);
+                        console.log("swipeleft");
+                    } else if (upX > downX + threshold) {
+                        tut1.play(true, 1);
+                        switchVisible(tut2, tut1);
+                        console.log("swiperight");
+                    } else if (upY < downY - threshold || upY > downY + threshold) {
+                        console.log("swipedown|up");
+                    } else {
+                        tut2.stop();
+                        tut3.play(true);
+                        switchVisible(tut2, tut3);
+                    }
                 }
             });
 
@@ -213,22 +225,24 @@ var Tutorial = new Phaser.Class({
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
-                saveActivePosition(pointer);
-                if (upX < downX - threshold) {
-                    tut1.stop();
-                    tut2.play(true);
-                    switchVisible(tut1, tut2);
-                    console.log("swipeleft");
-                } else if (upX > downX + threshold) {
-                    destroyAll();
-                    this.scene.start('logo', {name: 'Move from Tutorial to Logo'});
-                    console.log("swiperight");
-                } else if (upY < downY - threshold || upY > downY + threshold) {
-                    console.log("swipedown|up");
-                } else {
-                    tut1.stop();
-                    tut2.play(true);
-                    switchVisible(tut1, tut2);
+                if(!rotate.visible) {
+                    saveActivePosition(pointer);
+                    if (upX < downX - threshold) {
+                        tut1.stop();
+                        tut2.play(true);
+                        switchVisible(tut1, tut2);
+                        console.log("swipeleft");
+                    } else if (upX > downX + threshold) {
+                        destroyAll();
+                        this.scene.start('logo', {name: 'Move from Tutorial to Logo'});
+                        console.log("swiperight");
+                    } else if (upY < downY - threshold || upY > downY + threshold) {
+                        console.log("swipedown|up");
+                    } else {
+                        tut1.stop();
+                        tut2.play(true);
+                        switchVisible(tut1, tut2);
+                    }
                 }
             }, this);
         this.add.text(midle_window + conveer_width * 0.45, midle_window_h / 20,
@@ -263,6 +277,22 @@ var Tutorial = new Phaser.Class({
             tut4.destroy();
             tut5.destroy();
         };
+
+        var bg_clone = this.add.sprite(midle_window, 0, 'bg_clone').setOrigin(0.5, 0).setDepth(20).setScale(global_scale);
+        var rotate = this.add.sprite(midle_window, midle_window_h, 'rotate').setOrigin(0.5, 0.5).setDepth(21).setScale(3 * global_scale);
+        bg_clone.visible = false;
+        rotate.visible = false;
+        this.scale.on('orientationchange', function (orientation) {
+            if (orientation === 'portrait-primary') {
+                bg_clone.visible = false;
+                rotate.visible = false;
+            } else if (orientation === 'landscape-primary' || orientation === 'landscape-secondary') {
+                bg_clone.visible = true;
+                rotate.visible = true;
+            } else {
+                alert(orientation)
+            }
+        });
     },
 
     update: function () {
