@@ -277,6 +277,8 @@ var Logo = new Phaser.Class({
             } else if (orientation === 'landscape-primary' || orientation === 'landscape-secondary') {
                 bg_clone.visible = true;
                 rotate.visible = true;
+            } else {
+                alert(orientation)
             }
         });
     },
