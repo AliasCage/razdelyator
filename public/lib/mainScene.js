@@ -469,6 +469,9 @@ var MainSc = new Phaser.Class({
                 tutFirstGameTraining.setVisible(false);
             });
 
+        window.addEventListener("orientationchange", function() {
+            tutFirstGameTraining.setVisible(true);
+        }, false);
     },
 
     update: function () {
