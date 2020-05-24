@@ -7,9 +7,10 @@ var config = {
     width: GLOBAL_WIDTH - 2.3,
     height: GLOBAL_HEIGHT - 2.3,
     scale: {
-        mode: Phaser.Scale.WIDTH_CONTROLS_HEIGHT,
+        mode: Phaser.Scale.HEIGHT_CONTROLS_WIDTH,
         width: GLOBAL_WIDTH,
         height: GLOBAL_HEIGHT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
     },
     dom: {
         createContainer: true

@@ -4,7 +4,7 @@ const COLOR_DARK = 0xb1bfca;
 const TOXIC_COLOR = 0x01DF01;
 const INACTIVE_COLOR = 0x6b6b6b;
 const RED_COLOR = 0xe65c5c;//a64646
-const GREEN_COLOR=0x7ced68;
+const GREEN_COLOR = 0x7ced68;
 var isFirstStartGame = true;
 
 var now;
@@ -79,6 +79,8 @@ var Logo = new Phaser.Class({
         //common img
         this.load.image('menu_on', 'btn/menu_on.png');
         this.load.image('bg', 'bg.png');
+        this.load.image('bg_clone', 'bg_clone.png');
+        this.load.image('rotate', 'rotate.png');
         this.load.image('bg_tile', 'bg_tile.png');
         this.load.image('con1', '/conveer/1.png');
 
@@ -264,10 +266,17 @@ var Logo = new Phaser.Class({
                 raiting_btn.setScale(global_scale);
             });
 
+        var bg_clone = this.add.sprite(midle_window, 0, 'bg_clone').setOrigin(0.5, 0).setDepth(20).setScale(global_scale);
+        var rotate = this.add.sprite(midle_window, 0, 'rotate').setOrigin(0.5, 0).setDepth(21).setScale(global_scale);
+        bg_clone.visible = false;
+        rotate.visible = false;
         this.scale.on('orientationchange', function (orientation) {
             if (orientation === Phaser.Scale.PORTRAIT) {
-            //    todo: блочить при повороте
+                bg_clone.visible = false;
+                rotate.visible = false;
             } else if (orientation === Phaser.Scale.LANDSCAPE) {
+                bg_clone.visible = true;
+                rotate.visible = true;
             }
         });
     },
@@ -320,7 +329,7 @@ function createDialog() {
                 isPause = false;
                 player_score = 0;
                 this.scene.start('logo', {name: 'Move from Main to Logo'});
-            }else{
+            } else {
                 activeGroup.getChildren().forEach(function (trash) {
                     trash.setVelocityY(speedTrash * DEVICE_SIZE_SPEED);
                 });
@@ -351,7 +360,6 @@ var createLabel = function (scene, text) {
         background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK),
 
         text: scene.add.text(0, 0, text, {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK),
-
 
 
         space: {

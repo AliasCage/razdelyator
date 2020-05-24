@@ -231,7 +231,7 @@ var Tutorial = new Phaser.Class({
                     switchVisible(tut1, tut2);
                 }
             }, this);
-        this.add.text(midle_window + conveer_width * 0.45, midle_window_h / 10,
+        this.add.text(midle_window + conveer_width * 0.45, midle_window_h / 20,
             'Пропустить обучение', {font: DEVICE_SIZE * 19 + 'pt Ubuntu'})
             .setOrigin(1, 0.5)
             .setColor('#ffa500')
