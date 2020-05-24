@@ -759,7 +759,7 @@ function createAndDropObject() {
     var trashSkillType = null;
     var number = Math.random();
     var toxic = false;
-    if(Math.random() > 0.85 && folowObject===null){
+    if(Math.random() > 0.75 && folowObject===null){
         var skillType = Math.random();
         if(skillType > 0.7 ){
             trashSkillType = 'auto';
