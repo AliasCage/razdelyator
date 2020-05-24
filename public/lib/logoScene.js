@@ -278,7 +278,7 @@ var Logo = new Phaser.Class({
                 bg_clone.visible = true;
                 rotate.visible = true;
             } else {
-                alert(orientation)
+                // alert(orientation)
             }
         });
     },
