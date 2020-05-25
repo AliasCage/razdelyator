@@ -518,20 +518,15 @@ var MainSc = new Phaser.Class({
             return
         }
         if(isPausePast){
-            // debugger
             now2 = this.time.now + now2;
-            // debugger
             now3 = this.time.now + now3;
-            // debugger
             now4 = this.time.now + now4;
-            // debugger
             now = this.time.now - nowCreateTrash;
-            // debugger
             scoreDifficulty = this.time.now - nowScoreDifficulty;
             isPausePast = false;
         }
         // Увеличение скорости падения мусора, уменьшение интервала создания мусора
-        if (player_score > 5) {
+        if (player_score > 5 && !(light_auto_on.visible || light_one_on.visible)) {
             if (this.time.now - scoreDifficulty > intervalScoreDiff) {
                 speedTrash = speedTrash + 2;
                 if (intervalCreateTrash > 1000) {
@@ -598,6 +593,9 @@ var MainSc = new Phaser.Class({
                 folowObject = obj;
                 bonusSkill = this.add.sprite(obj.x, obj.y, obj.hasSkillType+'_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.85);
             }
+            if(light_auto_on.visible){
+                autoSort(this);
+            }
         }
 
         if(bonusSkill !== null) {
@@ -615,9 +613,6 @@ var MainSc = new Phaser.Class({
             }
         }
         //Автосортровка
-        if (auto_trash) {
-            autoSort();
-        }
         //Уменьшение скорости падения мусора
         if (slow_trash) {
             activeGroup.getChildren().forEach(function (trash) {
@@ -626,7 +621,6 @@ var MainSc = new Phaser.Class({
         }
         //таймеры для работы скилов
         if (this.time.now - now2 > timerAuto / 2 && auto_trash) {
-            debugger
             auto_trash = false;
             now2 = this.time.now;
             light_auto_on.visible = false;
@@ -654,7 +648,6 @@ var MainSc = new Phaser.Class({
         if (gameObjectDraggenNow && (checkOverlap(gameObjectDraggenNow, grey_bak) || checkOverlap(gameObjectDraggenNow, blue_bak)))
         {
            if(gameObjectDraggenNow.type === 'grey'){
-               debugger
                gameObjectDraggenNow.setTint(GREEN_COLOR,GREEN_COLOR,GREEN_COLOR,GREEN_COLOR);
            }else{
                gameObjectDraggenNow.setTint(RED_COLOR,RED_COLOR,RED_COLOR,RED_COLOR);
@@ -665,7 +658,6 @@ var MainSc = new Phaser.Class({
         if (gameObjectDraggenNow && checkOverlap(gameObjectDraggenNow, blue_bak))
         {
             if(gameObjectDraggenNow.type === 'blue'){
-                debugger
                 gameObjectDraggenNow.setTint(GREEN_COLOR,GREEN_COLOR,GREEN_COLOR,GREEN_COLOR);
             }else{
                 gameObjectDraggenNow.setTint(RED_COLOR,RED_COLOR,RED_COLOR,RED_COLOR);
@@ -776,17 +768,17 @@ function createAndDropObject() {
     var trashSkillType = null;
     var number = Math.random();
     var toxic = false;
-    if(Math.random() > 0.7 && folowObject===null){
+    if(Math.random() > 0.65 && folowObject===null){
         var skillType = Math.random();
-        if(skillType > 0.7 && !light_auto_on.visible){
+        if(skillType > 0.7 && !light_auto_on.visible && !auto_on.visible){
             trashSkillType = 'auto';
         }
-        else if(skillType > 0.55 && !light_slow_on.visible){
+        else if(skillType > 0.55 && !light_slow_on.visible && !slow_on.visible){
             trashSkillType = 'slow';
         }
-        else if(skillType > 0.35){
+        else if(skillType > 0.35 && !clear_on.visible){
             trashSkillType = 'clear';
-        }else if (!light_one_on.visible){
+        }else if (!light_one_on.visible && !one_on.visible){
             trashSkillType = 'one';
         }
     }
@@ -860,17 +852,31 @@ function autoTrash() {
     auto_on.visible = false;
     light_auto_on.visible = true;
     now2 = this.time.now;
-    debugger
+    autoSort(this);
+    scoreDifficulty = this.time.now;
 }
 
-function autoSort() {
+function autoSort(scene) {
     activeGroup.getChildren().forEach(function (trash) {
+        var speed = light_slow_on.visible?speedTrash / 4 : speedTrash ;
         if (auto_type === 1 && trash.type === 'blue') {
-            trash.setVelocity((blue_bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (blue_bak.y - trash.y) * DEVICE_SIZE_SPEED);
-            trash.setAngularVelocity(-1 * DEVICE_SIZE_SPEED);
+            scene.tweens.add({
+                targets: trash,
+                x: blue_bak.x + blue_bak.width/10,
+                y: blue_bak.y + blue_bak.height/10,
+                ease: 'Linear',
+                duration: 450 * DEVICE_SIZE_SPEED - speed,
+                delay: 30,
+            });
         } else if (auto_type === 2 && trash.type === 'grey') {
-            trash.setVelocity((grey_bak.x - trash.x) * DEVICE_SIZE_SPEED / 2, (grey_bak.y - trash.y) * DEVICE_SIZE_SPEED);
-            trash.setAngularVelocity(-1 * DEVICE_SIZE_SPEED);
+            scene.tweens.add({
+                targets: trash,
+                x: grey_bak.x - grey_bak.width/10,
+                y: grey_bak.y + grey_bak.height/10,
+                ease: 'Linear',
+                duration: 450 * DEVICE_SIZE_SPEED - speed,
+                delay: 30,
+            });
         }
     });
 }
@@ -919,6 +925,7 @@ function oneTrash() {
     light_one_on.visible = true;
     one_on.visible = false;
     now3 = this.time.now;
+    scoreDifficulty = this.time.now;
 }
 
 function createNotify(typeSkill, scene) {
