@@ -267,7 +267,7 @@ var MainSc = new Phaser.Class({
                 scoreMultiplier++;
                 group.remove(s2);
                 destroyGroup.push(s2);
-                if(bonusSkill !== null){
+                if(s2.hasSkillType !== null){
                     bonusSkill.destroy();
                     folowObject = null;
                 }
@@ -286,7 +286,7 @@ var MainSc = new Phaser.Class({
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
                 s2.setAngularVelocity(-5 * DEVICE_SIZE_SPEED);
-                if(bonusSkill !== null){
+                if(s2.hasSkillType !== null){
                     bonusSkill.destroy();
                     folowObject = null;
                 }
@@ -303,7 +303,7 @@ var MainSc = new Phaser.Class({
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
                 s2.setAngularVelocity(-5 * DEVICE_SIZE_SPEED);
-                if(bonusSkill !== null){
+                if(s2.hasSkillType !== null){
                     bonusSkill.destroy();
                     folowObject = null;
                 }
@@ -320,7 +320,7 @@ var MainSc = new Phaser.Class({
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
                 s2.setAngularVelocity(-5 * DEVICE_SIZE_SPEED);
-                if(bonusSkill !== null){
+                if(s2.hasSkillType !== null){
                     bonusSkill.destroy();
                     folowObject = null;
                 }
@@ -336,7 +336,7 @@ var MainSc = new Phaser.Class({
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
                 s2.setAngularVelocity(-5 * DEVICE_SIZE_SPEED);
-                if(bonusSkill !== null){
+                if(s2.hasSkillType !== null){
                     bonusSkill.destroy();
                     folowObject = null;
                 }
@@ -705,7 +705,7 @@ function darkness() {
 }
 
 function setInactive(object) {
-    if(bonusSkill !== null){
+    if(object.hasSkillType !== null){
         bonusSkill.destroy();
         folowObject = null;
     }
