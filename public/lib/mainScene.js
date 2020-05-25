@@ -705,9 +705,10 @@ function darkness() {
 }
 
 function setInactive(object) {
-    if(bonusSkill !== null)
+    if(bonusSkill !== null){
         bonusSkill.destroy();
-    folowObject = null;
+        folowObject = null;
+    }
     group.add(object);
     object.removeInteractive();
     object.body.allowdraggable = false;
@@ -731,7 +732,6 @@ function clearGroup(g) {
 }
 
 var createCoin = function (x, y, points, scene, skill) {
-    folowObject = null;
     if(scoreMultiplier !== 0){
         player_score  += points * scoreMultiplierDis;
     }
