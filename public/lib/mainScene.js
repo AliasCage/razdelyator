@@ -776,17 +776,17 @@ function createAndDropObject() {
     var trashSkillType = null;
     var number = Math.random();
     var toxic = false;
-    if(Math.random() > 0.75 && folowObject===null){
+    if(Math.random() > 0.7 && folowObject===null){
         var skillType = Math.random();
-        if(skillType > 0.7 ){
+        if(skillType > 0.7 && !light_auto_on.visible){
             trashSkillType = 'auto';
         }
-        else if(skillType > 0.55){
+        else if(skillType > 0.55 && !light_slow_on.visible){
             trashSkillType = 'slow';
         }
         else if(skillType > 0.35){
             trashSkillType = 'clear';
-        }else{
+        }else if (!light_one_on.visible){
             trashSkillType = 'one';
         }
     }
