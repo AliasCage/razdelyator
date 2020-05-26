@@ -294,6 +294,8 @@ var MainSc = new Phaser.Class({
             }else{
                 scoreMultiplier = 0;
                 scoreMultiplierDis = 1;
+                if(multiplierScoreInput)
+                    multiplierScoreInput.destroy();
             }
         }, null, this);
         this.physics.add.overlap(blue_bak, activeGroup, function (s1, s2) {
@@ -311,6 +313,8 @@ var MainSc = new Phaser.Class({
             }else{
                 scoreMultiplier = 0;
                 scoreMultiplierDis = 1;
+                if(multiplierScoreInput)
+                    multiplierScoreInput.destroy();
             }
         }, null, this);
         this.physics.add.overlap(grey_bak, activeGroup, function (s1, s2) {
@@ -404,6 +408,8 @@ var MainSc = new Phaser.Class({
                 }
             }
             s2.active = false;
+            if(multiplierScoreInput)
+                multiplierScoreInput.destroy();
         };
         this.physics.add.collider(toxicGroup, group, coliderGroupFunction);
         this.physics.add.collider(toxicGroup, toxicGroup, coliderGroupFunction);
@@ -419,7 +425,8 @@ var MainSc = new Phaser.Class({
 
         var zone_bottom = this.physics.add.sprite(midle_window, GLOBAL_HEIGHT, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
         this.physics.add.overlap(zone_bottom, activeGroup, function (s1, s2) {
-
+            if(multiplierScoreInput)
+                multiplierScoreInput.destroy();
             activeGroup.remove(s2);
             setInactive(s2, this);
             s2.body.moves = false;
@@ -427,6 +434,8 @@ var MainSc = new Phaser.Class({
         });
 
         this.physics.add.overlap(zone_bottom, group, function (s1, s2) {
+            if(multiplierScoreInput)
+                multiplierScoreInput.destroy();
             s2.body.moves = false;
             s2.body.enable = true;
             s2.active = false;
@@ -437,6 +446,8 @@ var MainSc = new Phaser.Class({
         });
 
         var coliderActiveGroup = function (s1, s2) {
+            if(multiplierScoreInput)
+                multiplierScoreInput.destroy();
             scoreMultiplier = 1;
             if (!auto_trash || auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue') {
                 if (!s2.body.allowdraggable && !s2.active) {
@@ -548,17 +559,37 @@ var MainSc = new Phaser.Class({
 
         // Изменения очков
         text_score.text = player_score;
-        if(scoreMultiplier>4){
+        if(scoreMultiplier===5){
             if(multiplierScoreInput)
                 multiplierScoreInput.destroy();
-            var t = scoreMultiplier>14 ? 'x5':scoreMultiplier>9 ? 'x3' : 'x2';
             var v = text_score.getBounds();
-            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height/3, t, {
+            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height/3, 'x2', {
                 font: DEVICE_SIZE * 3 + 'vh Ubuntu',
                 fill: "#fff",
             }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
-            scoreMultiplierDis = Math.floor(scoreMultiplier/5)>14 ? 5: Math.floor(scoreMultiplier/5)>9 ? 3 : 2;
-        }else if(multiplierScoreInput)
+            scoreMultiplierDis = 2;
+        }
+        if(scoreMultiplier===10){
+            if(multiplierScoreInput)
+                multiplierScoreInput.destroy();
+            var v = text_score.getBounds();
+            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height/3, 'x3', {
+                font: DEVICE_SIZE * 3 + 'vh Ubuntu',
+                fill: "#fff",
+            }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
+            scoreMultiplierDis = 3;
+        }
+        if(scoreMultiplier===15){
+            if(multiplierScoreInput)
+                multiplierScoreInput.destroy();
+            var v = text_score.getBounds();
+            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height/3, 'x5', {
+                font: DEVICE_SIZE * 3 + 'vh Ubuntu',
+                fill: "#fff",
+            }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
+            scoreMultiplierDis = 5;
+        }
+        if(scoreMultiplier<5 &&  multiplierScoreInput)
             multiplierScoreInput.destroy();
 
         if (Array.isArray(destroyGroup) && destroyGroup.length) {
@@ -768,7 +799,7 @@ function createAndDropObject() {
     var trashSkillType = null;
     var number = Math.random();
     var toxic = false;
-    if(Math.random() > 0.65 && folowObject===null){
+    if(Math.random() > 0.75 && folowObject===null){
         var skillType = Math.random();
         if(skillType > 0.7 && !light_auto_on.visible && !auto_on.visible){
             trashSkillType = 'auto';
