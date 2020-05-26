@@ -276,6 +276,8 @@ var MainSc = new Phaser.Class({
             }else{
                 scoreMultiplier = 0;
                 scoreMultiplierDis = 1;
+                if(multiplierScoreInput)
+                    multiplierScoreInput.destroy();
             }
         }, null, this);
 
@@ -331,6 +333,9 @@ var MainSc = new Phaser.Class({
                 createCoin(s2.x - 50, s2.y - 50, 2, this, s2.hasSkillType);
             }else{
                 scoreMultiplier = 0;
+                scoreMultiplierDis = 1;
+                if(multiplierScoreInput)
+                    multiplierScoreInput.destroy();
             }
         }, null, this);
         this.physics.add.overlap(grey_bak, group, function (s1, s2) {
@@ -347,6 +352,9 @@ var MainSc = new Phaser.Class({
                 createCoin(s2.x - 50, s2.y - 50, 1, this, s2.hasSkillType);
             }else{
                 scoreMultiplier = 0;
+                scoreMultiplierDis = 1;
+                if(multiplierScoreInput)
+                    multiplierScoreInput.destroy();
             }
         }, null, this);
 
