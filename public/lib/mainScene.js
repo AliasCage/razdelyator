@@ -297,7 +297,7 @@ var MainSc = new Phaser.Class({
             }
         }, null, this);
         this.physics.add.overlap(blue_bak, activeGroup, function (s1, s2) {
-            if (s2.type === 'blue' && auto_trash) {
+            if (s2.type === 'blue') {
                 scoreMultiplier++;
                 activeGroup.remove(s2);
                 destroyGroup.push(s2);
@@ -314,7 +314,7 @@ var MainSc = new Phaser.Class({
             }
         }, null, this);
         this.physics.add.overlap(grey_bak, activeGroup, function (s1, s2) {
-            if (s2.type === 'grey' && auto_trash) {
+            if (s2.type === 'grey') {
                 scoreMultiplier++;
                 activeGroup.remove(s2);
                 destroyGroup.push(s2);
