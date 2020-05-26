@@ -41,7 +41,7 @@ var Tutorial = new Phaser.Class({
 
         var tut7 = this.add.video(midle_window, midle_window_h, 'tut_video_7');
         var VIDEO_SCALE = conveer_width / tut7.width;
-        tut7.setLoop(true)
+        tut7
             .setPlaybackRate(0.75)
             .setInteractive()
             .setScale(VIDEO_SCALE)
@@ -76,7 +76,7 @@ var Tutorial = new Phaser.Class({
             }, this);
         var tut6 = this.add.video(midle_window, midle_window_h, 'tut_video_6');
         VIDEO_SCALE = conveer_width / tut6.width;
-        tut6.setLoop(true)
+        tut6
             .setPlaybackRate(0.75)
             .setInteractive()
             .setScale(VIDEO_SCALE)
@@ -108,7 +108,7 @@ var Tutorial = new Phaser.Class({
             });
         var tut5 = this.add.video(midle_window, midle_window_h, 'tut_video_5');
         VIDEO_SCALE = conveer_width / tut5.width;
-        tut5.setLoop(true)
+        tut5
             .setPlaybackRate(0.75)
             .setInteractive()
             .setScale(VIDEO_SCALE)
@@ -321,6 +321,7 @@ var Tutorial = new Phaser.Class({
             }, this);
 
         var destroyAll = function () {
+            numTut = 1;
             tut1.destroy();
             tut2.destroy();
             tut3.destroy();
