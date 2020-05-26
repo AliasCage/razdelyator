@@ -29,11 +29,7 @@ var Tutorial = new Phaser.Class({
             groundBar.destroy();
         });
 
-
         this.load.setBaseURL('img');
-
-
-
         this.load.video('tut_video_5', 'tutorial/tut_5.mp4', 'canplay', false, true);
         this.load.video('tut_video_6', 'tutorial/tut_6.mp4', 'canplay', false, true);
         this.load.video('tut_video_7', 'tutorial/tut_7.mp4', 'canplay', false, true);
@@ -64,7 +60,7 @@ var Tutorial = new Phaser.Class({
                     } else if (upX > downX + threshold) {
                         numTut --;
                         tut7.stop();
-                        tut6.play();
+                        tut6.play(false, 0);
                         switchVisible(tut7, tut6);
                         console.log("swiperight");
                     } else if (upY < downY - threshold || upY > downY + threshold) {
@@ -97,7 +93,7 @@ var Tutorial = new Phaser.Class({
                     } else if (upX > downX + threshold) {
                         numTut--;
                         tut6.stop();
-                        tut5.play();
+                        tut5.play(false, 0);
                         switchVisible(tut6, tut5);
                         console.log("swiperight");
                     } else if (upY < downY - threshold || upY > downY + threshold) {
@@ -129,7 +125,7 @@ var Tutorial = new Phaser.Class({
                     } else if (upX > downX + threshold) {
                         numTut--;
                         tut5.stop();
-                        tut4.play();
+                        tut4.play(false, 0);
                         switchVisible(tut5, tut4);
                         console.log("swiperight");
                     } else if (upY < downY - threshold || upY > downY + threshold) {
@@ -161,7 +157,7 @@ var Tutorial = new Phaser.Class({
                     } else if (upX > downX + threshold) {
                         numTut--;
                         tut4.stop();
-                        tut3.play();
+                        tut3.play(false, 0);
                         switchVisible(tut4, tut3);
                         console.log("swiperight");
                     } else if (upY < downY - threshold || upY > downY + threshold) {
@@ -193,7 +189,7 @@ var Tutorial = new Phaser.Class({
                     } else if (upX > downX + threshold) {
                         numTut--;
                         tut3.stop();
-                        tut2.play();
+                        tut2.play(false, 0);
                         switchVisible(tut3, tut2);
                         console.log("swiperight");
                     } else if (upY < downY - threshold || upY > downY + threshold) {
@@ -225,7 +221,7 @@ var Tutorial = new Phaser.Class({
                     } else if (upX > downX + threshold) {
                         numTut--;
                         tut2.stop();
-                        tut1.play();
+                        tut1.play(false, 0);
                         switchVisible(tut2, tut1);
                         console.log("swiperight");
                     } else if (upY < downY - threshold || upY > downY + threshold) {
