@@ -41,15 +41,14 @@ var Tutorial = new Phaser.Class({
 
         var tut7 = this.add.video(midle_window, midle_window_h, 'tut_video_7');
         var VIDEO_SCALE = conveer_width / tut7.width;
-        tut7
-            .setPlaybackRate(0.75)
-            .setInteractive()
+        tut7.setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
                 //todo:refactoring
                 if(!rotate.visible) {
                     saveActivePosition(pointer);
+                    tut7.setCurrentTime(0);
                     if (upX < downX - threshold) {
                         numTut = 1;
                         debugger
@@ -60,7 +59,7 @@ var Tutorial = new Phaser.Class({
                     } else if (upX > downX + threshold) {
                         numTut --;
                         tut7.stop();
-                        tut6.play(false, 0);
+                        tut6.play();
                         switchVisible(tut7, tut6);
                         console.log("swiperight");
                     } else if (upY < downY - threshold || upY > downY + threshold) {
@@ -76,14 +75,13 @@ var Tutorial = new Phaser.Class({
             }, this);
         var tut6 = this.add.video(midle_window, midle_window_h, 'tut_video_6');
         VIDEO_SCALE = conveer_width / tut6.width;
-        tut6
-            .setPlaybackRate(0.75)
-            .setInteractive()
+        tut6.setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
                 if(!rotate.visible) {
                     saveActivePosition(pointer);
+                    tut6.setCurrentTime(0);
                     if (upX < downX - threshold) {
                         numTut++;
                         tut6.stop();
@@ -93,7 +91,7 @@ var Tutorial = new Phaser.Class({
                     } else if (upX > downX + threshold) {
                         numTut--;
                         tut6.stop();
-                        tut5.play(false, 0);
+                        tut5.play();
                         switchVisible(tut6, tut5);
                         console.log("swiperight");
                     } else if (upY < downY - threshold || upY > downY + threshold) {
@@ -108,13 +106,12 @@ var Tutorial = new Phaser.Class({
             });
         var tut5 = this.add.video(midle_window, midle_window_h, 'tut_video_5');
         VIDEO_SCALE = conveer_width / tut5.width;
-        tut5
-            .setPlaybackRate(0.75)
-            .setInteractive()
+        tut5.setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
                 if(!rotate.visible) {
+                    tut5.setCurrentTime(0);
                     saveActivePosition(pointer);
                     if (upX < downX - threshold) {
                         numTut++;
@@ -125,7 +122,7 @@ var Tutorial = new Phaser.Class({
                     } else if (upX > downX + threshold) {
                         numTut--;
                         tut5.stop();
-                        tut4.play(false, 0);
+                        tut4.play();
                         switchVisible(tut5, tut4);
                         console.log("swiperight");
                     } else if (upY < downY - threshold || upY > downY + threshold) {
@@ -141,12 +138,12 @@ var Tutorial = new Phaser.Class({
         var tut4 = this.add.video(midle_window, midle_window_h, 'tut_video_4');
         VIDEO_SCALE = conveer_width / tut4.width;
         tut4
-            .setPlaybackRate(0.75)
             .setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
                 if(!rotate.visible) {
+                    tut4.setCurrentTime(0);
                     saveActivePosition(pointer);
                     if (upX < downX - threshold) {
                         numTut++;
@@ -157,7 +154,7 @@ var Tutorial = new Phaser.Class({
                     } else if (upX > downX + threshold) {
                         numTut--;
                         tut4.stop();
-                        tut3.play(false, 0);
+                        tut3.play();
                         switchVisible(tut4, tut3);
                         console.log("swiperight");
                     } else if (upY < downY - threshold || upY > downY + threshold) {
@@ -172,14 +169,13 @@ var Tutorial = new Phaser.Class({
             });
         var tut3 = this.add.video(midle_window, midle_window_h, 'tut_video_3');
         VIDEO_SCALE = conveer_width / tut3.width;
-        tut3
-            .setPlaybackRate(0.75)
-            .setInteractive()
+        tut3.setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
                 if(!rotate.visible) {
                     saveActivePosition(pointer);
+                    tut3.setCurrentTime(0);
                     if (upX < downX - threshold) {
                         numTut++;
                         tut3.stop();
@@ -189,7 +185,7 @@ var Tutorial = new Phaser.Class({
                     } else if (upX > downX + threshold) {
                         numTut--;
                         tut3.stop();
-                        tut2.play(false, 0);
+                        tut2.play();
                         switchVisible(tut3, tut2);
                         console.log("swiperight");
                     } else if (upY < downY - threshold || upY > downY + threshold) {
@@ -204,14 +200,13 @@ var Tutorial = new Phaser.Class({
             });
         var tut2 = this.add.video(midle_window, midle_window_h, 'tut_video_2');
         VIDEO_SCALE = conveer_width / tut2.width;
-        tut2
-            .setPlaybackRate(0.75)
-            .setInteractive()
+        tut2.setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
                 if(!rotate.visible) {
                     saveActivePosition(pointer);
+                    tut2.setCurrentTime(0);
                     if (upX < downX - threshold) {
                         numTut++;
                         tut2.stop();
@@ -221,7 +216,7 @@ var Tutorial = new Phaser.Class({
                     } else if (upX > downX + threshold) {
                         numTut--;
                         tut2.stop();
-                        tut1.play(false, 0);
+                        tut1.play();
                         switchVisible(tut2, tut1);
                         console.log("swiperight");
                     } else if (upY < downY - threshold || upY > downY + threshold) {
@@ -238,15 +233,14 @@ var Tutorial = new Phaser.Class({
         //todo: Заменить всё на видео как тут
         var tut1 = this.add.video(midle_window, midle_window_h, 'tut_video_1');
         VIDEO_SCALE = conveer_width / tut1.width;
-        tut1
-            .setPlaybackRate(0.75)
-            .play()
+        tut1.play()
             .setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
                 if(!rotate.visible) {
                     saveActivePosition(pointer);
+                    tut1.setCurrentTime(0);
                     if (upX < downX - threshold) {
                         numTut++;
                         tut1.stop();
@@ -293,13 +287,13 @@ var Tutorial = new Phaser.Class({
                         isFirstStartGame = false;
                         this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
                     }
+                    eval('tut' + (numTut).toString()).setCurrentTime(0);
                     eval('tut' + (numTut).toString()).stop();
-                    eval('tut' + (numTut+1).toString()).play(false, 0);
+                    eval('tut' + (numTut+1).toString()).play();
                     switchVisible(eval('tut' + (numTut).toString()), eval('tut' + (numTut+1).toString()));
                     numTut++;
                 }
             }, this);
-
         this.add.text(midle_window - conveer_width * 0.45, midle_window_h *1.9,
             'Свайп ->\n' +
             'Назад', {font: DEVICE_SIZE * 16 + 'pt Ubuntu'})
@@ -313,8 +307,9 @@ var Tutorial = new Phaser.Class({
                         destroyAll();
                         this.scene.start('logo', {name: 'Move from Tutorial to Logo'});
                     }
+                    eval('tut' + (numTut).toString()).setCurrentTime(0);
                     eval('tut' + (numTut).toString()).stop();
-                    eval('tut' + (numTut-1).toString()).play(false, 0);
+                    eval('tut' + (numTut-1).toString()).play();
                     switchVisible(eval('tut' + (numTut).toString()), eval('tut' + (numTut-1).toString()));
                     numTut--;
                 }
