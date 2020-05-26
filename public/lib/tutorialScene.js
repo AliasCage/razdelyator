@@ -41,7 +41,8 @@ var Tutorial = new Phaser.Class({
 
         var tut7 = this.add.video(midle_window, midle_window_h, 'tut_video_7');
         var VIDEO_SCALE = conveer_width / tut7.width;
-        tut7.setInteractive()
+        tut7.setPlaybackRate(1.5)
+            .setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
@@ -75,7 +76,8 @@ var Tutorial = new Phaser.Class({
             }, this);
         var tut6 = this.add.video(midle_window, midle_window_h, 'tut_video_6');
         VIDEO_SCALE = conveer_width / tut6.width;
-        tut6.setInteractive()
+        tut6.setPlaybackRate(1.5)
+            .setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
@@ -106,7 +108,8 @@ var Tutorial = new Phaser.Class({
             });
         var tut5 = this.add.video(midle_window, midle_window_h, 'tut_video_5');
         VIDEO_SCALE = conveer_width / tut5.width;
-        tut5.setInteractive()
+        tut5.setPlaybackRate(1.5)
+            .setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
@@ -137,7 +140,7 @@ var Tutorial = new Phaser.Class({
             });
         var tut4 = this.add.video(midle_window, midle_window_h, 'tut_video_4');
         VIDEO_SCALE = conveer_width / tut4.width;
-        tut4
+        tut4.setPlaybackRate(1.5)
             .setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
@@ -169,7 +172,8 @@ var Tutorial = new Phaser.Class({
             });
         var tut3 = this.add.video(midle_window, midle_window_h, 'tut_video_3');
         VIDEO_SCALE = conveer_width / tut3.width;
-        tut3.setInteractive()
+        tut3.setPlaybackRate(1.5)
+            .setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
@@ -200,7 +204,8 @@ var Tutorial = new Phaser.Class({
             });
         var tut2 = this.add.video(midle_window, midle_window_h, 'tut_video_2');
         VIDEO_SCALE = conveer_width / tut2.width;
-        tut2.setInteractive()
+        tut2.setPlaybackRate(1)
+            .setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
@@ -233,7 +238,8 @@ var Tutorial = new Phaser.Class({
         //todo: Заменить всё на видео как тут
         var tut1 = this.add.video(midle_window, midle_window_h, 'tut_video_1');
         VIDEO_SCALE = conveer_width / tut1.width;
-        tut1.play()
+        tut1.setPlaybackRate(1.5)
+            .play()
             .setInteractive()
             .setScale(VIDEO_SCALE)
             .on('pointerdown', savePosition)
