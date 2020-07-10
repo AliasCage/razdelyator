@@ -17,10 +17,10 @@ var folowObject = null;
 var skillShadow;
 
 var blue = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11', 'b12', 'b13', 'b14', 'b15', 'b16',
-    'b17', 'b18', 'b19', 'b20'];
+    'b17', 'b18', 'b19', 'b20', 'b21'];
 var grey = ['g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7', 'g8', 'g9', 'g10', 'g11', 'g12', 'g13', 'g14', 'g15', 'g16',
     'g17', 'g18', 'g19', 'g20'];
-var acc = ['a1', 'a2', 'a3'];
+var acc = ['a1', 'a2', 'a3', 'a4'];
 
 var blue_bak;
 var grey_bak;
