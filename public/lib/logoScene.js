@@ -181,6 +181,13 @@ var Logo = new Phaser.Class({
         this.load.image('clear_notify', 'btn/clear_notify.png');
         this.load.image('slow_notify', 'btn/slow_notify.png');
 
+
+        this.load.image('blot_jam', 'blot/blot_jam.png');
+        this.load.image('blot_canned', 'blot/blot_canned.png');
+        this.load.image('blot_batter', 'blot/blot_butter.png');
+        this.load.image('blot_yogurt', 'blot/blot_yogurt.png');
+
+        this.load.image('eraser', 'eraser.png');
     },
 
     create: function () {

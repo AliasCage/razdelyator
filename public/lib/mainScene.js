@@ -69,6 +69,8 @@ var multiplierScoreInput;
 
 var gameObjectDraggenNow;
 
+var blot_object;
+
 var MainSc = new Phaser.Class({
 
 
@@ -127,6 +129,8 @@ var MainSc = new Phaser.Class({
         });
 
         this.load.scenePlugin('rexuiplugin', 'lib/rexuiplugin.min.js', 'rexUI', 'rexUI');
+
+
     },
 
     create: function () {
@@ -183,9 +187,9 @@ var MainSc = new Phaser.Class({
 
 
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
-        var gsSubstrat = 1.35 * global_scale;
-        light_auto_on = this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 3.14, 'substrat')
-            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
+        var gsSubstrat = 0.3 * global_scale;
+        light_auto_on = this.add.sprite(midle_window + (bg_width / 3.05), GLOBAL_HEIGHT / 3.14, 'substrat')
+            .setOrigin(0.5, 0.5).setScale(global_scale * 0.2).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_auto_on.visible = false;
         this.tweens.add({
             targets: light_auto_on,
@@ -208,8 +212,8 @@ var MainSc = new Phaser.Class({
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", clearConveer, this);
         clear_on.visible = isInputUserMail;
 
-        light_one_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 6.5, 'substrat')
-            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
+        light_one_on = this.add.sprite(midle_window - (bg_width / 2.95), GLOBAL_HEIGHT / 6.6, 'substrat')
+            .setOrigin(0.5, 0.5).setScale(global_scale * 0.2).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_one_on.visible = false;
         this.tweens.add({
             targets: light_one_on,
@@ -227,8 +231,8 @@ var MainSc = new Phaser.Class({
         one_on.visible = isInputUserMail;
 
 
-        light_slow_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 3.14, 'substrat')
-            .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
+        light_slow_on = this.add.sprite(midle_window - (bg_width / 2.95), GLOBAL_HEIGHT / 3.14, 'substrat')
+            .setOrigin(0.5, 0.5).setScale(global_scale * 0.2).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_slow_on.visible = false;
         this.tweens.add({
             targets: light_slow_on,
@@ -278,6 +282,10 @@ var MainSc = new Phaser.Class({
                 scoreMultiplierDis = 1;
                 if(multiplierScoreInput)
                     multiplierScoreInput.destroy();
+                if (s2.type === 'grey'){
+                    var namesprite = s2.texture.key;
+                    createBlot(namesprite, this);
+                }
             }
         }, null, this);
 
@@ -298,6 +306,10 @@ var MainSc = new Phaser.Class({
                 scoreMultiplierDis = 1;
                 if(multiplierScoreInput)
                     multiplierScoreInput.destroy();
+                if (s2.type === 'grey'){
+                    var namesprite = s2.texture.key;
+                    createBlot(namesprite, this);
+                }
             }
         }, null, this);
         this.physics.add.overlap(blue_bak, activeGroup, function (s1, s2) {
@@ -317,6 +329,10 @@ var MainSc = new Phaser.Class({
                 scoreMultiplierDis = 1;
                 if(multiplierScoreInput)
                     multiplierScoreInput.destroy();
+                if (s2.type === 'grey'){
+                    var namesprite = s2.texture.key;
+                    createBlot(namesprite, this);
+                }
             }
         }, null, this);
         this.physics.add.overlap(grey_bak, activeGroup, function (s1, s2) {
@@ -357,6 +373,8 @@ var MainSc = new Phaser.Class({
                     multiplierScoreInput.destroy();
             }
         }, null, this);
+
+
 
         this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
             //На пк попытка вынести мусор за пределы поля
@@ -418,6 +436,10 @@ var MainSc = new Phaser.Class({
             s2.active = false;
             if(multiplierScoreInput)
                 multiplierScoreInput.destroy();
+            if (s2.type === 'grey'){
+                var namesprite = s2.texture.key;
+                createBlot(namesprite, this);
+            }
         };
         this.physics.add.collider(toxicGroup, group, coliderGroupFunction);
         this.physics.add.collider(toxicGroup, toxicGroup, coliderGroupFunction);
@@ -435,6 +457,10 @@ var MainSc = new Phaser.Class({
         this.physics.add.overlap(zone_bottom, activeGroup, function (s1, s2) {
             if(multiplierScoreInput)
                 multiplierScoreInput.destroy();
+            if (s2.type === 'grey'){
+                var namesprite = s2.texture.key;
+                createBlot(namesprite, this);
+            }
             activeGroup.remove(s2);
             setInactive(s2, this);
             s2.body.moves = false;
@@ -444,6 +470,10 @@ var MainSc = new Phaser.Class({
         this.physics.add.overlap(zone_bottom, group, function (s1, s2) {
             if(multiplierScoreInput)
                 multiplierScoreInput.destroy();
+            if (s2.type === 'grey'){
+                var namesprite = s2.texture.key;
+                createBlot(namesprite, this);
+            }
             s2.body.moves = false;
             s2.body.enable = true;
             s2.active = false;
@@ -456,6 +486,10 @@ var MainSc = new Phaser.Class({
         var coliderActiveGroup = function (s1, s2) {
             if(multiplierScoreInput)
                 multiplierScoreInput.destroy();
+            if (s2.type === 'grey'){
+                var namesprite = s2.texture.key;
+                createBlot(namesprite, this);
+            }
             scoreMultiplier = 1;
             if (!auto_trash || auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue') {
                 if (!s2.body.allowdraggable && !s2.active) {
@@ -502,6 +536,7 @@ var MainSc = new Phaser.Class({
                 alert(orientation)
             }
         });
+
         // window.addEventListener("orientationchange", function() {
         //     tutFirstGameTraining.setVisible(true);
         // }, false);
@@ -994,4 +1029,28 @@ function checkOverlap(spriteA, spriteB) {
         boundsA.x >= boundsB.right ||
         boundsA.y >= boundsB.bottom
     );
+}
+
+function createBlot(keySprite, scene) {
+    var nameBlot = keySprite === 'g3'? 'jam': keySprite === 'g5'? 'canned' : keySprite === 'g9'? 'butter' : keySprite === 'g4' ? 'yogurt' : 'jam';
+    if(!nameBlot){
+        return;
+    }
+    if(blot_object){
+        return;
+    }
+    var e = (getRandomInt(0,1)===1? -1 : 1) * getRandomInt(2, 10);
+    blot_object = scene.add.sprite(midle_window, midle_window_h + midle_window_h / e, 'blot_'+ nameBlot)
+        .setOrigin(0.5, 0.5).setScale(global_scale*0.5).setDepth(10).setInteractive();
+    scene.tweens.add({
+        targets: blot_object,
+        alpha: 0,
+        ease: 'Linear',
+        duration: 4500,
+        delay: 4000,
+        onComplete: function () {
+            blot_object = undefined;
+        }
+    });
+
 }
