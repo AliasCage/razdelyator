@@ -1032,7 +1032,7 @@ function checkOverlap(spriteA, spriteB) {
 }
 
 function createBlot(keySprite, scene) {
-    var nameBlot = keySprite === 'g3'? 'jam': keySprite === 'g5'? 'canned' : keySprite === 'g9'? 'butter' : keySprite === 'g4' ? 'yogurt' : 'jam';
+    var nameBlot = keySprite === 'g3'? 'jam': keySprite === 'g5'? 'canned' : keySprite === 'g9'? 'butter' : keySprite === 'g4' ? 'yogurt' : undefined;
     if(!nameBlot){
         return;
     }
