@@ -1032,16 +1032,16 @@ function checkOverlap(spriteA, spriteB) {
 }
 
 function createBlot(keySprite, scene) {
-    var nameBlot = keySprite === 'g3'? 'jam': keySprite === 'g5'? 'canned' : keySprite === 'g9'? 'butter' : keySprite === 'g4' ? 'yogurt' : undefined;
+    var nameBlot = /*keySprite === 'g3'? 'jam': keySprite === 'g5'? 'canned' : keySprite === 'g9'? 'butter' : keySprite === 'g4' ? 'yogurt' :*/ 'jam';
     if(!nameBlot){
         return;
     }
-    if(blot_object){
+    if (blot_object) {
         return;
     }
     var e = (getRandomInt(0,1)===1? -1 : 1) * getRandomInt(2, 10);
     blot_object = scene.add.sprite(midle_window, midle_window_h + midle_window_h / e, 'blot_'+ nameBlot)
-        .setOrigin(0.5, 0.5).setScale(global_scale*0.5).setDepth(10).setInteractive();
+        .setOrigin(0.5, 0.5).setScale(global_scale*0.5).setDepth(10).setInteractive().setVisible(false);
     scene.tweens.add({
         targets: blot_object,
         alpha: 0,
@@ -1050,6 +1050,39 @@ function createBlot(keySprite, scene) {
         delay: 4000,
         onComplete: function () {
             blot_object = undefined;
+        }
+    });
+    var rt = scene.add.renderTexture(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT).setDepth(10);
+
+    for(var y =0; y<5; y++){
+        var g =  getRandomInt(2, 5);
+        rt.draw('blot_'+ nameBlot, midle_window - bg_width/2 + bg_width/g, (getRandomInt(2, 15) * 100)*global_scale);
+    }
+
+    var brush = scene.make.image({ key: 'eraser' }, false).setScale(1);
+
+    scene.input.on('pointermove', function (pointer) {
+
+        if (pointer.isDown)
+        {
+            rt.erase(brush, pointer.x - 16, pointer.y - 16);
+        }
+
+    }, this);
+
+    scene.input.on('pointerdown', function (pointer) {
+        rt.erase(brush, pointer.x - 16, pointer.y - 16);
+    }, this);
+
+    scene.tweens.add({
+        targets: rt,
+        alpha: 0,
+        ease: 'Linear',
+        duration: 4500,
+        delay: 4000,
+        onComplete: function () {
+            blot_object = undefined;
+            rt.clear();
         }
     });
 
