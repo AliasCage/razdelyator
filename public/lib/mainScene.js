@@ -109,7 +109,7 @@ var MainSc = new Phaser.Class({
             font: DEVICE_SIZE * 6 + 'vh Ubuntu',
             fill: "#fff",
         }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(false);
-
+        blot_object = undefined;
     },
 
 
@@ -487,7 +487,7 @@ var MainSc = new Phaser.Class({
             if(multiplierScoreInput)
                 multiplierScoreInput.destroy();
             if (s2.type === 'grey'){
-                var namesprite = s2.texture.key;
+                var namesprite = s1.texture.key;
                 createBlot(namesprite, this);
             }
             scoreMultiplier = 1;
@@ -1031,6 +1031,17 @@ function checkOverlap(spriteA, spriteB) {
     );
 }
 
+function getRandomForPositionBlot() {
+    var s = Math.random();
+    if(s > 0.67)
+        return 0.4;
+    if(s > 0.33)
+        return 0.2;
+    else
+        return 0.1;
+
+}
+
 function createBlot(keySprite, scene) {
     var nameBlot = keySprite === 'g3'? 'jam': keySprite === 'g5'? 'canned' : keySprite === 'g9'? 'butter' : keySprite === 'g4' ? 'yogurt' : undefined;
     if(!nameBlot){
@@ -1041,11 +1052,11 @@ function createBlot(keySprite, scene) {
     }
     blot_object = 1;
     var rt = scene.add.renderTexture(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT).setDepth(10);
-    var sp = scene.make.image({ key: 'blot_'+ nameBlot }, false).setScale(global_scale*0.3);
+    var sp = scene.make.image({ key: 'blot_'+ nameBlot }, false).setScale(global_scale*0.35);
     for(var y =0; y<3; y++){
         debugger
-        var g =  getRandomInt(getRandomInt(1, 10), getRandomInt(10, 20));
-        rt.draw(sp, midle_window  + bg_width/g, (getRandomInt(2, 15) * 100)*global_scale * y+100);
+        var g =  getRandomForPositionBlot();
+        rt.draw(sp, midle_window  + bg_width*g, GLOBAL_HEIGHT*Math.random()+y*100*global_scale);
     }
     var brush = scene.make.image({ key: 'eraser' }, false).setScale(1);
 
