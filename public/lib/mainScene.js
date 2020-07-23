@@ -441,9 +441,9 @@ var MainSc = new Phaser.Class({
                 createBlot(namesprite, this);
             }
         };
-        this.physics.add.collider(toxicGroup, group, coliderGroupFunction);
-        this.physics.add.collider(toxicGroup, toxicGroup, coliderGroupFunction);
-        this.physics.add.collider(group, group, coliderGroupFunction);
+        this.physics.add.collider(toxicGroup, group, coliderGroupFunction, null, this);
+        this.physics.add.collider(toxicGroup, toxicGroup, coliderGroupFunction, null, this);
+        this.physics.add.collider(group, group, coliderGroupFunction, null, this);
 
         var zone_left = this.physics.add.sprite(0, 0, 'con9').setOrigin(1, 0).setAlpha(0).setImmovable(true);
         zone_left.setPosition(midle_window - conveer_width / 6, 0);
@@ -462,10 +462,10 @@ var MainSc = new Phaser.Class({
                 createBlot(namesprite, this);
             }
             activeGroup.remove(s2);
-            setInactive(s2, this);
+            setInactive(s2);
             s2.body.moves = false;
             s2.body.enable = true;
-        });
+        }, null, this);
 
         this.physics.add.overlap(zone_bottom, group, function (s1, s2) {
             if(multiplierScoreInput)
@@ -481,7 +481,7 @@ var MainSc = new Phaser.Class({
             if (s2.type === 'acc') {
                 toxicality(s2);
             }
-        });
+        }, null, this);
 
         var coliderActiveGroup = function (s1, s2) {
             if(multiplierScoreInput)
@@ -494,7 +494,7 @@ var MainSc = new Phaser.Class({
             if (!auto_trash || auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue') {
                 if (!s2.body.allowdraggable && !s2.active) {
                     activeGroup.remove(s1);
-                    setInactive(s1, this);
+                    setInactive(s1);
                     s1.body.moves = false;
                     if (s1.type === 'acc') {
                         toxicality(s2);
@@ -502,8 +502,8 @@ var MainSc = new Phaser.Class({
                 }
             }
         };
-        this.physics.add.overlap(activeGroup, group, coliderActiveGroup);
-        this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup);
+        this.physics.add.overlap(activeGroup, group, coliderActiveGroup, null, this);
+        this.physics.add.overlap(activeGroup, toxicGroup, coliderActiveGroup, null, this);
 
         // this.physics.add.overlap(activeGroup, grey_bak, destoyGreyTrash, null, this);
 
