@@ -676,8 +676,8 @@ var MainSc = new Phaser.Class({
             if(folowObject!==null){
                 this.tweens.add({
                     targets: bonusSkill,
-                    x: folowObject.x + DEVICE_SIZE * 12,
-                    y: folowObject.y - DEVICE_SIZE * 12,
+                    x: folowObject.x - folowObject.width/2,
+                    y: folowObject.y - folowObject.height/2,
                     ease: 'Linear',
                     duration: 0.001,
                     delay: 0.001,
