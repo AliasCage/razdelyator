@@ -106,7 +106,6 @@ var Logo = new Phaser.Class({
         this.load.image('a1', 'battary/a1.png');
         this.load.image('a2', 'battary/a2.png');
         this.load.image('a3', 'battary/a3.png');
-        this.load.image('a4', 'battary/a4.png');
 
         this.load.image('substrat', 'btn/substrat.png');
 
