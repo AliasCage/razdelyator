@@ -191,6 +191,7 @@ var Logo = new Phaser.Class({
         this.load.image('blot_yogurt', 'blot/blot_yogurt.png');
 
         this.load.image('eraser', 'eraser.png');
+        this.load.image('score_bg', 'score_bg.png');
     },
 
     create: function () {
@@ -202,10 +203,9 @@ var Logo = new Phaser.Class({
                 volume: 0.2
             });
         }
-        this.add.text(0, 0,
-            'Пропустить обучение', {font: DEVICE_SIZE * 16 + 'pt Electronica-Normal'}).setVisible(false);
 
         this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
+        this.add.text(0,0, 'Пропустить обучение', {font: DEVICE_SIZE * 16 + 'pt Electronica-Normal'}).setVisible(false);
 
         var intro = this.add.sprite(midle_window, 0, 'intro').setOrigin(0.5, 0).setDepth(10);
         if (!global_scale) {

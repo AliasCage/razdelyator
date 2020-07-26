@@ -107,7 +107,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     var height = GetValue(config, 'height', undefined);
 
     var background = scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, WHITE);
-    var titleField = scene.add.text(0, 0, title, {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK);
+    var titleField = scene.add.text(0, 0, title, {font: DEVICE_SIZE * 22 + 'pt Electronica-Normal'}).setColor(DARK);
     var userNameField = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
@@ -115,7 +115,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
             fixedWidth: DEVICE_SIZE * 200,
             fixedHeight: DEVICE_SIZE * 36,
             valign: 'center'
-        }).setColor(DARK).setFont(DEVICE_SIZE * 22 + 'pt Ubuntu'),
+        }).setColor(DARK).setFont(DEVICE_SIZE * 22 + 'pt Electronica-Normal'),
         space: {
             top: DEVICE_SIZE * 5,
             bottom: DEVICE_SIZE * 5,
@@ -161,7 +161,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
             fixedWidth: DEVICE_SIZE * 200,
             fixedHeight: DEVICE_SIZE * 36,
             valign: 'center'
-        }).setColor(DARK).setFont(DEVICE_SIZE * 22 + 'pt Ubuntu'),
+        }).setColor(DARK).setFont(DEVICE_SIZE * 22 + 'pt Electronica-Normal'),
 
         space: {
             top: DEVICE_SIZE * 5,
@@ -193,7 +193,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     loginButton = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, DARK),
-        text: scene.add.text(0, 0, 'Cохранить результат?', {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK),
+        text: scene.add.text(0, 0, 'Cохранить результат?', {font: DEVICE_SIZE * 22 + 'pt Electronica-Normal'}).setColor(DARK),
         space: {top: DEVICE_SIZE * 8, bottom: DEVICE_SIZE * 8, left: DEVICE_SIZE * 8, right: DEVICE_SIZE * 8}
     })
         .setInteractive()
@@ -206,7 +206,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     isBadWordInput = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, RED_COLOR),
-        text: scene.add.text(0, 0, 'Недопустимое значение!', {font: DEVICE_SIZE * 22 + 'pt Ubuntu', fill: '#e3f2fd'}),
+        text: scene.add.text(0, 0, 'Недопустимое значение!', {font: DEVICE_SIZE * 22 + 'pt Electronica-Normal', fill: '#e3f2fd'}),
         space: {top: DEVICE_SIZE * 8, bottom: DEVICE_SIZE * 8, left: DEVICE_SIZE * 8, right: DEVICE_SIZE * 8}
     });
     isBadWordInput.visible = false;
@@ -269,7 +269,7 @@ function createGridTable(game) {
 
         header: createRowItem(game,
             {
-                background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
+                background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, WHITE),
                 id: game.add.text(0, 0, 'Место', {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal'}).setColor(DARK),
                 score: game.add.text(0, 0, 'Очки', {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal'}).setColor(DARK),
                 name: game.add.text(0, 0, 'Никнейм', {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal'}).setColor(DARK),
@@ -281,7 +281,7 @@ function createGridTable(game) {
             width: undefined,
             height: DEVICE_SIZE * 10,
 
-            background: game.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_DARK),
+            background: game.rexUI.add.roundRectangle(0, 0, 10, 10, 0, WHITE),
             // text: game.add.text(0, 0, user_top_place ? 'Ваше место: ' + user_top_place + ' счёт: ' + player_score : '').setColor(DARK),
         }),
 
@@ -328,15 +328,15 @@ var createRowItem = function (scene, config) {
     }
     var id = GetValue(config, 'id', undefined);
     if (id === undefined) {
-        id = scene.add.text(0, 0, id, {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK);
+        id = scene.add.text(0, 0, id, {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal'}).setColor(DARK);
     }
     var score = GetValue(config, 'score', undefined);
     if (score === undefined) {
-        score = scene.add.text(0, 0, score, {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK);
+        score = scene.add.text(0, 0, score, {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal'}).setColor(DARK);
     }
     var name = GetValue(config, 'name', undefined);
     if (name === undefined) {
-        name = scene.add.text(0, 0, name, {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK);
+        name = scene.add.text(0, 0, name, {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal'}).setColor(DARK);
     }
     return scene.rexUI.add.sizer({
         width: GetValue(config, 'width', undefined),

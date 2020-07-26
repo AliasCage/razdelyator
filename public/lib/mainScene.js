@@ -70,6 +70,7 @@ var multiplierScoreInput;
 var gameObjectDraggenNow;
 
 var blot_object;
+var score_bg;
 
 var MainSc = new Phaser.Class({
 
@@ -106,7 +107,7 @@ var MainSc = new Phaser.Class({
             collideWorldBounds: true
         });
         text_score = this.add.text(midle_window - (conveer_width + (bg_width - conveer_width)) * 0.25 * 1.6, GLOBAL_HEIGHT * 0.9, player_score, {
-            font: DEVICE_SIZE * 6 + 'vh Ubuntu',
+            font: DEVICE_SIZE * 6 + 'vh Electronica-Normal',
             fill: "#fff",
         }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(false);
         blot_object = undefined;
@@ -260,8 +261,10 @@ var MainSc = new Phaser.Class({
                 createDialog.call(this);
             }, this);
 
-        text_score = this.add.text(midle_window - side_middle * 1.6, GLOBAL_HEIGHT * 0.9, player_score, {
-            font: DEVICE_SIZE * 6 + 'vh Ubuntu',
+        score_bg = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT * 0.9, 'score_bg').setOrigin(0.5, 0.45).setScale(global_scale);
+
+        text_score = this.add.text(score_bg.x - score_bg.width/2.4, score_bg.y -  score_bg.height/9, player_score, {
+            font: DEVICE_SIZE * 4.5 + 'vh Electronica-Normal',
             fill: "#fff",
         }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true);
 
@@ -537,6 +540,7 @@ var MainSc = new Phaser.Class({
             }
         });
 
+
         // window.addEventListener("orientationchange", function() {
         //     tutFirstGameTraining.setVisible(true);
         // }, false);
@@ -601,13 +605,17 @@ var MainSc = new Phaser.Class({
         }
 
         // Изменения очков
-        text_score.text = player_score;
+
+        text_score.text = player_score < 10 ? '0000' + player_score :
+            player_score < 100 ? '000' + player_score :
+                player_score < 1000 ? '00' + player_score:
+                    player_score < 10000 ? '0' + player_score: player_score;
         if(scoreMultiplier===5){
             if(multiplierScoreInput)
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
             multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height/3, 'x2', {
-                font: DEVICE_SIZE * 3 + 'vh Ubuntu',
+                font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
                 fill: "#fff",
             }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
             scoreMultiplierDis = 2;
@@ -617,7 +625,7 @@ var MainSc = new Phaser.Class({
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
             multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height/3, 'x3', {
-                font: DEVICE_SIZE * 3 + 'vh Ubuntu',
+                font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
                 fill: "#fff",
             }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
             scoreMultiplierDis = 3;
@@ -627,7 +635,7 @@ var MainSc = new Phaser.Class({
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
             multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height/3, 'x5', {
-                font: DEVICE_SIZE * 3 + 'vh Ubuntu',
+                font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
                 fill: "#fff",
             }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
             scoreMultiplierDis = 5;
