@@ -106,7 +106,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     var width = GetValue(config, 'width', undefined);
     var height = GetValue(config, 'height', undefined);
 
-    var background = scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, COLOR_PRIMARY);
+    var background = scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, WHITE);
     var titleField = scene.add.text(0, 0, title, {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK);
     var userNameField = scene.rexUI.add.label({
         orientation: 'x',
@@ -255,7 +255,7 @@ function createGridTable(game) {
 
         scrollMode: 0,
 
-        background: game.rexUI.add.roundRectangle(0, 0, 20, 10, 10, COLOR_DARK),
+        background: game.rexUI.add.roundRectangle(0, 0, 20, 10, 10, WHITE),
 
         table: {
             cellWidth: undefined,
@@ -270,9 +270,9 @@ function createGridTable(game) {
         header: createRowItem(game,
             {
                 background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
-                id: game.add.text(0, 0, 'Место', {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK),
-                score: game.add.text(0, 0, 'Очки', {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK),
-                name: game.add.text(0, 0, 'Никнейм', {font: DEVICE_SIZE * 15 + 'pt Ubuntu'}).setColor(DARK),
+                id: game.add.text(0, 0, 'Место', {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal'}).setColor(DARK),
+                score: game.add.text(0, 0, 'Очки', {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal'}).setColor(DARK),
+                name: game.add.text(0, 0, 'Никнейм', {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal'}).setColor(DARK),
                 height: DEVICE_SIZE * 30,
             }
         ),

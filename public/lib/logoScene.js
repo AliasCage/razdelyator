@@ -1,4 +1,5 @@
 const DARK = 0xeffffff;
+const WHITE = 0xffffff;
 const COLOR_PRIMARY = 0xe3f2fd;
 const COLOR_DARK = 0xb1bfca;
 const TOXIC_COLOR = 0x01DF01;
@@ -171,7 +172,7 @@ var Logo = new Phaser.Class({
         this.load.image('g19', 'trash/grey/19.png');
         this.load.image('g20', 'trash/grey/20.png');
 
-        this.load.image('cell', 'cell.jpg');
+        this.load.image('cell', 'cell.png');
 
         this.load.audio('m', ['sounds/sound.mp3', 'sounds/sound.ogg']);
 
@@ -201,7 +202,8 @@ var Logo = new Phaser.Class({
                 volume: 0.2
             });
         }
-
+        this.add.text(0, 0,
+            'Пропустить обучение', {font: DEVICE_SIZE * 16 + 'pt Electronica-Normal'}).setVisible(false);
 
         this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
 
@@ -318,7 +320,7 @@ function createDialog() {
         x: midle_window,
         y: midle_window_h,
 
-        background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, COLOR_PRIMARY).setStrokeStyle(2, INACTIVE_COLOR),
+        background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, WHITE).setStrokeStyle(2, INACTIVE_COLOR),
         content: this.add.text(0, 0, 'Пауза', {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK),
         actions: [
             createLabel(this, 'Выйти'),
