@@ -111,6 +111,7 @@ var MainSc = new Phaser.Class({
             fill: "#fff",
         }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(false);
         blot_object = undefined;
+        score_bg = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT * 0.9, 'score_bg').setOrigin(0.5, 0.45).setScale(global_scale).setVisible(false);
     },
 
 
@@ -489,8 +490,8 @@ var MainSc = new Phaser.Class({
         var coliderActiveGroup = function (s1, s2) {
             if(multiplierScoreInput)
                 multiplierScoreInput.destroy();
-            if (s2.type === 'grey'){
-                var namesprite = s2.texture.key;
+            if (s1.type === 'grey'){
+                var namesprite = s1.texture.key;
                 createBlot(namesprite, this);
             }
             scoreMultiplier = 1;
