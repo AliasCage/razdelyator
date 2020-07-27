@@ -7,6 +7,9 @@ const TOXIC_COLOR = 0x01DF01;
 const INACTIVE_COLOR = 0x6b6b6b;
 const RED_COLOR = 0xe65c5c;//a64646
 const GREEN_COLOR = 0x7ced68;
+const PROGRESS_COLOR_1 = 0x2A9D8F;
+const PROGRESS_COLOR_2 = 0x54DDC6;
+
 var isFirstStartGame = true;
 
 var now;
@@ -57,12 +60,12 @@ var Logo = new Phaser.Class({
 
 
     preload: function () {
-        var groundBar = this.add.graphics().fillStyle(COLOR_PRIMARY, 0.6).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
-        var progressBox = this.add.graphics().fillStyle(COLOR_DARK, 0.7)
+        var groundBar = this.add.graphics().fillStyle(PROGRESS_COLOR_2, 0.6).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+        var progressBox = this.add.graphics().fillStyle(PROGRESS_COLOR_1, 0.7)
             .fillRect(midle_window - GLOBAL_WIDTH * 0.475, GLOBAL_HEIGHT * 0.9, GLOBAL_WIDTH * 0.95, 50);
         var progressBar = this.add.graphics();
         this.load.on('progress', function (value) {
-            progressBar.clear().fillStyle(COLOR_PRIMARY, 1)
+            progressBar.clear().fillStyle(PROGRESS_COLOR_2, 1)
                 .fillRect(midle_window - GLOBAL_WIDTH * 0.45, GLOBAL_HEIGHT * 0.9 + 10, GLOBAL_WIDTH * 0.9 * value, 30);
         });
 
