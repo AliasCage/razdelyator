@@ -320,8 +320,11 @@ function createDialog() {
         x: midle_window,
         y: midle_window_h,
 
-        background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, WHITE).setStrokeStyle(2, INACTIVE_COLOR),
-        content: this.add.text(0, 0, 'Пауза', {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK),
+        background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, BG_COLOR).setStrokeStyle(2, INACTIVE_COLOR),
+        content: this.add.text(0, 0, 'Пауза', {
+            font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
+            fill: '#FFF'
+        }),
         actions: [
             createLabel(this, 'Выйти'),
             createLabel(this, 'Продолжить')
@@ -381,9 +384,12 @@ function createDialog() {
 
 var createLabel = function (scene, text) {
     return scene.rexUI.add.label({
-        background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK),
+        background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, "0xF4A261"),
 
-        text: scene.add.text(0, 0, text, {font: DEVICE_SIZE * 22 + 'pt Ubuntu'}).setColor(DARK),
+        text: scene.add.text(0, 0, text, {
+            font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
+            fill: "#FFF"
+        }),
 
 
         space: {

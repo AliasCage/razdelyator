@@ -106,10 +106,11 @@ var MainSc = new Phaser.Class({
         group = this.physics.add.group({
             collideWorldBounds: true
         });
-        text_score = this.add.text(midle_window - (conveer_width + (bg_width - conveer_width)) * 0.25 * 1.6, GLOBAL_HEIGHT * 0.9, player_score, {
-            font: DEVICE_SIZE * 6 + 'vh Electronica-Normal',
-            fill: "#fff",
-        }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(false);
+        //todo: удалить если не нужно
+        // text_score = this.add.text(midle_window - (conveer_width + (bg_width - conveer_width)) * 0.25 * 1.6, GLOBAL_HEIGHT * 0.9, player_score, {
+        //     font: DEVICE_SIZE * 6 + 'vh Electronica-Normal',
+        //     fill: "#fff",
+        // }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(false);
         blot_object = undefined;
         score_bg = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT * 0.9, 'score_bg').setOrigin(0.5, 0.45).setScale(global_scale).setVisible(false);
     },
@@ -131,8 +132,6 @@ var MainSc = new Phaser.Class({
         });
 
         this.load.scenePlugin('rexuiplugin', 'lib/rexuiplugin.min.js', 'rexUI', 'rexUI');
-
-
     },
 
     create: function () {
@@ -263,10 +262,10 @@ var MainSc = new Phaser.Class({
 
         score_bg = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT * 0.9, 'score_bg').setOrigin(0.5, 0.45).setScale(global_scale);
 
-        text_score = this.add.text(score_bg.x - score_bg.width / 2.4 * global_scale, score_bg.y - score_bg.height / 11 * global_scale, player_score, {
+        text_score = this.add.text(score_bg.x - score_bg.width / 2.3 * global_scale, score_bg.y - score_bg.height / 11 * global_scale, player_score, {
             font: DEVICE_SIZE * 4.3 + 'vh Electronica-Normal',
             fill: "#fff",
-        }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setScale(global_scale);
+        }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true);
 
 
         this.physics.add.overlap(battary_case, group, function (s1, s2) {
