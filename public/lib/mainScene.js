@@ -232,7 +232,7 @@ var MainSc = new Phaser.Class({
         one_on.visible = isInputUserMail;
 
 
-        light_slow_on = this.add.sprite(midle_window - (bg_width / 2.95), GLOBAL_HEIGHT / 3.14, 'substrat')
+        light_slow_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 3.14, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale * 0.2).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_slow_on.visible = false;
         this.tweens.add({
