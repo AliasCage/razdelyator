@@ -90,7 +90,6 @@ var Logo = new Phaser.Class({
         this.load.image('bg_clone', 'bg_clone.png');
         this.load.image('rotate', 'rotate.png');
         this.load.image('bg_tile', 'bg_tile.png');
-        this.load.image('con1', '/conveer/1.png');
 
         this.load.image('darknes', 'darknes.png');
         this.load.image('blue1', 'blue_up.png');
@@ -119,15 +118,16 @@ var Logo = new Phaser.Class({
         this.load.image('slow_off', 'btn/slow_off.png');
         this.load.image('slow_on', 'btn/slow_on.png');
 
-        this.load.image('con2', '/conveer/2.png');
-        this.load.image('con3', '/conveer/3.png');
-        this.load.image('con4', '/conveer/4.png');
-        this.load.image('con5', '/conveer/5.png');
-        this.load.image('con6', '/conveer/6.png');
-        this.load.image('con7', '/conveer/7.png');
-        this.load.image('con8', '/conveer/8.png');
-        this.load.image('con9', '/conveer/9.png');
-        this.load.image('con10', '/conveer/10.png');
+        this.load.image('con1', 'conveer/1.png');
+        this.load.image('con2', 'conveer/2.png');
+        this.load.image('con3', 'conveer/3.png');
+        this.load.image('con4', 'conveer/4.png');
+        this.load.image('con5', 'conveer/5.png');
+        this.load.image('con6', 'conveer/6.png');
+        this.load.image('con7', 'conveer/7.png');
+        this.load.image('con8', 'conveer/8.png');
+        this.load.image('con9', 'conveer/9.png');
+        this.load.image('con10', 'conveer/10.png');
 
         this.load.image('b1', 'trash/blue/1.png');
         this.load.image('b2', 'trash/blue/2.png');
