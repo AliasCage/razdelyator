@@ -1,5 +1,6 @@
 const DARK = 0xeffffff;
 const WHITE = 0xffffff;
+const BG_COLOR = 0x2A9D8F;
 const COLOR_PRIMARY = 0xe3f2fd;
 const COLOR_DARK = 0xb1bfca;
 const TOXIC_COLOR = 0x01DF01;
@@ -204,7 +205,7 @@ var Logo = new Phaser.Class({
         }
 
         this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
-        this.add.text(0,0, 'Пропустить обучение', {font: DEVICE_SIZE * 16 + 'pt Electronica-Normal'}).setVisible(false);
+        this.add.text(0, 0, 'Пропустить обучение', {font: DEVICE_SIZE * 16 + 'pt Electronica-Normal'}).setVisible(false);
 
         var intro = this.add.sprite(midle_window, 0, 'intro').setOrigin(0.5, 0).setDepth(10);
         if (!global_scale) {
@@ -225,7 +226,7 @@ var Logo = new Phaser.Class({
         var start_btn = this.add.sprite(midle_window, GLOBAL_HEIGHT * 0.53, 'start').setOrigin(0.5, 0.5)
             .setDepth(11).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
-                if(!bg_clone.visible) {
+                if (!bg_clone.visible) {
                     start_btn.setScale(global_scale);
                     if (isFirstStartGame) {
                         isFirstStartGame = false;
@@ -253,7 +254,7 @@ var Logo = new Phaser.Class({
         var tutorial_btn = this.add.sprite(midle_window, GLOBAL_HEIGHT * 0.605, 'tutorial').setOrigin(0.5, 0.5)
             .setDepth(11).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
-                if(!bg_clone.visible) {
+                if (!bg_clone.visible) {
                     tutorial_btn.setScale(global_scale);
                     console.log("tutr");
                     this.scene.start('tutorial', {name: 'Move from Logo to Tutorial'});
@@ -271,7 +272,7 @@ var Logo = new Phaser.Class({
         var raiting_btn = this.add.sprite(midle_window, GLOBAL_HEIGHT * 0.68, 'raiting').setOrigin(0.5, 0.5)
             .setDepth(11).setScale(global_scale).setInteractive()
             .on("pointerup", function () {
-                if(!bg_clone.visible){
+                if (!bg_clone.visible) {
                     raiting_btn.setScale(global_scale);
                     console.log("raiting");
                     this.scene.start('raiting', {name: 'Move from Logo to Raiting'});

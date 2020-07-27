@@ -255,7 +255,7 @@ function createGridTable(game) {
 
         scrollMode: 0,
 
-        background: game.rexUI.add.roundRectangle(0, 0, 20, 10, 10, WHITE),
+        background: game.rexUI.add.roundRectangle(0, 0, 20, 10, 10, BG_COLOR),
 
         table: {
             cellWidth: undefined,
@@ -269,10 +269,10 @@ function createGridTable(game) {
 
         header: createRowItem(game,
             {
-                background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, WHITE),
-                id: game.add.text(0, 0, 'Место', {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal'}).setColor(DARK),
-                score: game.add.text(0, 0, 'Очки', {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal'}).setColor(DARK),
-                name: game.add.text(0, 0, 'Никнейм', {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal'}).setColor(DARK),
+                background: game.rexUI.add.roundRectangle(0, 0, 20, 20, 0, BG_COLOR),
+                id: game.add.text(0, 0, 'Место', {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal', fill: "#fff"}),
+                score: game.add.text(0, 0, 'Очки', {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal', fill: "#fff"}),
+                name: game.add.text(0, 0, 'Никнейм', {font: DEVICE_SIZE * 15 + 'pt Electronica-Normal', fill: "#fff"}),
                 height: DEVICE_SIZE * 30,
             }
         ),
@@ -281,7 +281,7 @@ function createGridTable(game) {
             width: undefined,
             height: DEVICE_SIZE * 10,
 
-            background: game.rexUI.add.roundRectangle(0, 0, 10, 10, 0, WHITE),
+            background: game.rexUI.add.roundRectangle(0, 0, 10, 10, 0, BG_COLOR),
             // text: game.add.text(0, 0, user_top_place ? 'Ваше место: ' + user_top_place + ' счёт: ' + player_score : '').setColor(DARK),
         }),
 
