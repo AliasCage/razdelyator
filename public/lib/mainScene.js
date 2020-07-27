@@ -264,10 +264,11 @@ var MainSc = new Phaser.Class({
 
         score_bg = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT * 0.9, 'score_bg').setOrigin(0.5, 0.45).setScale(global_scale);
 
-        text_score = this.add.text(score_bg.x - score_bg.width/2.4 * global_scale, score_bg.y -  score_bg.height/11 * global_scale, player_score, {
-            font: DEVICE_SIZE * 4.3 + 'vh Electronica-Normal',
+
+        text_score = this.add.text(score_bg.x - score_bg.width/2.65, score_bg.y - score_bg.height/15, player_score, {
+            font: DEVICE_SIZE * 4 + 'vh Electronica-Normal',
             fill: "#fff",
-        }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true);
+        }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setScale(global_scale);
 
 
         this.physics.add.overlap(battary_case, group, function (s1, s2) {
@@ -333,10 +334,6 @@ var MainSc = new Phaser.Class({
                 scoreMultiplierDis = 1;
                 if(multiplierScoreInput)
                     multiplierScoreInput.destroy();
-                if (s2.type === 'grey'){
-                    var namesprite = s2.texture.key;
-                    createBlot(namesprite, this);
-                }
             }
         }, null, this);
         this.physics.add.overlap(grey_bak, activeGroup, function (s1, s2) {
@@ -431,6 +428,11 @@ var MainSc = new Phaser.Class({
 
         var coliderGroupFunction = function (s1, s2) {
             scoreMultiplier = 0;
+            if (s2.type === 'grey' && s2.body.moves){
+                debugger
+                var namesprite = s2.texture.key;
+                createBlot(namesprite, this);
+            }
             if (!s1.body.moves) {
                 s2.body.moves = false;
                 if (s2.type === 'acc' && s2.active) {
@@ -440,10 +442,6 @@ var MainSc = new Phaser.Class({
             s2.active = false;
             if(multiplierScoreInput)
                 multiplierScoreInput.destroy();
-            if (s2.type === 'grey'){
-                var namesprite = s2.texture.key;
-                createBlot(namesprite, this);
-            }
         };
         this.physics.add.collider(toxicGroup, group, coliderGroupFunction, null, this);
         this.physics.add.collider(toxicGroup, toxicGroup, coliderGroupFunction, null, this);
@@ -462,6 +460,7 @@ var MainSc = new Phaser.Class({
             if(multiplierScoreInput)
                 multiplierScoreInput.destroy();
             if (s2.type === 'grey'){
+                debugger
                 var namesprite = s2.texture.key;
                 createBlot(namesprite, this);
             }
@@ -475,6 +474,7 @@ var MainSc = new Phaser.Class({
             if(multiplierScoreInput)
                 multiplierScoreInput.destroy();
             if (s2.type === 'grey'){
+                debugger
                 var namesprite = s2.texture.key;
                 createBlot(namesprite, this);
             }
@@ -488,20 +488,22 @@ var MainSc = new Phaser.Class({
         }, null, this);
 
         var coliderActiveGroup = function (s1, s2) {
-            if(multiplierScoreInput)
-                multiplierScoreInput.destroy();
-            if (s1.type === 'grey'){
-                var namesprite = s1.texture.key;
-                createBlot(namesprite, this);
-            }
-            scoreMultiplier = 1;
+
             if (!auto_trash || auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue') {
                 if (!s2.body.allowdraggable && !s2.active) {
+                    if(multiplierScoreInput)
+                        multiplierScoreInput.destroy();
+                    if (s1.type === 'grey'){
+                        debugger
+                        var namesprite = s1.texture.key;
+                        createBlot(namesprite, this);
+                    }
+                    scoreMultiplier = 1;
                     activeGroup.remove(s1);
                     setInactive(s1);
                     s1.body.moves = false;
                     if (s1.type === 'acc') {
-                        toxicality(s2);
+                        toxicality(s1);
                     }
                 }
             }
@@ -513,7 +515,7 @@ var MainSc = new Phaser.Class({
 
         isPause = false;
 
-        tutFirstGameTraining = this.add.sprite(midle_window, 0, 'tut4').setDepth(10)
+        tutFirstGameTraining = this.add.sprite(midle_window, 0, 'tut4').setDepth(19)
             .setOrigin(0.5, 0).setScale(global_scale).setInteractive().setVisible(false)
             .on("pointerdown", function (pointer) {
                 isFirstGameTrainingDisplay = true;

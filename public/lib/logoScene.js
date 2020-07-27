@@ -374,7 +374,7 @@ function createDialog() {
         })
         .layout()
         .popUp(500)
-        .setDepth(9);
+        .setDepth(19);
 
 }
 

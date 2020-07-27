@@ -95,7 +95,7 @@ var Tutorial = new Phaser.Class({
             }
             tutNow = tutScene.add.video(midle_window, midle_window_h, 'tut_video_'+numTut).setCurrentTime(0);
             var VIDEO_SCALE = conveer_width / tutNow.width;
-            tutNow.setPlaybackRate(1.5)
+            tutNow.setLoop()
                 .play()
                 .setInteractive()
                 .setScale(VIDEO_SCALE)
