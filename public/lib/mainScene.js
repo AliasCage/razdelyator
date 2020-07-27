@@ -187,7 +187,6 @@ var MainSc = new Phaser.Class({
         });
 
 
-
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
         var gsSubstrat = 0.3 * global_scale;
         light_auto_on = this.add.sprite(midle_window + (bg_width / 3.05), GLOBAL_HEIGHT / 3.14, 'substrat')
@@ -203,7 +202,7 @@ var MainSc = new Phaser.Class({
             yoyo: true
         });
         this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 3, 'auto_off')
-             .setOrigin(0.5, 0.5).setScale(global_scale);
+            .setOrigin(0.5, 0.5).setScale(global_scale);
         auto_on = this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 3, 'auto_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", autoTrash, this);
         auto_on.visible = isInputUserMail;
@@ -256,7 +255,7 @@ var MainSc = new Phaser.Class({
             .on("pointerup", function () {
                 tweensBattaryCase.pause();
                 pauseCon.visible = true;
-                nowCreateTrash  = this.time.now - now;
+                nowCreateTrash = this.time.now - now;
                 nowScoreDifficulty = this.time.now - scoreDifficulty;
                 pauseMenu = true;
                 createDialog.call(this);
@@ -264,9 +263,8 @@ var MainSc = new Phaser.Class({
 
         score_bg = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT * 0.9, 'score_bg').setOrigin(0.5, 0.45).setScale(global_scale);
 
-
-        text_score = this.add.text(score_bg.x - score_bg.width/2.65, score_bg.y - score_bg.height/15, player_score, {
-            font: DEVICE_SIZE * 4 + 'vh Electronica-Normal',
+        text_score = this.add.text(score_bg.x - score_bg.width / 2.4 * global_scale, score_bg.y - score_bg.height / 11 * global_scale, player_score, {
+            font: DEVICE_SIZE * 4.3 + 'vh Electronica-Normal',
             fill: "#fff",
         }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setScale(global_scale);
 
@@ -276,18 +274,18 @@ var MainSc = new Phaser.Class({
                 scoreMultiplier++;
                 group.remove(s2);
                 destroyGroup.push(s2);
-                if(s2.hasSkillType !== null){
+                if (s2.hasSkillType !== null) {
                     bonusSkill.destroy();
                     folowObject = null;
                 }
                 s2.destroy();
                 createCoin(s2.x - 50, s2.y + 50, 3, this, s2.hasSkillType);
-            }else{
+            } else {
                 scoreMultiplier = 0;
                 scoreMultiplierDis = 1;
-                if(multiplierScoreInput)
+                if (multiplierScoreInput)
                     multiplierScoreInput.destroy();
-                if (s2.type === 'grey'){
+                if (s2.type === 'grey') {
                     var namesprite = s2.texture.key;
                     createBlot(namesprite, this);
                 }
@@ -301,17 +299,17 @@ var MainSc = new Phaser.Class({
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
                 s2.setAngularVelocity(-5 * DEVICE_SIZE_SPEED);
-                if(s2.hasSkillType !== null){
+                if (s2.hasSkillType !== null) {
                     bonusSkill.destroy();
                     folowObject = null;
                 }
                 createCoin(s2.x + 50, s2.y - 50, 2, this, s2.hasSkillType);
-            }else{
+            } else {
                 scoreMultiplier = 0;
                 scoreMultiplierDis = 1;
-                if(multiplierScoreInput)
+                if (multiplierScoreInput)
                     multiplierScoreInput.destroy();
-                if (s2.type === 'grey'){
+                if (s2.type === 'grey') {
                     var namesprite = s2.texture.key;
                     createBlot(namesprite, this);
                 }
@@ -324,16 +322,20 @@ var MainSc = new Phaser.Class({
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
                 s2.setAngularVelocity(-5 * DEVICE_SIZE_SPEED);
-                if(s2.hasSkillType !== null){
+                if (s2.hasSkillType !== null) {
                     bonusSkill.destroy();
                     folowObject = null;
                 }
                 createCoin(s2.x + 50, s2.y - 50, 2, this, s2.hasSkillType);
-            }else{
+            } else {
                 scoreMultiplier = 0;
                 scoreMultiplierDis = 1;
-                if(multiplierScoreInput)
+                if (multiplierScoreInput)
                     multiplierScoreInput.destroy();
+                if (s2.type === 'grey') {
+                    var namesprite = s2.texture.key;
+                    createBlot(namesprite, this);
+                }
             }
         }, null, this);
         this.physics.add.overlap(grey_bak, activeGroup, function (s1, s2) {
@@ -343,15 +345,15 @@ var MainSc = new Phaser.Class({
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
                 s2.setAngularVelocity(-5 * DEVICE_SIZE_SPEED);
-                if(s2.hasSkillType !== null){
+                if (s2.hasSkillType !== null) {
                     bonusSkill.destroy();
                     folowObject = null;
                 }
                 createCoin(s2.x - 50, s2.y - 50, 2, this, s2.hasSkillType);
-            }else{
+            } else {
                 scoreMultiplier = 0;
                 scoreMultiplierDis = 1;
-                if(multiplierScoreInput)
+                if (multiplierScoreInput)
                     multiplierScoreInput.destroy();
             }
         }, null, this);
@@ -362,24 +364,23 @@ var MainSc = new Phaser.Class({
                 destroyGroup.push(s2);
                 s2.setVelocity((s1.x - s2.x) * DEVICE_SIZE_SPEED / 2, (s1.y - s2.y) * DEVICE_SIZE_SPEED);
                 s2.setAngularVelocity(-5 * DEVICE_SIZE_SPEED);
-                if(s2.hasSkillType !== null){
+                if (s2.hasSkillType !== null) {
                     bonusSkill.destroy();
                     folowObject = null;
                 }
                 createCoin(s2.x - 50, s2.y - 50, 1, this, s2.hasSkillType);
-            }else{
+            } else {
                 scoreMultiplier = 0;
                 scoreMultiplierDis = 1;
-                if(multiplierScoreInput)
+                if (multiplierScoreInput)
                     multiplierScoreInput.destroy();
             }
         }, null, this);
 
 
-
         this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
             //На пк попытка вынести мусор за пределы поля
-            if(!gameObjectDraggenNow){
+            if (!gameObjectDraggenNow) {
                 gameObjectDraggenNow = gameObject;
             }
             if ((midle_window + bg_width * 0.5) < dragX || (midle_window - bg_width * 0.5) > dragX) {
@@ -394,7 +395,7 @@ var MainSc = new Phaser.Class({
         });
 
         this.input.on('dragend', function (pointer, gameObject, dragX, dragY) {
-            if(gameObjectDraggenNow){
+            if (gameObjectDraggenNow) {
                 gameObjectDraggenNow = undefined;
             }
             activeGroup.remove(gameObject);
@@ -440,7 +441,7 @@ var MainSc = new Phaser.Class({
                 }
             }
             s2.active = false;
-            if(multiplierScoreInput)
+            if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
         };
         this.physics.add.collider(toxicGroup, group, coliderGroupFunction, null, this);
@@ -457,10 +458,9 @@ var MainSc = new Phaser.Class({
 
         var zone_bottom = this.physics.add.sprite(midle_window, GLOBAL_HEIGHT, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
         this.physics.add.overlap(zone_bottom, activeGroup, function (s1, s2) {
-            if(multiplierScoreInput)
+            if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
-            if (s2.type === 'grey'){
-                debugger
+            if (s2.type === 'grey') {
                 var namesprite = s2.texture.key;
                 createBlot(namesprite, this);
             }
@@ -471,10 +471,9 @@ var MainSc = new Phaser.Class({
         }, null, this);
 
         this.physics.add.overlap(zone_bottom, group, function (s1, s2) {
-            if(multiplierScoreInput)
+            if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
-            if (s2.type === 'grey'){
-                debugger
+            if (s2.type === 'grey') {
                 var namesprite = s2.texture.key;
                 createBlot(namesprite, this);
             }
@@ -571,14 +570,14 @@ var MainSc = new Phaser.Class({
         if (isPause || pauseMenu || tutFirstGameTraining.visible) {
             isPausePast = true;
             activeGroup.getChildren().forEach(function (trash) {
-            trash.setVelocityY(0);
-        });
+                trash.setVelocityY(0);
+            });
             group.getChildren().forEach(function (trash) {
                 trash.setVelocityY(0);
             });
             return
         }
-        if(isPausePast){
+        if (isPausePast) {
             now2 = this.time.now + now2;
             now3 = this.time.now + now3;
             now4 = this.time.now + now4;
@@ -611,39 +610,39 @@ var MainSc = new Phaser.Class({
 
         text_score.text = player_score < 10 ? '0000' + player_score :
             player_score < 100 ? '000' + player_score :
-                player_score < 1000 ? '00' + player_score:
-                    player_score < 10000 ? '0' + player_score: player_score;
-        if(scoreMultiplier===5){
-            if(multiplierScoreInput)
+                player_score < 1000 ? '00' + player_score :
+                    player_score < 10000 ? '0' + player_score : player_score;
+        if (scoreMultiplier === 5) {
+            if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
-            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height/3, 'x2', {
+            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height / 3, 'x2', {
                 font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
                 fill: "#fff",
             }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
             scoreMultiplierDis = 2;
         }
-        if(scoreMultiplier===10){
-            if(multiplierScoreInput)
+        if (scoreMultiplier === 10) {
+            if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
-            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height/3, 'x3', {
+            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height / 3, 'x3', {
                 font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
                 fill: "#fff",
             }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
             scoreMultiplierDis = 3;
         }
-        if(scoreMultiplier===15){
-            if(multiplierScoreInput)
+        if (scoreMultiplier === 15) {
+            if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
-            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height/3, 'x5', {
+            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height / 3, 'x5', {
                 font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
                 fill: "#fff",
             }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
             scoreMultiplierDis = 5;
         }
-        if(scoreMultiplier<5 &&  multiplierScoreInput)
+        if (scoreMultiplier < 5 && multiplierScoreInput)
             multiplierScoreInput.destroy();
 
         if (Array.isArray(destroyGroup) && destroyGroup.length) {
@@ -673,27 +672,27 @@ var MainSc = new Phaser.Class({
         if (this.time.now - now > interval) {
             now = this.time.now;
             var obj = createAndDropObject.call(this);
-            if(obj.hasSkillType !== null){
-                console.log (obj.hasSkillType);
+            if (obj.hasSkillType !== null) {
+                console.log(obj.hasSkillType);
                 folowObject = obj;
-                bonusSkill = this.add.sprite(obj.x, obj.y, obj.hasSkillType+'_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.85);
+                bonusSkill = this.add.sprite(obj.x, obj.y, obj.hasSkillType + '_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.85);
             }
-            if(light_auto_on.visible){
+            if (light_auto_on.visible) {
                 autoSort(this);
             }
         }
 
-        if(bonusSkill !== null) {
-            if(folowObject!==null){
+        if (bonusSkill !== null) {
+            if (folowObject !== null) {
                 this.tweens.add({
                     targets: bonusSkill,
-                    x: folowObject.x - folowObject.width/2,
-                    y: folowObject.y - folowObject.height/2,
+                    x: folowObject.x - folowObject.width / 2,
+                    y: folowObject.y - folowObject.height / 2,
                     ease: 'Linear',
                     duration: 0.001,
                     delay: 0.001,
                 });
-            }else{
+            } else {
                 bonusSkill.destroy();
             }
         }
@@ -725,27 +724,25 @@ var MainSc = new Phaser.Class({
             one_type = 0;
         }
 
-        if ((this.time.now - now4 > timerSlow / 2) && slow_trash ) {
+        if ((this.time.now - now4 > timerSlow / 2) && slow_trash) {
             slow_trash = false;
             light_slow_on.visible = false;
             now4 = this.time.now;
         }
-        if (gameObjectDraggenNow && (checkOverlap(gameObjectDraggenNow, grey_bak) || checkOverlap(gameObjectDraggenNow, blue_bak)))
-        {
-           if(gameObjectDraggenNow.type === 'grey'){
-               gameObjectDraggenNow.setTint(GREEN_COLOR,GREEN_COLOR,GREEN_COLOR,GREEN_COLOR);
-           }else{
-               gameObjectDraggenNow.setTint(RED_COLOR,RED_COLOR,RED_COLOR,RED_COLOR);
-           }
-        }else if(gameObjectDraggenNow){
+        if (gameObjectDraggenNow && (checkOverlap(gameObjectDraggenNow, grey_bak) || checkOverlap(gameObjectDraggenNow, blue_bak))) {
+            if (gameObjectDraggenNow.type === 'grey') {
+                gameObjectDraggenNow.setTint(GREEN_COLOR, GREEN_COLOR, GREEN_COLOR, GREEN_COLOR);
+            } else {
+                gameObjectDraggenNow.setTint(RED_COLOR, RED_COLOR, RED_COLOR, RED_COLOR);
+            }
+        } else if (gameObjectDraggenNow) {
             gameObjectDraggenNow.setTint();
         }
-        if (gameObjectDraggenNow && checkOverlap(gameObjectDraggenNow, blue_bak))
-        {
-            if(gameObjectDraggenNow.type === 'blue'){
-                gameObjectDraggenNow.setTint(GREEN_COLOR,GREEN_COLOR,GREEN_COLOR,GREEN_COLOR);
-            }else{
-                gameObjectDraggenNow.setTint(RED_COLOR,RED_COLOR,RED_COLOR,RED_COLOR);
+        if (gameObjectDraggenNow && checkOverlap(gameObjectDraggenNow, blue_bak)) {
+            if (gameObjectDraggenNow.type === 'blue') {
+                gameObjectDraggenNow.setTint(GREEN_COLOR, GREEN_COLOR, GREEN_COLOR, GREEN_COLOR);
+            } else {
+                gameObjectDraggenNow.setTint(RED_COLOR, RED_COLOR, RED_COLOR, RED_COLOR);
             }
         }
 
@@ -782,7 +779,7 @@ function darkness() {
 }
 
 function setInactive(object) {
-    if(object.hasSkillType !== null){
+    if (object.hasSkillType !== null) {
         bonusSkill.destroy();
         folowObject = null;
     }
@@ -809,16 +806,11 @@ function clearGroup(g) {
 }
 
 var createCoin = function (x, y, points, scene, skill) {
-    if(scoreMultiplier !== 0){
-        player_score  += points * scoreMultiplierDis;
-    }
-    else{
-        player_score += points;
-    }
+
     var coin = scene.add.sprite(x, y, '+' + points).setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20);
     scene.tweens.add({
         targets: coin,
-        x: text_score.x,
+        x: text_score.x*1.1,
         y: text_score.y,
         scaleX: 0.10,
         scaleY: 0.10,
@@ -827,21 +819,26 @@ var createCoin = function (x, y, points, scene, skill) {
         delay: 300,
         onComplete: function () {
             coin.destroy();
+            if (scoreMultiplier !== 0) {
+                player_score += points * scoreMultiplierDis;
+            } else {
+                player_score += points;
+            }
         },
     });
-    if(skill !== null){
-        skillShadow = scene.add.sprite(x, y, skill+'_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.5);
+    if (skill !== null) {
+        skillShadow = scene.add.sprite(x, y, skill + '_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.5);
         scene.tweens.add({
             targets: skillShadow,
-            x: eval(skill+'_on').x,
-            y: eval(skill+'_on').y,
+            x: eval(skill + '_on').x,
+            y: eval(skill + '_on').y,
             scaleX: 0.10,
             scaleY: 0.10,
             ease: 'Linear',
             duration: 500,
             onComplete: function () {
                 skillShadow.destroy();
-                eval(skill+'_on').visible = true;
+                eval(skill + '_on').visible = true;
             },
         });
     }
@@ -853,17 +850,15 @@ function createAndDropObject() {
     var trashSkillType = null;
     var number = Math.random();
     var toxic = false;
-    if(Math.random() > 0.75 && folowObject===null){
+    if (Math.random() > 0.75 && folowObject === null) {
         var skillType = Math.random();
-        if(skillType > 0.7 && !light_auto_on.visible && !auto_on.visible){
+        if (skillType > 0.7 && !light_auto_on.visible && !auto_on.visible) {
             trashSkillType = 'auto';
-        }
-        else if(skillType > 0.55 && !light_slow_on.visible && !slow_on.visible){
+        } else if (skillType > 0.55 && !light_slow_on.visible && !slow_on.visible) {
             trashSkillType = 'slow';
-        }
-        else if(skillType > 0.35 && !clear_on.visible){
+        } else if (skillType > 0.35 && !clear_on.visible) {
             trashSkillType = 'clear';
-        }else if (!light_one_on.visible && !one_on.visible){
+        } else if (!light_one_on.visible && !one_on.visible) {
             trashSkillType = 'one';
         }
     }
@@ -882,7 +877,7 @@ function createAndDropObject() {
         if (number > 0.8 && batary_counter < 0) {
             if (isFirstGameTraining) {
                 isFirstGameTraining = false;
-                nowCreateTrash  = this.time.now - now;
+                nowCreateTrash = this.time.now - now;
                 nowScoreDifficulty = this.time.now - scoreDifficulty;
                 tutFirstGameTraining.setVisible(true);
             }
@@ -943,12 +938,12 @@ function autoTrash() {
 
 function autoSort(scene) {
     activeGroup.getChildren().forEach(function (trash) {
-        var speed = light_slow_on.visible?speedTrash / 4 : speedTrash ;
+        var speed = light_slow_on.visible ? speedTrash / 4 : speedTrash;
         if (auto_type === 1 && trash.type === 'blue') {
             scene.tweens.add({
                 targets: trash,
-                x: blue_bak.x + blue_bak.width/10,
-                y: blue_bak.y + blue_bak.height/10,
+                x: blue_bak.x + blue_bak.width / 10,
+                y: blue_bak.y + blue_bak.height / 10,
                 ease: 'Linear',
                 duration: 450 * DEVICE_SIZE_SPEED - speed,
                 delay: 30,
@@ -956,8 +951,8 @@ function autoSort(scene) {
         } else if (auto_type === 2 && trash.type === 'grey') {
             scene.tweens.add({
                 targets: trash,
-                x: grey_bak.x - grey_bak.width/10,
-                y: grey_bak.y + grey_bak.height/10,
+                x: grey_bak.x - grey_bak.width / 10,
+                y: grey_bak.y + grey_bak.height / 10,
                 ease: 'Linear',
                 duration: 450 * DEVICE_SIZE_SPEED - speed,
                 delay: 30,
@@ -1014,7 +1009,7 @@ function oneTrash() {
 }
 
 function createNotify(typeSkill, scene) {
-    var s = scene.add.sprite(midle_window, midle_window_h * 0.5, typeSkill+'_notify')
+    var s = scene.add.sprite(midle_window, midle_window_h * 0.5, typeSkill + '_notify')
         .setOrigin(0.5, 0.5).setScale(global_scale).setDepth(2);
     scene.tweens.add({
         targets: s,
@@ -1031,6 +1026,7 @@ function createNotify(typeSkill, scene) {
     });
 
 }
+
 function checkOverlap(spriteA, spriteB) {
     var boundsA = spriteA.getBounds();
     var boundsB = spriteB.getBounds();
@@ -1044,9 +1040,9 @@ function checkOverlap(spriteA, spriteB) {
 
 function getRandomForPositionBlot() {
     var s = Math.random();
-    if(s > 0.67)
+    if (s > 0.67)
         return 0.4;
-    if(s > 0.33)
+    if (s > 0.33)
         return 0.2;
     else
         return 0.1;
@@ -1054,8 +1050,8 @@ function getRandomForPositionBlot() {
 }
 
 function createBlot(keySprite, scene) {
-    var nameBlot = keySprite === 'g3'? 'jam': keySprite === 'g5'? 'canned' : keySprite === 'g9'? 'butter' : keySprite === 'g4' ? 'yogurt' : undefined;
-    if(!nameBlot){
+    var nameBlot = keySprite === 'g3' ? 'jam' : keySprite === 'g5' ? 'canned' : keySprite === 'g9' ? 'butter' : keySprite === 'g4' ? 'yogurt' : undefined;
+    if (!nameBlot) {
         return;
     }
     if (blot_object) {
@@ -1063,18 +1059,17 @@ function createBlot(keySprite, scene) {
     }
     blot_object = 1;
     var rt = scene.add.renderTexture(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT).setDepth(10);
-    var sp = scene.make.image({ key: 'blot_'+ nameBlot }, false).setScale(global_scale*0.35);
-    for(var y =0; y<3; y++){
+    var sp = scene.make.image({key: 'blot_' + nameBlot}, false).setScale(global_scale * 0.35);
+    for (var y = 0; y < 3; y++) {
         debugger
-        var g =  getRandomForPositionBlot();
-        rt.draw(sp, midle_window  + bg_width*g, GLOBAL_HEIGHT*Math.random()+y*100*global_scale);
+        var g = getRandomForPositionBlot();
+        rt.draw(sp, midle_window + bg_width * g, GLOBAL_HEIGHT * Math.random() + y * 100 * global_scale);
     }
-    var brush = scene.make.image({ key: 'eraser' }, false).setScale(1);
+    var brush = scene.make.image({key: 'eraser'}, false).setScale(1);
 
     scene.input.on('pointermove', function (pointer) {
 
-        if (pointer.isDown)
-        {
+        if (pointer.isDown) {
             rt.erase(brush, pointer.x - 16, pointer.y - 16);
         }
 
