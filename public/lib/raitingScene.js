@@ -55,7 +55,7 @@ var Raiting = new Phaser.Class({
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
 
-         if (player_score && player_score > 0) {
+        if (player_score && player_score > 0) {
             loginDialog = CreateLoginDialog(this, {
                 x: midle_window,
                 y: GLOBAL_HEIGHT * 0.4,
@@ -70,7 +70,7 @@ var Raiting = new Phaser.Class({
                     loginDialog.destroy();
                 })
                 .popUp(500).setDepth(10);
-         }
+        }
         var bg_clone = this.add.sprite(midle_window, 0, 'bg_clone').setOrigin(0.5, 0).setDepth(20).setScale(global_scale);
         var rotate = this.add.sprite(midle_window, midle_window_h, 'rotate').setOrigin(0.5, 0.5).setDepth(21).setScale(3 * global_scale);
         bg_clone.visible = false;
@@ -139,12 +139,12 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
                     loginButton.visible = true;
                     isBadWordInUsername = false;
                     listBad.forEach(function (badWord) {
-                        if(!isBadWordInUsername){
-                            if (username.toLowerCase().indexOf(badWord) !== -1){
+                        if (!isBadWordInUsername) {
+                            if (username.toLowerCase().indexOf(badWord) !== -1) {
                                 isBadWordInUsername = true;
                                 loginButton.visible = false;
                                 isBadWordInput.visible = true;
-                            }else{
+                            } else {
                                 isBadWordInUsername = false;
                             }
                         }
@@ -198,7 +198,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     })
         .setInteractive()
         .on('pointerdown', function () {
-            if(isBadWordInUsername){
+            if (isBadWordInUsername) {
                 return;
             }
             loginDialog.emit('login', username, email);
@@ -206,7 +206,10 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     isBadWordInput = scene.rexUI.add.label({
         orientation: 'x',
         background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, RED_COLOR),
-        text: scene.add.text(0, 0, 'Недопустимое значение!', {font: DEVICE_SIZE * 22 + 'pt Electronica-Normal', fill: '#e3f2fd'}),
+        text: scene.add.text(0, 0, 'Недопустимое значение!', {
+            font: DEVICE_SIZE * 22 + 'pt Electronica-Normal',
+            fill: '#e3f2fd'
+        }),
         space: {top: DEVICE_SIZE * 8, bottom: DEVICE_SIZE * 8, left: DEVICE_SIZE * 8, right: DEVICE_SIZE * 8}
     });
     isBadWordInput.visible = false;
