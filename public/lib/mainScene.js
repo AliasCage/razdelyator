@@ -623,7 +623,7 @@ var MainSc = new Phaser.Class({
             player_score < 100 ? '000' + player_score :
                 player_score < 1000 ? '00' + player_score :
                     player_score < 10000 ? '0' + player_score : player_score;
-        if (scoreMultiplier === 5  && multiplierScoreInput.text !== 'x2') {
+        if (scoreMultiplier === 5  && scoreMultiplierDis !== 2) {
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
@@ -633,7 +633,7 @@ var MainSc = new Phaser.Class({
             }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
             scoreMultiplierDis = 2;
         }
-        if (scoreMultiplier === 10 && multiplierScoreInput.text !== 'x3') {
+        if (scoreMultiplier === 10 && scoreMultiplierDis !== 3) {
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
@@ -643,7 +643,7 @@ var MainSc = new Phaser.Class({
             }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
             scoreMultiplierDis = 3;
         }
-        if (scoreMultiplier === 15  && multiplierScoreInput.text !== 'x5') {
+        if (scoreMultiplier === 15  && scoreMultiplierDis !== 5) {
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
