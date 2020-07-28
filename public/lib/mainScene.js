@@ -773,7 +773,7 @@ function toxicality(accumulator) {
 
 function darkness() {
     isNeedDarknes = false;
-    var scale = DEVICE_SIZE === 1 ? 1 / (global_scale) : 1.5 * global_scale;
+    var scale = DEVICE_SIZE === 1 ? 1 / (global_scale) : 4 * global_scale;
     var darknes = this.add.sprite(midle_window, 0, 'darknes').setOrigin(0.5, 0).setScale(scale).setDepth(11);
     this.tweens.add({
         targets: darknes,
