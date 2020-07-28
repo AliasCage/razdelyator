@@ -39,7 +39,12 @@ var Tutorial = new Phaser.Class({
 
     create: function () {
 
-        this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
+        if (DEVICE_SIZE === 1) {
+            this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
+        } else {
+            this.add.graphics().fillStyle(PROGRESS_COLOR_1, 1).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+        }
+
         createNewTut(this);
         this.add.text(midle_window + conveer_width * 0.45, midle_window_h / 22,
             'Пропустить обучение', {font: DEVICE_SIZE * 16 + 'pt Ubuntu'})
