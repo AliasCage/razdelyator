@@ -79,7 +79,6 @@ var Logo = new Phaser.Class({
         this.load.setBaseURL('img');
 
         this.load.video('tut_video_1', 'tutorial/tut_1.mp4', 'canplay', false, true);
-        this.load.video('tut_video_2', 'tutorial/tut_2.mp4', 'canplay', false, true);
 
         this.load.image('intro', 'intro.png');
         this.load.image('raiting', 'raiting.png');

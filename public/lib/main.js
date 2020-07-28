@@ -2,7 +2,7 @@ const GLOBAL_WIDTH = window.innerWidth * window.devicePixelRatio;
 const GLOBAL_HEIGHT = window.innerHeight * window.devicePixelRatio;
 
 var config = {
-    type: Phaser.AUTO,
+    type: Phaser.WEBGL,
     parent: "div_form",
     width: GLOBAL_WIDTH - 2.3,
     height: GLOBAL_HEIGHT - 2.3,
