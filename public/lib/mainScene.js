@@ -452,11 +452,11 @@ var MainSc = new Phaser.Class({
         this.physics.add.collider(toxicGroup, toxicGroup, coliderGroupFunction, null, this);
         this.physics.add.collider(group, group, coliderGroupFunction, null, this);
 
-        var zone_left = this.physics.add.sprite(0, 0, 'con9').setOrigin(1, 0).setAlpha(0).setImmovable(true);
+        var zone_left = this.physics.add.sprite(0, 0, 'con9').setOrigin(1, 0).setAlpha(0).setImmovable(true).setScale(global_scale);
         zone_left.setPosition(midle_window - conveer_width / 6, 0);
         this.physics.add.collider(zone_left, group);
 
-        var zone_right = this.physics.add.sprite(0, 0, 'con9').setOrigin(0, 0).setAlpha(0).setImmovable(true);
+        var zone_right = this.physics.add.sprite(0, 0, 'con9').setOrigin(0, 0).setAlpha(0).setImmovable(true).setScale(global_scale);
         zone_right.setPosition(midle_window + conveer_width / 6, 0);
         this.physics.add.collider(zone_right, group);
 
