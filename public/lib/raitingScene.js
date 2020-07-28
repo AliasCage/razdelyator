@@ -55,7 +55,7 @@ var Raiting = new Phaser.Class({
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
 
-        if (player_score && player_score > 0) {
+         //if (player_score && player_score > 0) {
             loginDialog = CreateLoginDialog(this, {
                 x: midle_window,
                 y: GLOBAL_HEIGHT * 0.4,
@@ -70,7 +70,7 @@ var Raiting = new Phaser.Class({
                     loginDialog.destroy();
                 })
                 .popUp(500).setDepth(10);
-        }
+         //}
         var bg_clone = this.add.sprite(midle_window, 0, 'bg_clone').setOrigin(0.5, 0).setDepth(20).setScale(global_scale);
         var rotate = this.add.sprite(midle_window, midle_window_h, 'rotate').setOrigin(0.5, 0.5).setDepth(21).setScale(3 * global_scale);
         bg_clone.visible = false;
@@ -106,16 +106,17 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
     var width = GetValue(config, 'width', undefined);
     var height = GetValue(config, 'height', undefined);
 
-    var background = scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, WHITE);
-    var titleField = scene.add.text(0, 0, title, {font: DEVICE_SIZE * 22 + 'pt Electronica-Normal'}).setColor(DARK);
+    var background = scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, PROGRESS_COLOR_2);
+    var titleField = scene.add.text(0, 0, title, {font: DEVICE_SIZE * 22 + 'pt Electronica-Normal', fill: "#FFF"});
     var userNameField = scene.rexUI.add.label({
         orientation: 'x',
-        background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
+        background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, PROGRESS_COLOR_1),
         text: scene.rexUI.add.BBCodeText(0, 0, username, {
             fixedWidth: DEVICE_SIZE * 200,
             fixedHeight: DEVICE_SIZE * 36,
-            valign: 'center'
-        }).setColor(DARK).setFont(DEVICE_SIZE * 22 + 'pt Electronica-Normal'),
+            valign: 'center',
+            fill: "#FFF"
+        }).setFont(DEVICE_SIZE * 22 + 'pt Electronica-Normal'),
         space: {
             top: DEVICE_SIZE * 5,
             bottom: DEVICE_SIZE * 5,
@@ -156,12 +157,13 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
 
     var emailField = scene.rexUI.add.label({
         orientation: 'x',
-        background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10).setStrokeStyle(2, DARK),
+        background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, PROGRESS_COLOR_1),
         text: scene.rexUI.add.BBCodeText(0, 0, email, {
             fixedWidth: DEVICE_SIZE * 200,
             fixedHeight: DEVICE_SIZE * 36,
-            valign: 'center'
-        }).setColor(DARK).setFont(DEVICE_SIZE * 22 + 'pt Electronica-Normal'),
+            valign: 'center',
+            fill: "#FFF"
+        }).setFont(DEVICE_SIZE * 22 + 'pt Electronica-Normal'),
 
         space: {
             top: DEVICE_SIZE * 5,
@@ -192,8 +194,8 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
 
     loginButton = scene.rexUI.add.label({
         orientation: 'x',
-        background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, DARK),
-        text: scene.add.text(0, 0, 'Cохранить результат?', {font: DEVICE_SIZE * 22 + 'pt Electronica-Normal'}).setColor(DARK),
+        background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, "0xF4A261"),
+        text: scene.add.text(0, 0, 'Cохранить результат?', {font: DEVICE_SIZE * 22 + 'pt Electronica-Normal', fill: "#FFF"}),
         space: {top: DEVICE_SIZE * 8, bottom: DEVICE_SIZE * 8, left: DEVICE_SIZE * 8, right: DEVICE_SIZE * 8}
     })
         .setInteractive()
@@ -203,15 +205,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
             }
             loginDialog.emit('login', username, email);
         });
-    isBadWordInput = scene.rexUI.add.label({
-        orientation: 'x',
-        background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, RED_COLOR),
-        text: scene.add.text(0, 0, 'Недопустимое значение!', {
-            font: DEVICE_SIZE * 22 + 'pt Electronica-Normal',
-            fill: '#e3f2fd'
-        }),
-        space: {top: DEVICE_SIZE * 8, bottom: DEVICE_SIZE * 8, left: DEVICE_SIZE * 8, right: DEVICE_SIZE * 8}
-    });
+    isBadWordInput = scene.add.text(0, 0, 'Недопустимое значение!', {font: DEVICE_SIZE * 22 + 'pt Electronica-Normal', fill: '#ff0000'}).setStroke('#c90000', 1);
     isBadWordInput.visible = false;
 
     var loginDialog = scene.rexUI.add.sizer({

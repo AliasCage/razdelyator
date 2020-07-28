@@ -209,7 +209,7 @@ var MainSc = new Phaser.Class({
             .setOrigin(0.5, 0.5).setScale(global_scale);
         clear_on = this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 6, 'clear_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", clearConveer, this);
-        clear_on.visible = true;
+        clear_on.visible = isInputUserMail;
 
         light_one_on = this.add.sprite(midle_window - (bg_width / 2.95), GLOBAL_HEIGHT / 6.6, 'substrat')
             .setOrigin(0.5, 0.5).setScale(global_scale * 0.1).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
