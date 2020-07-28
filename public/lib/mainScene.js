@@ -426,12 +426,12 @@ var MainSc = new Phaser.Class({
 
 
         var coliderGroupFunction = function (s1, s2) {
-            if (s2.type === 'grey' && s2.body.moves && s2.active){
-                debugger
-                var namesprite = s2.texture.key;
-                createBlot(namesprite, this);
-            }
             if (!s1.body.moves) {
+                if (s2.type === 'grey' && s2.body.moves && s2.active){
+                    debugger
+                    var namesprite = s2.texture.key;
+                    createBlot(namesprite, this);
+                }
                 s2.body.moves = false;
                 if (s2.type === 'acc' && s2.active) {
                     toxicality(s2);
@@ -457,6 +457,8 @@ var MainSc = new Phaser.Class({
 
         var zone_bottom = this.physics.add.sprite(midle_window, GLOBAL_HEIGHT, 'blank').setOrigin(0.5, 0.2).setAlpha(0);
         this.physics.add.overlap(zone_bottom, activeGroup, function (s1, s2) {
+            scoreMultiplier = 0;
+            scoreMultiplierDis = 1;
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             if (s2.type === 'grey') {
@@ -470,6 +472,8 @@ var MainSc = new Phaser.Class({
         }, null, this);
 
         this.physics.add.overlap(zone_bottom, group, function (s1, s2) {
+            scoreMultiplier = 0;
+            scoreMultiplierDis = 1;
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             if (s2.type === 'grey') {
@@ -487,11 +491,11 @@ var MainSc = new Phaser.Class({
 
         var coliderActiveGroup = function (s1, s2) {
             if (!auto_trash || auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue') {
+                scoreMultiplier = 0;
+                scoreMultiplierDis = 1;
+                if(multiplierScoreInput)
+                    multiplierScoreInput.destroy();
                 if (!s2.body.allowdraggable && !s2.active) {
-                    scoreMultiplier = 0;
-                    scoreMultiplierDis = 1;
-                    if(multiplierScoreInput)
-                        multiplierScoreInput.destroy();
                     if (s1.type === 'grey'){
                         debugger
                         var namesprite = s1.texture.key;
@@ -685,11 +689,11 @@ var MainSc = new Phaser.Class({
             if (folowObject !== null) {
                 this.tweens.add({
                     targets: bonusSkill,
-                    x: folowObject.x - folowObject.width / 2,
-                    y: folowObject.y - folowObject.height / 2,
+                    x: folowObject.x - folowObject.width / 4,
+                    y: folowObject.y - folowObject.height / 4,
                     ease: 'Linear',
-                    duration: 0.001,
-                    delay: 0.001,
+                    duration: 0.00001,
+                    delay: 0.00001,
                 });
             } else {
                 bonusSkill.destroy();

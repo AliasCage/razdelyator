@@ -55,7 +55,7 @@ var Raiting = new Phaser.Class({
                 this.scene.start('logo', {name: 'Move from Raiting to Logo'});
             }, this);
 
-         //if (player_score && player_score > 0) {
+         if (player_score && player_score > 0) {
             loginDialog = CreateLoginDialog(this, {
                 x: midle_window,
                 y: GLOBAL_HEIGHT * 0.4,
@@ -70,7 +70,7 @@ var Raiting = new Phaser.Class({
                     loginDialog.destroy();
                 })
                 .popUp(500).setDepth(10);
-         //}
+         }
         var bg_clone = this.add.sprite(midle_window, 0, 'bg_clone').setOrigin(0.5, 0).setDepth(20).setScale(global_scale);
         var rotate = this.add.sprite(midle_window, midle_window_h, 'rotate').setOrigin(0.5, 0.5).setDepth(21).setScale(3 * global_scale);
         bg_clone.visible = false;
