@@ -50,6 +50,7 @@ var Tutorial = new Phaser.Class({
             .setColor('#ffa500')
             .setDepth(11)
             .setInteractive()
+            .setScale(global_scale/2)
             .on("pointerdown", function () {
                 this.scene.start('mainSc', {name: 'Move from Tutorial to MainScene'});
             }, this);
@@ -60,6 +61,7 @@ var Tutorial = new Phaser.Class({
             .setOrigin(1, 0.5)
             .setColor('#ffa500')
             .setDepth(11)
+            .setScale(global_scale/2)
             .setInteractive()
             .on("pointerdown", function () {
                 if(!rotate.visible) {
@@ -79,6 +81,7 @@ var Tutorial = new Phaser.Class({
             .setOrigin(0, 0.5)
             .setColor('#ffa500')
             .setDepth(11)
+            .setScale(global_scale/2)
             .setInteractive()
             .on("pointerdown", function () {
                 if(!rotate.visible) {

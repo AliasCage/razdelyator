@@ -17,10 +17,10 @@ var folowObject = null;
 var skillShadow;
 
 var blue = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11', 'b12', 'b13', 'b14', 'b15', 'b16',
-    'b17', 'b18', 'b19', 'b20', 'b21'];
+    'b17', 'b18', 'b19', 'b20'];
 var grey = ['g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7', 'g8', 'g9', 'g10', 'g11', 'g12', 'g13', 'g14', 'g15', 'g16',
     'g17', 'g18', 'g19', 'g20'];
-var acc = ['a1', 'a2', 'a3'];
+var acc = ['a1', 'a2', 'a3', 'a4'];
 
 var blue_bak;
 var grey_bak;
@@ -187,9 +187,9 @@ var MainSc = new Phaser.Class({
 
 
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;
-        var gsSubstrat = 0.3 * global_scale;
+        var gsSubstrat = 0.15 * global_scale;
         light_auto_on = this.add.sprite(midle_window + (bg_width / 3.05), GLOBAL_HEIGHT / 3.14, 'substrat')
-            .setOrigin(0.5, 0.5).setScale(global_scale * 0.2).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
+            .setOrigin(0.5, 0.5).setScale(global_scale * 0.1).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_auto_on.visible = false;
         this.tweens.add({
             targets: light_auto_on,
@@ -210,10 +210,10 @@ var MainSc = new Phaser.Class({
             .setOrigin(0.5, 0.5).setScale(global_scale);
         clear_on = this.add.sprite(midle_window + (bg_width / 3), GLOBAL_HEIGHT / 6, 'clear_on')
             .setOrigin(0.5, 0.5).setScale(global_scale).setInteractive().on("pointerdown", clearConveer, this);
-        clear_on.visible = isInputUserMail;
+        clear_on.visible = true;
 
         light_one_on = this.add.sprite(midle_window - (bg_width / 2.95), GLOBAL_HEIGHT / 6.6, 'substrat')
-            .setOrigin(0.5, 0.5).setScale(global_scale * 0.2).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
+            .setOrigin(0.5, 0.5).setScale(global_scale * 0.1).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_one_on.visible = false;
         this.tweens.add({
             targets: light_one_on,
@@ -232,7 +232,7 @@ var MainSc = new Phaser.Class({
 
 
         light_slow_on = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT / 3.14, 'substrat')
-            .setOrigin(0.5, 0.5).setScale(global_scale * 0.2).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
+            .setOrigin(0.5, 0.5).setScale(global_scale * 0.1).setInteractive().setTint(0xffffff, 0xffffff, 0xffffff, 0xffffff).setAlpha(0.5);
         light_slow_on.visible = false;
         this.tweens.add({
             targets: light_slow_on,
@@ -427,8 +427,7 @@ var MainSc = new Phaser.Class({
 
 
         var coliderGroupFunction = function (s1, s2) {
-            scoreMultiplier = 0;
-            if (s2.type === 'grey' && s2.body.moves){
+            if (s2.type === 'grey' && s2.body.moves && s2.active){
                 debugger
                 var namesprite = s2.texture.key;
                 createBlot(namesprite, this);
@@ -440,6 +439,8 @@ var MainSc = new Phaser.Class({
                 }
             }
             s2.active = false;
+            scoreMultiplier = 0;
+            scoreMultiplierDis = 1;
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
         };
@@ -486,9 +487,10 @@ var MainSc = new Phaser.Class({
         }, null, this);
 
         var coliderActiveGroup = function (s1, s2) {
-
             if (!auto_trash || auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue') {
                 if (!s2.body.allowdraggable && !s2.active) {
+                    scoreMultiplier = 0;
+                    scoreMultiplierDis = 1;
                     if(multiplierScoreInput)
                         multiplierScoreInput.destroy();
                     if (s1.type === 'grey'){
@@ -496,7 +498,6 @@ var MainSc = new Phaser.Class({
                         var namesprite = s1.texture.key;
                         createBlot(namesprite, this);
                     }
-                    scoreMultiplier = 1;
                     activeGroup.remove(s1);
                     setInactive(s1);
                     s1.body.moves = false;
@@ -514,7 +515,7 @@ var MainSc = new Phaser.Class({
         isPause = false;
 
         tutFirstGameTraining = this.add.sprite(midle_window, 0, 'tut4').setDepth(19)
-            .setOrigin(0.5, 0).setScale(global_scale).setInteractive().setVisible(false)
+            .setOrigin(0.5, 0).setScale(global_scale/2).setInteractive().setVisible(false)
             .on("pointerdown", function (pointer) {
                 isFirstGameTrainingDisplay = true;
                 activeGroup.getChildren().forEach(function (trash) {
@@ -674,7 +675,7 @@ var MainSc = new Phaser.Class({
             if (obj.hasSkillType !== null) {
                 console.log(obj.hasSkillType);
                 folowObject = obj;
-                bonusSkill = this.add.sprite(obj.x, obj.y, obj.hasSkillType + '_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.85);
+                bonusSkill = this.add.sprite(obj.x, obj.y, obj.hasSkillType + '_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(17).setTint(COLOR_PRIMARY).setAlpha(0.85);
             }
             if (light_auto_on.visible) {
                 autoSort(this);
@@ -764,7 +765,7 @@ function toxicality(accumulator) {
 
 function darkness() {
     isNeedDarknes = false;
-    var scale = DEVICE_SIZE === 1 ? 1 / (global_scale) : 4 * global_scale;
+    var scale = DEVICE_SIZE === 1 ? 1 / (global_scale) : 2 * global_scale;
     var darknes = this.add.sprite(midle_window, 0, 'darknes').setOrigin(0.5, 0).setScale(scale).setDepth(11);
     this.tweens.add({
         targets: darknes,
@@ -806,7 +807,7 @@ function clearGroup(g) {
 
 var createCoin = function (x, y, points, scene, skill) {
 
-    var coin = scene.add.sprite(x, y, '+' + points).setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20);
+    var coin = scene.add.sprite(x, y, '+' + points).setOrigin(0.5, 0.5).setScale(global_scale * 0.3).setDepth(17);
     scene.tweens.add({
         targets: coin,
         x: text_score.x*1.1,
@@ -826,7 +827,7 @@ var createCoin = function (x, y, points, scene, skill) {
         },
     });
     if (skill !== null) {
-        skillShadow = scene.add.sprite(x, y, skill + '_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(20).setTint(COLOR_PRIMARY).setAlpha(0.5);
+        skillShadow = scene.add.sprite(x, y, skill + '_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.3).setDepth(17).setTint(COLOR_PRIMARY).setAlpha(0.5);
         scene.tweens.add({
             targets: skillShadow,
             x: eval(skill + '_on').x,
@@ -901,7 +902,7 @@ function createAndDropObject() {
     obj.type = trashType;
     obj.isToxic = toxic;
     obj.hasSkillType = trashSkillType;
-    obj.setScale(global_scale / 1.25);
+    obj.setScale(global_scale/2.5);
     obj.setInteractive();
     obj.setCollideWorldBounds(true);
     if (!isPause) {
@@ -1009,7 +1010,7 @@ function oneTrash() {
 
 function createNotify(typeSkill, scene) {
     var s = scene.add.sprite(midle_window, midle_window_h * 0.5, typeSkill + '_notify')
-        .setOrigin(0.5, 0.5).setScale(global_scale).setDepth(2);
+        .setOrigin(0.5, 0.5).setScale(global_scale/2).setDepth(2);
     scene.tweens.add({
         targets: s,
         x: midle_window,
@@ -1057,7 +1058,7 @@ function createBlot(keySprite, scene) {
         return;
     }
     blot_object = 1;
-    var rt = scene.add.renderTexture(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT).setDepth(10);
+    var rt = scene.add.renderTexture(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT).setDepth(18);
     var sp = scene.make.image({key: 'blot_' + nameBlot}, false).setScale(global_scale * 0.35);
     for (var y = 0; y < 3; y++) {
         debugger
