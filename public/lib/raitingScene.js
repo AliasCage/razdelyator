@@ -43,7 +43,11 @@ var Raiting = new Phaser.Class({
     },
 
     create: function () {
-        this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
+        if (DEVICE_SIZE === 1) {
+            this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
+        } else {
+            this.add.graphics().fillStyle(PROGRESS_COLOR_2, 1).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+        }
         this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0).setScale(global_scale);
         var loginDialog;
         var side_middle = (conveer_width + (bg_width - conveer_width)) * 0.25;

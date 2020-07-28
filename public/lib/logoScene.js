@@ -210,7 +210,11 @@ var Logo = new Phaser.Class({
             });
         }
 
-        this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
+        if (DEVICE_SIZE === 1) {
+            this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
+        } else {
+            this.add.graphics().fillStyle(PROGRESS_COLOR_2, 1).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+        }
         this.add.text(0, 0, 'Пропустить обучение', {font: DEVICE_SIZE * 16 + 'pt Electronica-Normal'}).setVisible(false);
 
         var intro = this.add.sprite(midle_window, 0, 'intro').setOrigin(0.5, 0).setDepth(10).setScale(2 * global_scale);
