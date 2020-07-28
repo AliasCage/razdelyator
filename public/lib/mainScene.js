@@ -180,7 +180,7 @@ var MainSc = new Phaser.Class({
             .setPosition(midle_window, GLOBAL_HEIGHT * 0.05).setDepth(1);
         var battary_case = this.physics.add.sprite(midle_window + bg_width * 0.4, GLOBAL_HEIGHT * 0.05, 'battary_case')
             .setOrigin(0.5, 0.5).setScale(global_scale).setDepth(2);
-        tweensBattaryCase =  this.tweens.add({
+        tweensBattaryCase = this.tweens.add({
             targets: battary_case,
             x: midle_window - bg_width * 0.4,
             ease: 'Linear',
@@ -432,7 +432,7 @@ var MainSc = new Phaser.Class({
 
         var coliderGroupFunction = function (s1, s2) {
             if (!s1.body.moves) {
-                if (s2.type === 'grey' && s2.body.moves && s2.active){
+                if (s2.type === 'grey' && s2.body.moves && s2.active) {
                     debugger
                     var namesprite = s2.texture.key;
                     createBlot(namesprite, this);
@@ -498,10 +498,10 @@ var MainSc = new Phaser.Class({
             if (!auto_trash || auto_type === 1 && s1.type === 'grey' || auto_type === 2 && s1.type === 'blue') {
                 scoreMultiplier = 0;
                 scoreMultiplierDis = 1;
-                if(multiplierScoreInput)
+                if (multiplierScoreInput)
                     multiplierScoreInput.destroy();
                 if (!s2.body.allowdraggable && !s2.active) {
-                    if (s1.type === 'grey'){
+                    if (s1.type === 'grey') {
                         debugger
                         var namesprite = s1.texture.key;
                         createBlot(namesprite, this);
@@ -523,7 +523,7 @@ var MainSc = new Phaser.Class({
         isPause = false;
 
         tutFirstGameTraining = this.add.sprite(midle_window, 0, 'tut4').setDepth(19)
-            .setOrigin(0.5, 0).setScale(global_scale/2).setInteractive().setVisible(false)
+            .setOrigin(0.5, 0).setScale(global_scale / 2).setInteractive().setVisible(false)
             .on("pointerdown", function (pointer) {
                 isFirstGameTrainingDisplay = true;
                 activeGroup.getChildren().forEach(function (trash) {
@@ -773,8 +773,8 @@ function toxicality(accumulator) {
 
 function darkness() {
     isNeedDarknes = false;
-    var scale = DEVICE_SIZE === 1 ? 1 / (global_scale) : 3 * global_scale;
-    var darknes = this.add.sprite(midle_window, 0, 'darknes').setOrigin(0.5, 0).setScale(global_scale*2.5).setDepth(11);
+    var scale = DEVICE_SIZE === 1 ? 2 / (global_scale) :2 * global_scale;
+    var darknes = this.add.sprite(midle_window, 0, 'darknes').setOrigin(0.5, 0).setScale(scale).setDepth(11);
     this.tweens.add({
         targets: darknes,
         alpha: 0,
@@ -818,7 +818,7 @@ var createCoin = function (x, y, points, scene, skill) {
     var coin = scene.add.sprite(x, y, '+' + points).setOrigin(0.5, 0.5).setScale(global_scale * 0.3).setDepth(17);
     scene.tweens.add({
         targets: coin,
-        x: text_score.x*1.1,
+        x: text_score.x * 1.1,
         y: text_score.y,
         scaleX: 0.10,
         scaleY: 0.10,
@@ -910,7 +910,7 @@ function createAndDropObject() {
     obj.type = trashType;
     obj.isToxic = toxic;
     obj.hasSkillType = trashSkillType;
-    obj.setScale(global_scale/2.5);
+    obj.setScale(global_scale / 2.5);
     obj.setInteractive();
     obj.setCollideWorldBounds(true);
     if (!isPause) {
@@ -1018,7 +1018,7 @@ function oneTrash() {
 
 function createNotify(typeSkill, scene) {
     var s = scene.add.sprite(midle_window, midle_window_h * 0.5, typeSkill + '_notify')
-        .setOrigin(0.5, 0.5).setScale(global_scale/2).setDepth(2);
+        .setOrigin(0.5, 0.5).setScale(global_scale / 2).setDepth(2);
     scene.tweens.add({
         targets: s,
         x: midle_window,
