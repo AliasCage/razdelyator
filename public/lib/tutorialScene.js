@@ -33,11 +33,8 @@ var Tutorial = new Phaser.Class({
         });
 
         this.load.setBaseURL('img');
-      /*  this.load.video('tut_video_3', 'tutorial/tut_3.mp4', 'canplay', false, true);
-        this.load.video('tut_video_4', 'tutorial/tut_4.mp4', 'canplay', false, true);
-        this.load.video('tut_video_5', 'tutorial/tut_5.mp4', 'canplay', false, true);
         this.load.video('tut_video_6', 'tutorial/tut_6.mp4', 'canplay', false, true);
-        this.load.video('tut_video_7', 'tutorial/tut_7.mp4', 'canplay', false, true);*/
+        this.load.video('tut_video_7', 'tutorial/tut_7.mp4', 'canplay', false, true);
     },
 
     create: function () {
