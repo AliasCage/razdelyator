@@ -246,7 +246,6 @@ var Logo = new Phaser.Class({
                         console.log("tutr");
                         this.scene.start('tutorial', {name: 'Move from Logo to Tutorial'});
                     } else {
-                        debugger
                         intro.destroy();
                         start_btn.destroy();
                         tutorial_btn.destroy();

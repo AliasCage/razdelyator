@@ -94,7 +94,6 @@ var Tutorial = new Phaser.Class({
             }, this);
         function createNewTut(tutScene) {
             if(tutNow){
-                debugger
                 tutNow.seekTo(0);
                 tutNow.destroy();
             }

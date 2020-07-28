@@ -438,7 +438,6 @@ var MainSc = new Phaser.Class({
         var coliderGroupFunction = function (s1, s2) {
             if (!s1.body.moves) {
                 if (s2.type === 'grey' && s2.body.moves && s2.active) {
-                    debugger
                     var namesprite = s2.texture.key;
                     createBlot(namesprite, this);
                 }
@@ -507,7 +506,6 @@ var MainSc = new Phaser.Class({
                     multiplierScoreInput.destroy();
                 if (!s2.body.allowdraggable && !s2.active) {
                     if (s1.type === 'grey') {
-                        debugger
                         var namesprite = s1.texture.key;
                         createBlot(namesprite, this);
                     }
@@ -1074,7 +1072,6 @@ function createBlot(keySprite, scene) {
     var rt = scene.add.renderTexture(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT).setDepth(18);
     var sp = scene.make.image({key: 'blot_' + nameBlot}, false).setScale(global_scale * 0.35);
     for (var y = 0; y < 3; y++) {
-        debugger
         var g = getRandomForPositionBlot();
         rt.draw(sp, midle_window + bg_width * g, GLOBAL_HEIGHT * Math.random() + y * 100 * global_scale);
     }
