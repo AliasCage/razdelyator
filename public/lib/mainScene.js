@@ -149,7 +149,12 @@ var MainSc = new Phaser.Class({
                 {key: 'con7'},
                 {key: 'con8'},
                 {key: 'con9'},
-                {key: 'con10'}
+                {key: 'con10'},
+                {key: 'con11'},
+                {key: 'con12'},
+                {key: 'con13'},
+                {key: 'con14'},
+                {key: 'con15'}
             ],
             frameRate: 12,
             repeat: -1
@@ -768,7 +773,7 @@ function toxicality(accumulator) {
 
 function darkness() {
     isNeedDarknes = false;
-    var scale = DEVICE_SIZE === 1 ? 1 / (global_scale) : 2 * global_scale;
+    var scale = DEVICE_SIZE === 1 ? 1 / (global_scale) : 1.5 * global_scale;
     var darknes = this.add.sprite(midle_window, 0, 'darknes').setOrigin(0.5, 0).setScale(scale).setDepth(11);
     this.tweens.add({
         targets: darknes,

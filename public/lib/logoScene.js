@@ -130,6 +130,11 @@ var Logo = new Phaser.Class({
         this.load.image('con8', 'conveer/8.png');
         this.load.image('con9', 'conveer/9.png');
         this.load.image('con10', 'conveer/10.png');
+        this.load.image('con11', 'conveer/11.png');
+        this.load.image('con12', 'conveer/12.png');
+        this.load.image('con13', 'conveer/13.png');
+        this.load.image('con14', 'conveer/14.png');
+        this.load.image('con15', 'conveer/15.png');
 
         this.load.image('b1', 'trash/blue/1.png');
         this.load.image('b2', 'trash/blue/2.png');
