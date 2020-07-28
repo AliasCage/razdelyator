@@ -20,7 +20,7 @@ var config = {
         arcade: {}
     },
     render: {
-        antialias: false
+        antialias: true
     },
     scene: [Logo, MainSc, Raiting, Tutorial]
 };
