@@ -187,12 +187,10 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
                 text: email,
                 fontSize: 'xxx-large',
                 onTextChanged: function (textObject, text) {
-                    debugger
                     email = text;
                     textObject.text = email;
                 }
             };
-            debugger
             scene.rexUI.edit(emailField.getElement('text'), config);
         });
 
