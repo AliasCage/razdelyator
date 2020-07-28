@@ -19,6 +19,9 @@ var config = {
         default: 'arcade',
         arcade: {}
     },
+    render: {
+        antialias: false
+    },
     scene: [Logo, MainSc, Raiting, Tutorial]
 };
 

@@ -45,7 +45,7 @@ var Tutorial = new Phaser.Class({
         if (DEVICE_SIZE === 1) {
             this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
         } else {
-            this.add.graphics().fillStyle(PROGRESS_COLOR_2, 1).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+            this.add.graphics().fillStyle(PROGRESS_COLOR_1, 1).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
         }
 
         createNewTut(this);
