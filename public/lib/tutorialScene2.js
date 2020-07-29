@@ -71,6 +71,9 @@ var Tutorial2 = new Phaser.Class({
         this.load.image('clothing2', 'tutorial/tut4/clothing2.png');
         this.load.image('recyclables4', 'tutorial/tut4/recyclables4.png');
         this.load.image('waste', 'tutorial/tut4/waste3.png');
+        //5
+        this.load.image('bottom5', 'tutorial/tut5/bottom.png');
+        this.load.image('top5', 'tutorial/tut5/top.png');
 
     },
 
@@ -330,6 +333,30 @@ var Tutorial2 = new Phaser.Class({
 
             }
             if(numTut === 5){
+                bak_bottom =  tutScene.add.sprite(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
+                    .setPosition(midle_window, GLOBAL_HEIGHT * 0.05).setDepth(1);
+                bak_top = tutScene.add.sprite(midle_window + bg_width * 0.2, GLOBAL_HEIGHT * 0.05, 'battary_case')
+                    .setOrigin(0.5, 0.5).setScale(global_scale).setDepth(2);
+                textTop = tutScene.add.sprite(midle_window,  bg.height * 0.25, 'top' + numTut).setOrigin(0.5, 0.5)
+                    .setScale(global_scale * 0.45).setAlpha(0).setDepth(5);
+                tutScene.tweens.add({
+                    targets: textTop,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 2500,
+                    onComplete: function () {
+                        createTrashForTut5(tutScene);
+                    },
+                });
+                textBottom = tutScene.add.sprite(midle_window,  bg.height * 0.6, 'bottom' + numTut).setOrigin(0.5, 0.5)
+                    .setScale(global_scale * 0.45).setAlpha(0);
+                tutScene.tweens.add({
+                    targets: textBottom,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 2500,
+                    delay: 2500
+                });
 
             }
             if(numTut === 6){
@@ -407,6 +434,27 @@ var Tutorial2 = new Phaser.Class({
                 onComplete: function () {
                     trash3.destroy();
                     createTrashForTut4(scene, trashNum);
+                },
+            });
+        }
+        function createTrashForTut5(scene){
+            if(numTut !== 5)
+                return;
+            var trashKey = 'a' + getRandomInt(1, 4);
+            trash1 = scene.add.sprite(midle_window,  bg.height * 0.4,  trashKey).setOrigin(0.5, 0.5)
+                .setScale(global_scale * 0.45).setAlpha(1).setDepth(4);
+            scene.tweens.add({
+                targets: trash1,
+                x: bak_top.x - bak_top.width/2,
+                y: bak_top.y,
+                scaleX: 0.5,
+                scaleY: 0.5,
+                ease: 'Linear',
+                duration: 3000,
+                delay: 1000,
+                onComplete: function () {
+                    trash1.destroy();
+                    createTrashForTut5(scene);
                 },
             });
         }
