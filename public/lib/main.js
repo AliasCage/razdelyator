@@ -22,7 +22,7 @@ var config = {
     render: {
         antialias: true
     },
-    scene: [Logo, MainSc, Raiting, Tutorial]
+    scene: [Logo, MainSc, Raiting, Tutorial2]
 };
 
 var game = new Phaser.Game(config);

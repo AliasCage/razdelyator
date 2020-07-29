@@ -78,12 +78,6 @@ var Logo = new Phaser.Class({
 
         this.load.setBaseURL('img');
 
-        this.load.video('tut_video_1', 'tutorial/tut_1.mp4', 'canplay', false, true);
-        this.load.video('tut_video_2', 'tutorial/tut_2.mp4', 'canplay', false, true);
-        this.load.video('tut_video_3', 'tutorial/tut_3.mp4', 'canplay', false, true);
-        this.load.video('tut_video_4', 'tutorial/tut_4.mp4', 'canplay', false, true);
-
-
         this.load.image('intro', 'intro.png');
         this.load.image('raiting', 'raiting.png');
         this.load.image('start', 'start.png');
@@ -244,7 +238,7 @@ var Logo = new Phaser.Class({
                     if (isFirstStartGame) {
                         isFirstStartGame = false;
                         console.log("tutr");
-                        this.scene.start('tutorial', {name: 'Move from Logo to Tutorial'});
+                        this.scene.start('tutorial2', {name: 'Move from Logo to Tutorial'});
                     } else {
                         intro.destroy();
                         start_btn.destroy();
@@ -269,7 +263,7 @@ var Logo = new Phaser.Class({
                 if (!bg_clone.visible) {
                     tutorial_btn.setScale(global_scale);
                     console.log("tutr");
-                    this.scene.start('tutorial', {name: 'Move from Logo to Tutorial'});
+                    this.scene.start('tutorial2', {name: 'Move from Logo to Tutorial'});
                 }
             }, this)
             .on("pointerdown", function () {
