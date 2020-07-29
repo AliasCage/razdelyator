@@ -47,6 +47,9 @@ var Tutorial2 = new Phaser.Class({
         this.load.image('bottom1', 'tutorial/tut1/bottom.png');
         this.load.image('middle1', 'tutorial/tut1/middle.png');
         this.load.image('top1', 'tutorial/tut1/top.png');
+        //2
+        this.load.image('middle2', 'tutorial/tut2/middle.png');
+        this.load.image('top2', 'tutorial/tut2/top.png');
 
     },
 
@@ -177,7 +180,24 @@ var Tutorial2 = new Phaser.Class({
                 });
             }
             if(numTut === 2){
-
+                textTop = tutScene.add.sprite(midle_window,  bg.height * 0.15, 'top' + numTut).setOrigin(0.5, 0.5)
+                    .setScale(global_scale * 0.45).setAlpha(0.1);
+                tutScene.tweens.add({
+                    targets: textTop,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 2500,
+                });
+                textMiddle = tutScene.add.sprite(midle_window,  bg.height * 0.25, 'middle' + numTut).setOrigin(0.5, 0.5)
+                    .setScale(global_scale * 0.45).setAlpha(0);
+                tutScene.tweens.add({
+                    targets: textMiddle,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 2500,
+                    delay: 2500
+                });
+                createTrash(tutScene, 1);
             }
             if(numTut === 3){
 
@@ -194,6 +214,29 @@ var Tutorial2 = new Phaser.Class({
             if(numTut === 7){
 
             }
+        }
+        function createTrash(scene, trashNum){
+            var trashKey = getRandomInt(1,20);
+            var trashType = getRandomInt(1,2)===1?'g':'b';
+            if(trashNum === 1){
+                trash3 = scene.add.sprite(midle_window,  bg.height * 0.25, trashType + trashKey).setOrigin(0.5, 0.5)
+                    .setScale(global_scale * 0.45).setAlpha(1);
+            }else{
+                trash3 = scene.add.sprite(midle_window,  bg.height * 0.38, trashType + trashKey).setOrigin(0.5, 0.5)
+                    .setScale(global_scale * 0.45).setAlpha(1);
+            }
+            scene.tweens.add({
+                targets: trash3,
+                x: midle_window,
+                y: GLOBAL_HEIGHT * 0.9,
+                alpha: 0.3,
+                ease: 'Linear',
+                duration: 3500,
+                onComplete: function () {
+                    trash3.destroy();
+                    createTrash(scene, 2);
+                },
+            });
         }
         var bg_clone = this.add.sprite(midle_window, 0, 'bg_clone').setOrigin(0.5, 0).setDepth(20).setScale(global_scale);
         var rotate = this.add.sprite(midle_window, midle_window_h, 'rotate').setOrigin(0.5, 0.5).setDepth(21).setScale(3 * global_scale);
