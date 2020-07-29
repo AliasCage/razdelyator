@@ -1,4 +1,4 @@
-const DUR = 2000;
+const DUR = 1500;
 
 
 var downX, upX, downY, upY, threshold = 50;
@@ -12,6 +12,7 @@ var textBottom;
 var trash1;
 var trash2;
 var trash3;
+var trash4;
 
 var textTypeTrash1;
 var textTypeTrash2;
@@ -94,7 +95,42 @@ var Tutorial2 = new Phaser.Class({
             this.add.graphics().fillStyle(PROGRESS_COLOR_1, 1).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
         }
 
-        bg = this.add.sprite(midle_window, 0, 'bg_tut').setOrigin(0.5, 0).setScale(global_scale/2);
+        bg = this.add.sprite(midle_window, 0, 'bg_tut').setOrigin(0.5, 0).setScale(global_scale/2).setInteractive()
+            .on('pointerdown', savePosition)
+            .on("pointerup", function (pointer) {
+                if(!rotate.visible) {
+                    saveActivePosition(pointer);
+                    if (upX < downX - threshold) {
+                        if(numTut===7){
+                            numTut = 1;
+                            isFirstStartGame = false;
+                            this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
+                        }
+                        numTut++;
+                        clearTutScene();
+                        createNewTut(this);
+                    } else if (upX > downX + threshold) {
+                        console.log("swiperight");
+                        if(numTut===1){
+                            this.scene.start('logo', {name: 'Move from Tutorial to Logo'});
+                        }
+                        numTut--;
+                        clearTutScene();
+                        createNewTut(this);
+                    } else if (upY < downY - threshold || upY > downY + threshold) {
+                        console.log("swipedown|up");
+                    } else {
+                        if(numTut===7){
+                            numTut = 1;
+                            isFirstStartGame = false;
+                            this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
+                        }
+                        numTut++;
+                        clearTutScene();
+                        createNewTut(this);
+                    }
+                }
+            }, this);
 
         createNewTut(this);
 
@@ -154,7 +190,7 @@ var Tutorial2 = new Phaser.Class({
                     targets: textTop,
                     alpha: 1,
                     ease: 'Linear',
-                    duration: 800,
+                    duration: DUR * 0.4,
                 });
                 textMiddle = tutScene.add.sprite(midle_window,  bg.height * 0.38, 'middle' + numTut).setOrigin(0.5, 0.5)
                     .setScale(global_scale * 0.45).setAlpha(0);
@@ -165,10 +201,10 @@ var Tutorial2 = new Phaser.Class({
                    duration: DUR,
                    delay: DUR
                });
-                trash1 = tutScene.add.sprite(midle_window - bg.width/4,  bg.height * 0.60, 'b1').setOrigin(0.5, 0.5)
+                trash4 = tutScene.add.sprite(midle_window - bg.width/4,  bg.height * 0.60, 'b19').setOrigin(0.5, 0.5)
                     .setScale(global_scale * 0.45).setAlpha(0);
                 tutScene.tweens.add({
-                    targets: trash1,
+                    targets: trash4,
                     alpha: 1,
                     ease: 'Linear',
                     duration: DUR,
@@ -602,11 +638,11 @@ var Tutorial2 = new Phaser.Class({
                 return;
             var trashKey = trashNum === 1 ? 'g11' :  trashNum === 2 ? 'g6' :  trashNum === 3 ? 'g9' :  trashNum === 4 ? 'g5' : 'g' + getRandomInt(1, 20);
 
-            trash3 = scene.add.sprite(midle_window,  bg.height * 0.3,  trashKey).setOrigin(0.5, 0.5)
+            trash1 = scene.add.sprite(midle_window,  bg.height * 0.3,  trashKey).setOrigin(0.5, 0.5)
                 .setScale(global_scale * 0.45).setAlpha(1).setDepth(5);
             trashNum++;
             scene.tweens.add({
-                targets: trash3,
+                targets: trash1,
                 x: bak_bottom.x - bak_bottom.width,
                 y: bak_bottom.y,
                 scaleX: 0.5,
@@ -615,7 +651,7 @@ var Tutorial2 = new Phaser.Class({
                 duration: DUR,
                 delay: DUR * 0.5,
                 onComplete: function () {
-                    trash3.destroy();
+                    trash1.destroy();
                     createTrashForTut4(scene, trashNum);
                 },
             });
@@ -624,10 +660,10 @@ var Tutorial2 = new Phaser.Class({
             if(numTut !== 5)
                 return;
             var trashKey = 'a' + getRandomInt(1, 4);
-            trash1 = scene.add.sprite(midle_window,  bg.height * 0.4,  trashKey).setOrigin(0.5, 0.5)
+            trash3 = scene.add.sprite(midle_window,  bg.height * 0.4,  trashKey).setOrigin(0.5, 0.5)
                 .setScale(global_scale * 0.45).setAlpha(1).setDepth(4);
             scene.tweens.add({
-                targets: trash1,
+                targets: trash3,
                 x: bak_top.x - bak_top.width/2,
                 y: bak_top.y,
                 scaleX: 0.5,
@@ -636,7 +672,7 @@ var Tutorial2 = new Phaser.Class({
                 duration: DUR,
                 delay: DUR * 0.5,
                 onComplete: function () {
-                    trash1.destroy();
+                    trash3.destroy();
                     createTrashForTut5(scene);
                 },
             });
@@ -655,6 +691,8 @@ var Tutorial2 = new Phaser.Class({
                 trash2.destroy();
             if(trash3)
                 trash3.destroy();
+            if(trash4)
+                trash4.destroy();
             if(textTypeTrash1)
                 textTypeTrash1.destroy();
             if(textTypeTrash2)
