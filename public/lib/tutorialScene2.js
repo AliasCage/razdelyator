@@ -10,6 +10,14 @@ var trash1;
 var trash2;
 var trash3;
 
+var textTypeTrash1;
+var textTypeTrash2;
+var textTypeTrash3;
+var textTypeTrash4;
+
+var bak_top;
+var bak_bottom;
+
 var Tutorial2 = new Phaser.Class({
 
     Extends: Phaser.Scene,
@@ -50,6 +58,19 @@ var Tutorial2 = new Phaser.Class({
         //2
         this.load.image('middle2', 'tutorial/tut2/middle.png');
         this.load.image('top2', 'tutorial/tut2/top.png');
+        //3
+        this.load.image('bottom3', 'tutorial/tut3/bottom.png');
+        this.load.image('top3', 'tutorial/tut3/top.png');
+        this.load.image('glass', 'tutorial/tut3/glass.png');
+        this.load.image('metal', 'tutorial/tut3/metal.png');
+        this.load.image('plastic', 'tutorial/tut3/plastic.png');
+        this.load.image('paper', 'tutorial/tut3/paper.png');
+        //4
+        this.load.image('top4', 'tutorial/tut4/top.png');
+        this.load.image('food', 'tutorial/tut4/food.png');
+        this.load.image('clothing2', 'tutorial/tut4/clothing2.png');
+        this.load.image('recyclables4', 'tutorial/tut4/recyclables4.png');
+        this.load.image('waste', 'tutorial/tut4/waste3.png');
 
     },
 
@@ -90,12 +111,7 @@ var Tutorial2 = new Phaser.Class({
                         this.scene.start('mainSc', {name: 'Move from Tutorial to Main'});
                     }
                     numTut++;
-                    textTop.destroy();
-                    textMiddle.destroy();
-                    textBottom.destroy();
-                    trash1.destroy();
-                    trash2.destroy();
-                    trash3.destroy();
+                    clearTutScene();
                     createNewTut(this);
                 }
             }, this);
@@ -113,12 +129,7 @@ var Tutorial2 = new Phaser.Class({
                         this.scene.start('logo', {name: 'Move from Tutorial to Logo'});
                     }
                     numTut--;
-                    textTop.destroy();
-                    textMiddle.destroy();
-                    textBottom.destroy();
-                    trash1.destroy();
-                    trash2.destroy();
-                    trash3.destroy();
+                    clearTutScene();
                     createNewTut(this);
                 }
             }, this);
@@ -187,6 +198,7 @@ var Tutorial2 = new Phaser.Class({
                     alpha: 1,
                     ease: 'Linear',
                     duration: 2500,
+
                 });
                 textMiddle = tutScene.add.sprite(midle_window,  bg.height * 0.25, 'middle' + numTut).setOrigin(0.5, 0.5)
                     .setScale(global_scale * 0.45).setAlpha(0);
@@ -197,12 +209,124 @@ var Tutorial2 = new Phaser.Class({
                     duration: 2500,
                     delay: 2500
                 });
-                createTrash(tutScene, 1);
+                createTrashForTut2(tutScene, 1);
             }
             if(numTut === 3){
+                textTop = tutScene.add.sprite(midle_window,  bg.height * 0.4, 'top' + numTut).setOrigin(0.5, 0.5)
+                    .setScale(global_scale * 0.45).setAlpha(0.1).setDepth(10);
+                tutScene.tweens.add({
+                    targets: textTop,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 2000,
+                    onComplete: function () {
+                        debugger
+                        createTrashForTut3(tutScene, 1);
+                    },
+                });
+                textBottom = tutScene.add.sprite(midle_window,  bg.height * 0.8, 'bottom' + numTut).setOrigin(0.5, 0.5)
+                    .setScale(global_scale * 0.45).setAlpha(0);
+                tutScene.tweens.add({
+                    targets: textBottom,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 1700,
+                    delay: 17000
+                });
+                textTypeTrash1 = tutScene.add.sprite(midle_window,  bg.height * 0.57, 'glass')
+                    .setScale(global_scale * 0.45).setAlpha(0);
+                tutScene.tweens.add({
+                    targets: textTypeTrash1,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 1000,
+                    delay: 2500
+                });
+                textTypeTrash2 = tutScene.add.sprite(midle_window,  bg.height * 0.6, 'paper')
+                    .setScale(global_scale * 0.45).setAlpha(0);
+                tutScene.tweens.add({
+                    targets: textTypeTrash2,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 1000,
+                    delay: 6500
+                });
+                textTypeTrash3 = tutScene.add.sprite(midle_window,  bg.height * 0.65, 'plastic')
+                    .setScale(global_scale * 0.45).setAlpha(0);
+                tutScene.tweens.add({
+                    targets: textTypeTrash3,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 1000,
+                    delay: 10500
+                });
+                textTypeTrash4 = tutScene.add.sprite(midle_window,  bg.height * 0.7, 'metal')
+                    .setScale(global_scale * 0.45).setAlpha(0);
+                tutScene.tweens.add({
+                    targets: textTypeTrash4,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 1000,
+                    delay: 14500
+                });
+                bak_top = tutScene.add.sprite(midle_window - bg_width * 0.5, GLOBAL_HEIGHT / 1.65, 'blue1')
+                    .setOrigin(-0.05, 1).setScale(global_scale);
+                bak_bottom = tutScene.add.sprite(midle_window - bg_width * 0.5, GLOBAL_HEIGHT / 1.65, 'blue2') // trash2 = низ бака, чтобы не заводить новую переменную
+                    .setOrigin(-0.05, 0).setScale(global_scale).setDepth(9);
 
             }
             if(numTut === 4){
+                textTop = tutScene.add.sprite(midle_window,  bg.height * 0.4, 'top' + numTut).setOrigin(0.5, 0.5)
+                    .setScale(global_scale * 0.45).setAlpha(0.1).setDepth(10);
+                tutScene.tweens.add({
+                    targets: textTop,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 2000,
+                    onComplete: function () {
+                        createTrashForTut4(tutScene, 1);
+                    },
+                });
+                textTypeTrash1 = tutScene.add.sprite(midle_window - bg.width/8,  bg.height * 0.56, 'food')
+                    .setScale(global_scale * 0.45).setAlpha(0).setOrigin(0, 1);
+                tutScene.tweens.add({
+                    targets: textTypeTrash1,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 1000,
+                    delay: 2500
+                });
+                textTypeTrash2 = tutScene.add.sprite(midle_window - bg.width/8,  bg.height * 0.58, 'clothing2')
+                    .setScale(global_scale * 0.45).setAlpha(0).setOrigin(0, 1);
+                tutScene.tweens.add({
+                    targets: textTypeTrash2,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 1000,
+                    delay: 6500
+                });
+                textTypeTrash3 = tutScene.add.sprite(midle_window - bg.width/8,  bg.height * 0.65, 'waste')
+                    .setScale(global_scale * 0.45).setAlpha(0).setOrigin(0, 1);
+                tutScene.tweens.add({
+                    targets: textTypeTrash3,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 1000,
+                    delay: 10500
+                });
+                textTypeTrash4 = tutScene.add.sprite(midle_window - bg.width/8,  bg.height * 0.72, 'recyclables4')
+                    .setScale(global_scale * 0.45).setAlpha(0).setOrigin(0, 1);
+                tutScene.tweens.add({
+                    targets: textTypeTrash4,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: 1000,
+                    delay: 14500
+                });
+                bak_top = tutScene.add.sprite(midle_window + bg_width * 0.5, GLOBAL_HEIGHT / 1.65, 'grey1')
+                    .setOrigin(1.05, 1).setScale(global_scale);
+                bak_bottom = tutScene.add.sprite(midle_window + bg_width * 0.5, GLOBAL_HEIGHT / 1.65, 'grey2') // trash2 = низ бака, чтобы не заводить новую переменную
+                    .setOrigin(1.05, 0).setScale(global_scale).setDepth(9);
 
             }
             if(numTut === 5){
@@ -215,28 +339,102 @@ var Tutorial2 = new Phaser.Class({
 
             }
         }
-        function createTrash(scene, trashNum){
+        function createTrashForTut2(scene, trashNum){
+            if(numTut !== 2)
+                return;
             var trashKey = getRandomInt(1,20);
             var trashType = getRandomInt(1,2)===1?'g':'b';
             if(trashNum === 1){
-                trash3 = scene.add.sprite(midle_window,  bg.height * 0.25, trashType + trashKey).setOrigin(0.5, 0.5)
+                trash1 = scene.add.sprite(midle_window,  bg.height * 0.25, trashType + trashKey).setOrigin(0.5, 0.5)
                     .setScale(global_scale * 0.45).setAlpha(1);
             }else{
-                trash3 = scene.add.sprite(midle_window,  bg.height * 0.38, trashType + trashKey).setOrigin(0.5, 0.5)
+                trash1 = scene.add.sprite(midle_window,  bg.height * 0.38, trashType + trashKey).setOrigin(0.5, 0.5)
                     .setScale(global_scale * 0.45).setAlpha(1);
             }
             scene.tweens.add({
-                targets: trash3,
+                targets: trash1,
                 x: midle_window,
                 y: GLOBAL_HEIGHT * 0.9,
                 alpha: 0.3,
                 ease: 'Linear',
                 duration: 3500,
                 onComplete: function () {
-                    trash3.destroy();
-                    createTrash(scene, 2);
+                    trash1.destroy();
+                    createTrashForTut2(scene, 2);
                 },
             });
+        }
+        function createTrashForTut3(scene, trashNum){
+            if(numTut !== 3)
+                return;
+            var trashKey = trashNum === 1 ? 'b4' :  trashNum === 2 ? 'b9' :  trashNum === 3 ? 'b6' :  trashNum === 4 ? 'b8' : 'b' + getRandomInt(1, 20);
+
+            trash3 = scene.add.sprite(midle_window,  bg.height * 0.3,  trashKey).setOrigin(0.5, 0.5)
+                .setScale(global_scale * 0.45).setAlpha(1).setDepth(5);
+            trashNum++;
+            scene.tweens.add({
+                targets: trash3,
+                x: bak_bottom.x + bak_bottom.width,
+                y: bak_bottom.y,
+                scaleX: 0.5,
+                scaleY: 0.5,
+                ease: 'Linear',
+                duration: 3000,
+                delay: 1000,
+                onComplete: function () {
+                    trash3.destroy();
+                    createTrashForTut3(scene, trashNum);
+                },
+            });
+        }
+        function createTrashForTut4(scene, trashNum){
+            if(numTut !== 4)
+                return;
+            var trashKey = trashNum === 1 ? 'g11' :  trashNum === 2 ? 'g6' :  trashNum === 3 ? 'g9' :  trashNum === 4 ? 'g5' : 'g' + getRandomInt(1, 20);
+
+            trash3 = scene.add.sprite(midle_window,  bg.height * 0.3,  trashKey).setOrigin(0.5, 0.5)
+                .setScale(global_scale * 0.45).setAlpha(1).setDepth(5);
+            trashNum++;
+            scene.tweens.add({
+                targets: trash3,
+                x: bak_bottom.x - bak_bottom.width,
+                y: bak_bottom.y,
+                scaleX: 0.5,
+                scaleY: 0.5,
+                ease: 'Linear',
+                duration: 3000,
+                delay: 1000,
+                onComplete: function () {
+                    trash3.destroy();
+                    createTrashForTut4(scene, trashNum);
+                },
+            });
+        }
+        function clearTutScene() {
+            if(textTop)
+                textTop.destroy();
+            if(textMiddle)
+                textMiddle.destroy();
+            if(textBottom)
+                textBottom.destroy();
+            if(trash1)
+                trash1.destroy();
+            if(trash2)
+                trash2.destroy();
+            if(trash3)
+                trash3.destroy();
+            if(textTypeTrash1)
+                textTypeTrash1.destroy();
+            if(textTypeTrash2)
+                textTypeTrash2.destroy();
+            if(textTypeTrash3)
+                textTypeTrash3.destroy();
+            if(textTypeTrash4)
+                textTypeTrash4.destroy();
+            if(bak_bottom)
+                bak_bottom.destroy();
+            if(bak_top)
+                bak_top.destroy();
         }
         var bg_clone = this.add.sprite(midle_window, 0, 'bg_clone').setOrigin(0.5, 0).setDepth(20).setScale(global_scale);
         var rotate = this.add.sprite(midle_window, midle_window_h, 'rotate').setOrigin(0.5, 0.5).setDepth(21).setScale(3 * global_scale);
