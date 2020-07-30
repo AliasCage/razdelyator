@@ -97,7 +97,7 @@ var Tutorial2 = new Phaser.Class({
         if (DEVICE_SIZE === 1) {
             this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
         } else {
-            this.add.graphics().fillStyle(COLOR_DARK, 1).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+            this.add.graphics().fillStyle(COLOR_RUE_DARK, 1).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
         }
 
         bg = this.add.sprite(midle_window, 0, 'bg_tut').setOrigin(0.5, 0).setInteractive().setScale(global_scale * 0.5)
