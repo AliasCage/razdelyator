@@ -146,8 +146,9 @@ var Tutorial2 = new Phaser.Class({
         createNewTut(this);
 
         this.add.text(midle_window + conveer_width * 0.45, midle_window_h / 22,
-            'Пропустить обучение', {font: DEVICE_SIZE * 16 + 'pt Ubuntu'})
+            'Пропустить обучение', {font: DEVICE_SIZE * 2.7 + 'vh Ubuntu'})
             .setOrigin(1, 0.5)
+            .setScale(tutScale)
             .setColor('#ffa500')
             .setDepth(11)
             .setInteractive()
@@ -157,8 +158,9 @@ var Tutorial2 = new Phaser.Class({
 
         this.add.text(midle_window + conveer_width * 0.45, midle_window_h * 1.9,
             '<- Свайп\n' +
-            '    Далее', {font: DEVICE_SIZE * 16 + 'pt Ubuntu'})
+            '    Далее', {font: DEVICE_SIZE * 2.7 + 'vh Ubuntu'})
             .setOrigin(1, 0.5)
+            .setScale(tutScale)
             .setColor('#ffa500')
             .setDepth(11)
             .setInteractive()
@@ -177,8 +179,9 @@ var Tutorial2 = new Phaser.Class({
 
         this.add.text(midle_window - conveer_width * 0.45, midle_window_h * 1.9,
             'Свайп ->\n' +
-            'Назад', {font: DEVICE_SIZE * 16 + 'pt Ubuntu'})
+            'Назад', {font: DEVICE_SIZE * 2.7 + 'vh Ubuntu'})
             .setOrigin(0, 0.5)
+            .setScale(tutScale)
             .setColor('#ffa500')
             .setDepth(11)
             .setInteractive()
