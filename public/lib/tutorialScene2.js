@@ -24,6 +24,11 @@ var bak_bottom;
 var blot;
 var brush;
 
+var tweens1;
+var tweens2;
+var tweens3;
+
+
 var Tutorial2 = new Phaser.Class({
 
     Extends: Phaser.Scene,
@@ -207,15 +212,6 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR,
                     delay: DUR
                 });
-                trash4 = tutScene.add.sprite(midle_window - bg.width / 4, GLOBAL_HEIGHT * 0.60, 'b19').setOrigin(0.5, 0.5)
-                    .setScale(tutScale).setAlpha(0);
-                tutScene.tweens.add({
-                    targets: trash4,
-                    alpha: 1,
-                    ease: 'Linear',
-                    duration: DUR,
-                    delay: DUR
-                });
                 trash2 = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.60, 'b9').setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
@@ -225,7 +221,17 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR,
                     delay: DUR
                 });
-                trash3 = tutScene.add.sprite(midle_window + bg.width / 4, GLOBAL_HEIGHT * 0.60, 'g4').setOrigin(0.5, 0.5)
+                trash4 = tutScene.add.sprite(midle_window - trash2.width * 1.3, GLOBAL_HEIGHT * 0.60, 'b19').setOrigin(0.5, 0.5)
+                    .setScale(tutScale).setAlpha(0);
+                tutScene.tweens.add({
+                    targets: trash4,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: DUR,
+                    delay: DUR
+                });
+
+                trash3 = tutScene.add.sprite(midle_window + trash2.width * 1.3, GLOBAL_HEIGHT * 0.60, 'g4').setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: trash3,
@@ -274,7 +280,6 @@ var Tutorial2 = new Phaser.Class({
                     ease: 'Linear',
                     duration: DUR * 0.5,
                     onComplete: function () {
-                        debugger
                         createTrashForTut3(tutScene, 1);
                     },
                 });
@@ -588,7 +593,6 @@ var Tutorial2 = new Phaser.Class({
                 });
             }
             if (numTut === 7) {
-
                 bak_top = tutScene.add.sprite(midle_window - bg_width * 0.5, GLOBAL_HEIGHT / 1.65, 'blue1')
                     .setOrigin(-0.05, 1).setScale(global_scale);
                 bak_bottom = tutScene.add.sprite(midle_window - bg_width * 0.5, GLOBAL_HEIGHT / 1.65, 'blue2') // trash2 = низ бака, чтобы не заводить новую переменную
@@ -618,6 +622,9 @@ var Tutorial2 = new Phaser.Class({
         }
 
         function createTrashForTut2(scene, trashNum) {
+            if (trash1)
+                trash1.destroy();
+            trash1 = undefined;
             if (numTut !== 2)
                 return;
             var trashKey = getRandomInt(1, 20);
@@ -629,7 +636,7 @@ var Tutorial2 = new Phaser.Class({
                 trash1 = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.38, trashType + trashKey).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(1);
             }
-            scene.tweens.add({
+            tweens1 = scene.tweens.add({
                 targets: trash1,
                 x: midle_window,
                 y: GLOBAL_HEIGHT * 0.9,
@@ -644,6 +651,9 @@ var Tutorial2 = new Phaser.Class({
         }
 
         function createTrashForTut3(scene, trashNum) {
+            if (trash3)
+                trash3.destroy();
+            trash3 = undefined;
             if (numTut !== 3)
                 return;
             var trashKey = trashNum === 1 ? 'b4' : trashNum === 2 ? 'b9' : trashNum === 3 ? 'b6' : trashNum === 4 ? 'b8' : 'b' + getRandomInt(1, 20);
@@ -651,9 +661,9 @@ var Tutorial2 = new Phaser.Class({
             trash3 = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.3, trashKey).setOrigin(0.5, 0.5)
                 .setScale(tutScale).setAlpha(1).setDepth(5);
             trashNum++;
-            scene.tweens.add({
+            tweens1 = scene.tweens.add({
                 targets: trash3,
-                x: bak_bottom.x + bak_bottom.width,
+                x: bak_bottom.x + bak_bottom.width/2,
                 y: bak_bottom.y,
                 scaleX: 0.5,
                 scaleY: 0.5,
@@ -668,6 +678,9 @@ var Tutorial2 = new Phaser.Class({
         }
 
         function createTrashForTut4(scene, trashNum) {
+            if (trash1)
+                trash1.destroy();
+            trash1 = undefined;
             if (numTut !== 4)
                 return;
             var trashKey = trashNum === 1 ? 'g11' : trashNum === 2 ? 'g6' : trashNum === 3 ? 'g9' : trashNum === 4 ? 'g5' : 'g' + getRandomInt(1, 20);
@@ -675,9 +688,9 @@ var Tutorial2 = new Phaser.Class({
             trash1 = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.3, trashKey).setOrigin(0.5, 0.5)
                 .setScale(tutScale).setAlpha(1).setDepth(5);
             trashNum++;
-            scene.tweens.add({
+            tweens1 = scene.tweens.add({
                 targets: trash1,
-                x: bak_bottom.x - bak_bottom.width,
+                x: bak_bottom.x - bak_bottom.width/2,
                 y: bak_bottom.y,
                 scaleX: 0.5,
                 scaleY: 0.5,
@@ -692,12 +705,15 @@ var Tutorial2 = new Phaser.Class({
         }
 
         function createTrashForTut5(scene) {
+            if (trash3)
+                trash3.destroy();
+            trash3 = undefined;
             if (numTut !== 5)
                 return;
             var trashKey = 'a' + getRandomInt(1, 4);
             trash3 = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.4, trashKey).setOrigin(0.5, 0.5)
                 .setScale(tutScale).setAlpha(1).setDepth(4);
-            scene.tweens.add({
+            tweens1 = scene.tweens.add({
                 targets: trash3,
                 x: bak_top.x - bak_top.width / 2,
                 y: bak_top.y,
@@ -714,6 +730,9 @@ var Tutorial2 = new Phaser.Class({
         }
 
         function createTrashForTut7(scene) {
+            if (trash3)
+                trash3.destroy();
+            trash3 = undefined;
             if (numTut !== 7)
                 return;
             //'g3' ? 'jam'
@@ -726,7 +745,7 @@ var Tutorial2 = new Phaser.Class({
 
             trash3 = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.35, trashKey).setOrigin(0.5, 0.5)
                 .setScale(tutScale).setAlpha(1).setDepth(4);
-            scene.tweens.add({
+            tweens1 = scene.tweens.add({
                 targets: trash3,
                 x: bak_bottom.x + bak_bottom.width,
                 y: bak_bottom.y,
@@ -743,7 +762,7 @@ var Tutorial2 = new Phaser.Class({
 
                     brush = scene.make.image({key: 'eraser'}, false).setScale(tutScale)
                         .setPosition(midle_window - bg.width / 2, GLOBAL_HEIGHT * 0.65);
-                    scene.tweens.add({
+                    tweens2 = scene.tweens.add({
                         targets: brush,
                         x: midle_window + bg.width / 2,
                         y: GLOBAL_HEIGHT * 0.65,
@@ -755,7 +774,7 @@ var Tutorial2 = new Phaser.Class({
                             brush = undefined;
                         },
                     });
-                    scene.tweens.add({
+                    tweens3 = scene.tweens.add({
                         targets: blot,
                         alpha: 0,
                         ease: 'Linear',
@@ -773,6 +792,12 @@ var Tutorial2 = new Phaser.Class({
         }
 
         function clearTutScene() {
+            if (tweens1)
+                tweens1.stop();
+            if (tweens2)
+                tweens2.stop();
+            if (tweens3)
+                tweens3.stop();
             if (textTop)
                 textTop.destroy();
             if (textMiddle)
@@ -832,7 +857,6 @@ var Tutorial2 = new Phaser.Class({
 
     update: function () {
         if (numTut === 7 && blot && brush && checkOverlap(blot, brush)) {
-            debugger
             blot.erase(brush, brush.x - 16, brush.y - 16);
         }
     },
