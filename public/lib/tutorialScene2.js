@@ -240,7 +240,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR,
                     delay: DUR
                 });
-                textBottom = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT, 'bottom' + numTut).setOrigin(0.5, 0.5)
+                textBottom = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.75, 'bottom' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textBottom,
@@ -391,7 +391,7 @@ var Tutorial2 = new Phaser.Class({
             if (numTut === 5) {
                 bak_bottom = tutScene.add.sprite(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
                     .setPosition(midle_window, GLOBAL_HEIGHT * 0.05).setDepth(1);
-                bak_top = tutScene.add.sprite(midle_window + bg_width * 0.2, GLOBAL_HEIGHT * 0.05, 'battary_case')
+                bak_top = tutScene.add.sprite(midle_window - bg_width * 0.2, GLOBAL_HEIGHT * 0.05, 'battary_case')
                     .setOrigin(0.5, 0.5).setScale(global_scale).setDepth(2);
                 textTop = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.25, 'top' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0).setDepth(5);
