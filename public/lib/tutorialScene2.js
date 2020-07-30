@@ -21,6 +21,8 @@ var textTypeTrash4;
 
 var bak_top;
 var bak_bottom;
+var blot;
+var brush;
 
 var Tutorial2 = new Phaser.Class({
 
@@ -85,6 +87,9 @@ var Tutorial2 = new Phaser.Class({
         this.load.image('text_clear', 'tutorial/tut6/clear.png');
         this.load.image('text_one', 'tutorial/tut6/one.png');
         this.load.image('text_auto', 'tutorial/tut6/auto.png');
+        //7
+        this.load.image('middle7', 'tutorial/tut7/middle.png');
+        this.load.image('top7', 'tutorial/tut7/top.png');
     },
 
     create: function () {
@@ -583,6 +588,31 @@ var Tutorial2 = new Phaser.Class({
             }
             if(numTut === 7){
 
+                bak_top = tutScene.add.sprite(midle_window - bg_width * 0.5, GLOBAL_HEIGHT / 1.65, 'blue1')
+                    .setOrigin(-0.05, 1).setScale(global_scale);
+                bak_bottom = tutScene.add.sprite(midle_window - bg_width * 0.5, GLOBAL_HEIGHT / 1.65, 'blue2') // trash2 = низ бака, чтобы не заводить новую переменную
+                    .setOrigin(-0.05, 0).setScale(global_scale).setDepth(9);
+
+                textTop = tutScene.add.sprite(midle_window,  bg.height * 0.1, 'top' + numTut).setOrigin(0.5, 0.5)
+                    .setScale(global_scale * 0.45).setAlpha(1);
+                tutScene.tweens.add({
+                    targets: textTop,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: DUR * 0.2,
+                    onComplete: function () {
+                        createTrashForTut7(tutScene);
+                    },
+                });
+                textMiddle = tutScene.add.sprite(midle_window,  bg.height * 0.2, 'middle' + numTut).setOrigin(0.5, 0.5)
+                    .setScale(global_scale * 0.45).setAlpha(1);
+                tutScene.tweens.add({
+                    targets: textMiddle,
+                    alpha: 1,
+                    ease: 'Linear',
+                    duration: DUR,
+                    delay: DUR
+                });
             }
         }
         function createTrashForTut2(scene, trashNum){
@@ -677,6 +707,62 @@ var Tutorial2 = new Phaser.Class({
                 },
             });
         }
+        function createTrashForTut7(scene) {
+            if(numTut !== 7)
+                return;
+            //'g3' ? 'jam'
+            // 'g5' ? 'canned'
+            // 'g9' ? 'butter'
+            // 'g4' ? 'yogurt'
+            var rand = getRandomInt(1, 4);
+            var trashKey = rand === 1 ? 'g3' : rand === 2 ? 'g5' : rand === 3 ? 'g9' : 'g4';
+            var blotKey = trashKey ==='g3' ? 'jam' : trashKey === 'g5' ? 'canned' : trashKey === 'g9' ? 'butter' : 'yogurt';
+
+            trash3 = scene.add.sprite(midle_window,  bg.height * 0.35,  trashKey).setOrigin(0.5, 0.5)
+                .setScale(global_scale * 0.45).setAlpha(1).setDepth(4);
+            scene.tweens.add({
+                targets: trash3,
+                x: bak_bottom.x + bak_bottom.width,
+                y: bak_bottom.y,
+                scaleX: 0.5,
+                scaleY: 0.5,
+                ease: 'Linear',
+                duration: DUR,
+                delay: DUR * 0.5,
+                onComplete: function () {
+                    trash3.destroy();
+                    blot = scene.add.renderTexture(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT).setDepth(18);
+                    var sp = scene.make.image({key: 'blot_' + blotKey}, false).setScale(global_scale/2);
+                    blot.draw(sp, midle_window, bg.height * 0.65);
+
+                    brush = scene.make.image({key: 'eraser'}, false).setScale( global_scale * 0.5)
+                        .setPosition(midle_window - bg.width/2, bg.height * 0.65);
+                    scene.tweens.add({
+                        targets: brush,
+                        x: midle_window + bg.width/2,
+                        y: bg.height * 0.65,
+                        ease: 'Linear',
+                        duration: DUR,
+                        delay: DUR,
+                        onComplete: function () {
+                            brush.destroy();
+                        },
+                    });
+                    scene.tweens.add({
+                        targets: blot,
+                        alpha: 0,
+                        ease: 'Linear',
+                        duration: DUR,
+                        delay: DUR * 3,
+                        onComplete: function () {
+                            blot.destroy();
+                            createTrashForTut7(scene);
+                        },
+                    });
+                },
+            });
+
+        }
 
         function clearTutScene() {
             if(textTop)
@@ -713,6 +799,10 @@ var Tutorial2 = new Phaser.Class({
                 clear_on.destroy();
             if(slow_on)
                 slow_on.destroy();
+            if(blot)
+                blot.destroy();
+            if(brush)
+                brush.destroy();
         }
         var bg_clone = this.add.sprite(midle_window, 0, 'bg_clone').setOrigin(0.5, 0).setDepth(20).setScale(global_scale);
         var rotate = this.add.sprite(midle_window, midle_window_h, 'rotate').setOrigin(0.5, 0.5).setDepth(21).setScale(3 * global_scale);
@@ -732,7 +822,10 @@ var Tutorial2 = new Phaser.Class({
     },
 
     update: function () {
-
+            if(numTut===7 && blot && brush && checkOverlap(blot, brush)){
+                debugger
+                blot.erase(brush, brush.x - 16, brush.y - 16);
+            }
     },
 });
 
