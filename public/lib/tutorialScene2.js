@@ -100,7 +100,7 @@ var Tutorial2 = new Phaser.Class({
             this.add.graphics().fillStyle(PROGRESS_COLOR_1, 1).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
         }
 
-        bg = this.add.sprite(midle_window, 0, 'bg_tut').setOrigin(0.5, 0).setScale(tutScale).setInteractive()
+        bg = this.add.sprite(midle_window, 0, 'bg_tut').setOrigin(0.5, 0).setInteractive().setScale(global_scale * 0.5)
             .on('pointerdown', savePosition)
             .on("pointerup", function (pointer) {
                 if(!rotate.visible) {
@@ -138,7 +138,6 @@ var Tutorial2 = new Phaser.Class({
             }, this);
 
         var tutScale = conveer_width / bg.width;
-
         createNewTut(this);
 
         this.add.text(midle_window + conveer_width * 0.45, midle_window_h / 22,
