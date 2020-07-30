@@ -160,10 +160,10 @@ var MainSc = new Phaser.Class({
             repeat: -1
         });
 
-        if (DEVICE_SIZE === 1) {
-            this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
-        } else {
+        if (DEVICE_SIZE === 3) {
             this.add.graphics().fillStyle(PROGRESS_COLOR_1, 1).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+        } else {
+            this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
         }
 
         this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0).setScale(global_scale);
@@ -623,7 +623,7 @@ var MainSc = new Phaser.Class({
             player_score < 100 ? '000' + player_score :
                 player_score < 1000 ? '00' + player_score :
                     player_score < 10000 ? '0' + player_score : player_score;
-        if (scoreMultiplier === 5  && scoreMultiplierDis !== 2) {
+        if (scoreMultiplier === 5 && scoreMultiplierDis !== 2) {
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
@@ -643,7 +643,7 @@ var MainSc = new Phaser.Class({
             }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
             scoreMultiplierDis = 3;
         }
-        if (scoreMultiplier === 15  && scoreMultiplierDis !== 5) {
+        if (scoreMultiplier === 15 && scoreMultiplierDis !== 5) {
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
@@ -776,7 +776,7 @@ function toxicality(accumulator) {
 
 function darkness() {
     isNeedDarknes = false;
-    var scale = DEVICE_SIZE === 1 ? 2 / (global_scale) :2 * global_scale;
+    var scale = DEVICE_SIZE === 1 ? 2 / (global_scale) : 2 * global_scale;
     var darknes = this.add.sprite(midle_window, 0, 'darknes').setOrigin(0.5, 0).setScale(scale).setDepth(11);
     this.tweens.add({
         targets: darknes,

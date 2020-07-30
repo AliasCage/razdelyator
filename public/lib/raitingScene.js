@@ -43,10 +43,10 @@ var Raiting = new Phaser.Class({
     },
 
     create: function () {
-        if (DEVICE_SIZE === 1) {
-            this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
-        } else {
+        if (DEVICE_SIZE === 3) {
             this.add.graphics().fillStyle(PROGRESS_COLOR_1, 1).fillRect(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT);
+        } else {
+            this.add.tileSprite(midle_window, midle_window_h, GLOBAL_WIDTH, GLOBAL_HEIGHT, 'bg_tile');
         }
         this.add.sprite(midle_window, 0, 'bg').setOrigin(0.5, 0).setScale(global_scale);
         var loginDialog;
