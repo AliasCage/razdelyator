@@ -111,7 +111,7 @@ var MainSc = new Phaser.Class({
         text_score = this.add.text(score_bg.x - score_bg.width / 2.3 * global_scale, score_bg.y - score_bg.height / 11 * global_scale, player_score, {
             font: DEVICE_SIZE * 4.3 + 'vh Electronica-Normal',
             fill: "#fff",
-        }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true);
+        }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setScale(global_scale);
     },
 
 
@@ -686,7 +686,8 @@ var MainSc = new Phaser.Class({
             if (obj.hasSkillType !== null) {
                 console.log(obj.hasSkillType);
                 folowObject = obj;
-                bonusSkill = this.add.sprite(obj.x, obj.y, obj.hasSkillType + '_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5).setDepth(17).setTint(COLOR_PRIMARY).setAlpha(0.85);
+                bonusSkill = this.add.sprite(obj.x, obj.y, obj.hasSkillType + '_on').setOrigin(0.5, 0.5).setScale(global_scale * 0.5)
+                    .setDepth(1).setTint(COLOR_PRIMARY).setAlpha(0.85);
             }
             if (light_auto_on.visible) {
                 autoSort(this);
