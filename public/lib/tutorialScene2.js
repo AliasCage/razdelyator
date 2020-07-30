@@ -190,7 +190,7 @@ var Tutorial2 = new Phaser.Class({
 
         function createNewTut(tutScene) {
             if (numTut === 1) {
-                textTop = tutScene.add.sprite(midle_window, bg.height * 0.2, 'top' + numTut).setOrigin(0.5, 0.5)
+                textTop = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.2, 'top' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textTop,
@@ -198,7 +198,7 @@ var Tutorial2 = new Phaser.Class({
                     ease: 'Linear',
                     duration: DUR * 0.4,
                 });
-                textMiddle = tutScene.add.sprite(midle_window, bg.height * 0.38, 'middle' + numTut).setOrigin(0.5, 0.5)
+                textMiddle = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.38, 'middle' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textMiddle,
@@ -207,7 +207,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR,
                     delay: DUR
                 });
-                trash4 = tutScene.add.sprite(midle_window - bg.width / 4, bg.height * 0.60, 'b19').setOrigin(0.5, 0.5)
+                trash4 = tutScene.add.sprite(midle_window - bg.width / 4, GLOBAL_HEIGHT * 0.60, 'b19').setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: trash4,
@@ -216,7 +216,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR,
                     delay: DUR
                 });
-                trash2 = tutScene.add.sprite(midle_window, bg.height * 0.60, 'b9').setOrigin(0.5, 0.5)
+                trash2 = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.60, 'b9').setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: trash2,
@@ -225,7 +225,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR,
                     delay: DUR
                 });
-                trash3 = tutScene.add.sprite(midle_window + bg.width / 4, bg.height * 0.60, 'g4').setOrigin(0.5, 0.5)
+                trash3 = tutScene.add.sprite(midle_window + bg.width / 4, GLOBAL_HEIGHT * 0.60, 'g4').setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: trash3,
@@ -234,7 +234,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR,
                     delay: DUR
                 });
-                textBottom = tutScene.add.sprite(midle_window, bg.height * 0.75, 'bottom' + numTut).setOrigin(0.5, 0.5)
+                textBottom = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.75, 'bottom' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textBottom,
@@ -245,7 +245,7 @@ var Tutorial2 = new Phaser.Class({
                 });
             }
             if (numTut === 2) {
-                textTop = tutScene.add.sprite(midle_window, bg.height * 0.15, 'top' + numTut).setOrigin(0.5, 0.5)
+                textTop = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.15, 'top' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0.1);
                 tutScene.tweens.add({
                     targets: textTop,
@@ -254,7 +254,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR,
 
                 });
-                textMiddle = tutScene.add.sprite(midle_window, bg.height * 0.25, 'middle' + numTut).setOrigin(0.5, 0.5)
+                textMiddle = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.25, 'middle' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textMiddle,
@@ -266,7 +266,7 @@ var Tutorial2 = new Phaser.Class({
                 createTrashForTut2(tutScene, 1);
             }
             if (numTut === 3) {
-                textTop = tutScene.add.sprite(midle_window, bg.height * 0.4, 'top' + numTut).setOrigin(0.5, 0.5)
+                textTop = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.4, 'top' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0.1).setDepth(10);
                 tutScene.tweens.add({
                     targets: textTop,
@@ -278,7 +278,7 @@ var Tutorial2 = new Phaser.Class({
                         createTrashForTut3(tutScene, 1);
                     },
                 });
-                textBottom = tutScene.add.sprite(midle_window, bg.height * 0.8, 'bottom' + numTut).setOrigin(0.5, 0.5)
+                textBottom = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.8, 'bottom' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textBottom,
@@ -287,7 +287,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR * 0.5,
                     delay: 6.5 * DUR
                 });
-                textTypeTrash1 = tutScene.add.sprite(midle_window, bg.height * 0.57, 'glass')
+                textTypeTrash1 = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.57, 'glass')
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textTypeTrash1,
@@ -296,7 +296,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR,
                     delay: DUR * 0.5
                 });
-                textTypeTrash2 = tutScene.add.sprite(midle_window, bg.height * 0.6, 'paper')
+                textTypeTrash2 = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.6, 'paper')
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textTypeTrash2,
@@ -305,7 +305,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR * 0.5,
                     delay: 2 * DUR
                 });
-                textTypeTrash3 = tutScene.add.sprite(midle_window, bg.height * 0.65, 'plastic')
+                textTypeTrash3 = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.65, 'plastic')
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textTypeTrash3,
@@ -314,7 +314,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR * 0.5,
                     delay: 3.5 * DUR
                 });
-                textTypeTrash4 = tutScene.add.sprite(midle_window, bg.height * 0.7, 'metal')
+                textTypeTrash4 = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.7, 'metal')
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textTypeTrash4,
@@ -330,7 +330,7 @@ var Tutorial2 = new Phaser.Class({
 
             }
             if (numTut === 4) {
-                textTop = tutScene.add.sprite(midle_window, bg.height * 0.4, 'top' + numTut).setOrigin(0.5, 0.5)
+                textTop = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.4, 'top' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0.1).setDepth(10);
                 tutScene.tweens.add({
                     targets: textTop,
@@ -341,7 +341,7 @@ var Tutorial2 = new Phaser.Class({
                         createTrashForTut4(tutScene, 1);
                     },
                 });
-                textTypeTrash1 = tutScene.add.sprite(midle_window - bg.width / 8, bg.height * 0.56, 'food')
+                textTypeTrash1 = tutScene.add.sprite(midle_window - bg.width / 8, GLOBAL_HEIGHT * 0.56, 'food')
                     .setScale(tutScale).setAlpha(0).setOrigin(0, 1);
                 tutScene.tweens.add({
                     targets: textTypeTrash1,
@@ -350,7 +350,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR,
                     delay: DUR * 0.5
                 });
-                textTypeTrash2 = tutScene.add.sprite(midle_window - bg.width / 8, bg.height * 0.58, 'clothing2')
+                textTypeTrash2 = tutScene.add.sprite(midle_window - bg.width / 8, GLOBAL_HEIGHT * 0.58, 'clothing2')
                     .setScale(tutScale).setAlpha(0).setOrigin(0, 1);
                 tutScene.tweens.add({
                     targets: textTypeTrash2,
@@ -359,7 +359,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR * 0.5,
                     delay: 2 * DUR
                 });
-                textTypeTrash3 = tutScene.add.sprite(midle_window - bg.width / 8, bg.height * 0.65, 'waste')
+                textTypeTrash3 = tutScene.add.sprite(midle_window - bg.width / 8, GLOBAL_HEIGHT * 0.65, 'waste')
                     .setScale(tutScale).setAlpha(0).setOrigin(0, 1);
                 tutScene.tweens.add({
                     targets: textTypeTrash3,
@@ -368,7 +368,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR * 0.5,
                     delay: 3.2 * DUR
                 });
-                textTypeTrash4 = tutScene.add.sprite(midle_window - bg.width / 8, bg.height * 0.72, 'recyclables4')
+                textTypeTrash4 = tutScene.add.sprite(midle_window - bg.width / 8, GLOBAL_HEIGHT * 0.72, 'recyclables4')
                     .setScale(tutScale).setAlpha(0).setOrigin(0, 1);
                 tutScene.tweens.add({
                     targets: textTypeTrash4,
@@ -388,7 +388,7 @@ var Tutorial2 = new Phaser.Class({
                     .setPosition(midle_window, GLOBAL_HEIGHT * 0.05).setDepth(1);
                 bak_top = tutScene.add.sprite(midle_window + bg_width * 0.2, GLOBAL_HEIGHT * 0.05, 'battary_case')
                     .setOrigin(0.5, 0.5).setScale(global_scale).setDepth(2);
-                textTop = tutScene.add.sprite(midle_window, bg.height * 0.25, 'top' + numTut).setOrigin(0.5, 0.5)
+                textTop = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.25, 'top' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0).setDepth(5);
                 tutScene.tweens.add({
                     targets: textTop,
@@ -399,7 +399,7 @@ var Tutorial2 = new Phaser.Class({
                         createTrashForTut5(tutScene);
                     },
                 });
-                textBottom = tutScene.add.sprite(midle_window, bg.height * 0.6, 'bottom' + numTut).setOrigin(0.5, 0.5)
+                textBottom = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.6, 'bottom' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textBottom,
@@ -411,7 +411,7 @@ var Tutorial2 = new Phaser.Class({
 
             }
             if (numTut === 6) {
-                textTop = tutScene.add.sprite(midle_window, bg.height * 0.07, 'top' + numTut).setOrigin(0.5, 0.5)
+                textTop = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.07, 'top' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0).setDepth(5);
                 tutScene.tweens.add({
                     targets: textTop,
@@ -549,7 +549,7 @@ var Tutorial2 = new Phaser.Class({
                     duration: DUR,
                     delay: 16.5 * DUR
                 });
-                textBottom = tutScene.add.sprite(midle_window, bg.height * 0.6, 'bottom' + numTut).setOrigin(0.5, 0.5)
+                textBottom = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.6, 'bottom' + numTut).setOrigin(0.5, 0.5)
                     .setScale(global_scale * 0.45).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textBottom,
@@ -594,7 +594,7 @@ var Tutorial2 = new Phaser.Class({
                 bak_bottom = tutScene.add.sprite(midle_window - bg_width * 0.5, GLOBAL_HEIGHT / 1.65, 'blue2') // trash2 = низ бака, чтобы не заводить новую переменную
                     .setOrigin(-0.05, 0).setScale(global_scale).setDepth(9);
 
-                textTop = tutScene.add.sprite(midle_window, bg.height * 0.15, 'top' + numTut).setOrigin(0.5, 0.5)
+                textTop = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.15, 'top' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textTop,
@@ -605,7 +605,7 @@ var Tutorial2 = new Phaser.Class({
                         createTrashForTut7(tutScene);
                     },
                 });
-                textMiddle = tutScene.add.sprite(midle_window, bg.height * 0.23, 'middle' + numTut).setOrigin(0.5, 0.5)
+                textMiddle = tutScene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.23, 'middle' + numTut).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(0);
                 tutScene.tweens.add({
                     targets: textMiddle,
@@ -623,10 +623,10 @@ var Tutorial2 = new Phaser.Class({
             var trashKey = getRandomInt(1, 20);
             var trashType = getRandomInt(1, 2) === 1 ? 'g' : 'b';
             if (trashNum === 1) {
-                trash1 = scene.add.sprite(midle_window, bg.height * 0.25, trashType + trashKey).setOrigin(0.5, 0.5)
+                trash1 = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.25, trashType + trashKey).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(1);
             } else {
-                trash1 = scene.add.sprite(midle_window, bg.height * 0.38, trashType + trashKey).setOrigin(0.5, 0.5)
+                trash1 = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.38, trashType + trashKey).setOrigin(0.5, 0.5)
                     .setScale(tutScale).setAlpha(1);
             }
             scene.tweens.add({
@@ -648,7 +648,7 @@ var Tutorial2 = new Phaser.Class({
                 return;
             var trashKey = trashNum === 1 ? 'b4' : trashNum === 2 ? 'b9' : trashNum === 3 ? 'b6' : trashNum === 4 ? 'b8' : 'b' + getRandomInt(1, 20);
 
-            trash3 = scene.add.sprite(midle_window, bg.height * 0.3, trashKey).setOrigin(0.5, 0.5)
+            trash3 = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.3, trashKey).setOrigin(0.5, 0.5)
                 .setScale(tutScale).setAlpha(1).setDepth(5);
             trashNum++;
             scene.tweens.add({
@@ -672,7 +672,7 @@ var Tutorial2 = new Phaser.Class({
                 return;
             var trashKey = trashNum === 1 ? 'g11' : trashNum === 2 ? 'g6' : trashNum === 3 ? 'g9' : trashNum === 4 ? 'g5' : 'g' + getRandomInt(1, 20);
 
-            trash1 = scene.add.sprite(midle_window, bg.height * 0.3, trashKey).setOrigin(0.5, 0.5)
+            trash1 = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.3, trashKey).setOrigin(0.5, 0.5)
                 .setScale(tutScale).setAlpha(1).setDepth(5);
             trashNum++;
             scene.tweens.add({
@@ -695,7 +695,7 @@ var Tutorial2 = new Phaser.Class({
             if (numTut !== 5)
                 return;
             var trashKey = 'a' + getRandomInt(1, 4);
-            trash3 = scene.add.sprite(midle_window, bg.height * 0.4, trashKey).setOrigin(0.5, 0.5)
+            trash3 = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.4, trashKey).setOrigin(0.5, 0.5)
                 .setScale(tutScale).setAlpha(1).setDepth(4);
             scene.tweens.add({
                 targets: trash3,
@@ -724,7 +724,7 @@ var Tutorial2 = new Phaser.Class({
             var trashKey = rand === 1 ? 'g3' : rand === 2 ? 'g5' : rand === 3 ? 'g9' : 'g4';
             var blotKey = trashKey === 'g3' ? 'jam' : trashKey === 'g5' ? 'canned' : trashKey === 'g9' ? 'butter' : 'yogurt';
 
-            trash3 = scene.add.sprite(midle_window, bg.height * 0.35, trashKey).setOrigin(0.5, 0.5)
+            trash3 = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.35, trashKey).setOrigin(0.5, 0.5)
                 .setScale(tutScale).setAlpha(1).setDepth(4);
             scene.tweens.add({
                 targets: trash3,
@@ -739,14 +739,14 @@ var Tutorial2 = new Phaser.Class({
                     trash3.destroy();
                     blot = scene.add.renderTexture(0, 0, GLOBAL_WIDTH, GLOBAL_HEIGHT).setDepth(18);
                     var sp = scene.make.image({key: 'blot_' + blotKey}, false).setScale(tutScale);
-                    blot.draw(sp, midle_window, bg.height * 0.65);
+                    blot.draw(sp, midle_window, GLOBAL_HEIGHT * 0.65);
 
                     brush = scene.make.image({key: 'eraser'}, false).setScale(tutScale)
-                        .setPosition(midle_window - bg.width / 2, bg.height * 0.65);
+                        .setPosition(midle_window - bg.width / 2, GLOBAL_HEIGHT * 0.65);
                     scene.tweens.add({
                         targets: brush,
                         x: midle_window + bg.width / 2,
-                        y: bg.height * 0.65,
+                        y: GLOBAL_HEIGHT * 0.65,
                         ease: 'Linear',
                         duration: DUR,
                         delay: DUR,
