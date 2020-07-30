@@ -59,7 +59,8 @@ const timerSlow = 45000;
 const batary_case_speed = 4500;
 var batary_counter = -1;
 
-var tutFirstGameTraining;
+var isFirstGameTraining = true;
+var isFirstGameTrainingDis = true;
 var isPausePast = false;
 var pauseMenu = false;
 var pauseCon;
@@ -106,6 +107,8 @@ var MainSc = new Phaser.Class({
         group = this.physics.add.group({
             collideWorldBounds: true
         });
+
+        
         blot_object = undefined;
         score_bg = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT * 0.9, 'score_bg').setOrigin(0.5, 0.45).setScale(global_scale).setVisible(false);
         text_score = this.add.text(score_bg.x - score_bg.width / 2.3 * global_scale, score_bg.y - score_bg.height / 11 * global_scale, player_score, {
@@ -525,18 +528,6 @@ var MainSc = new Phaser.Class({
 
         isPause = false;
 
-        tutFirstGameTraining = this.add.sprite(midle_window, 0, 'tut4').setDepth(19)
-            .setOrigin(0.5, 0).setScale(global_scale / 2).setInteractive().setVisible(false)
-            .on("pointerdown", function (pointer) {
-                isFirstGameTrainingDisplay = true;
-                activeGroup.getChildren().forEach(function (trash) {
-                    trash.setVelocityY(speedTrash * DEVICE_SIZE_SPEED);
-                });
-                group.getChildren().forEach(function (trash) {
-                    trash.setVelocityY((speedTrash + 350) * DEVICE_SIZE_SPEED);
-                });
-                tutFirstGameTraining.setVisible(false);
-            });
         var bg_clone = this.add.sprite(midle_window, 0, 'bg_clone').setOrigin(0.5, 0).setDepth(20).setScale(global_scale);
         var rotate = this.add.sprite(midle_window, midle_window_h, 'rotate').setOrigin(0.5, 0.5).setDepth(21).setScale(3 * global_scale);
         bg_clone.visible = false;
@@ -552,8 +543,6 @@ var MainSc = new Phaser.Class({
                 alert(orientation)
             }
         });
-
-
         // window.addEventListener("orientationchange", function() {
         //     tutFirstGameTraining.setVisible(true);
         // }, false);
@@ -578,7 +567,7 @@ var MainSc = new Phaser.Class({
         }
 
 
-        if (isPause || pauseMenu || tutFirstGameTraining.visible) {
+        if (isPause || pauseMenu || !isFirstGameTrainingDis) {
             isPausePast = true;
             activeGroup.getChildren().forEach(function (trash) {
                 trash.setVelocityY(0);
@@ -889,9 +878,10 @@ function createAndDropObject() {
         if (number > 0.8 && batary_counter < 0) {
             if (isFirstGameTraining) {
                 isFirstGameTraining = false;
+                isFirstGameTrainingDis = false;
                 nowCreateTrash = this.time.now - now;
                 nowScoreDifficulty = this.time.now - scoreDifficulty;
-                tutFirstGameTraining.setVisible(true);
+                createTutAcc(this);
             }
             trash = acc[Math.floor(Math.random() * acc.length)];
             trashType = 'acc';
@@ -1102,4 +1092,37 @@ function createBlot(keySprite, scene) {
         }
     });
 
+}
+
+function createTutAcc(scene) {
+    var bak_bottom = scene.add.sprite(0, 0, 'rails').setOrigin(0.5, 0.5).setScale(global_scale)
+        .setPosition(midle_window, GLOBAL_HEIGHT * 0.05).setDepth(26);
+    var bak_top = scene.add.sprite(midle_window - bg_width * 0.2, GLOBAL_HEIGHT * 0.05, 'battary_case')
+        .setOrigin(0.5, 0.5).setScale(global_scale).setDepth(27);
+    var textTop = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.25, 'top5').setOrigin(0.5, 0.5)
+        .setScale(global_scale * 0.5).setAlpha(1).setDepth(26);
+
+    var textBottom = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.6, 'bottom5').setOrigin(0.5, 0.5)
+        .setScale(global_scale * 0.5).setAlpha(1).setDepth(26);
+
+    var trashKey = 'a' + getRandomInt(1, 4);
+    var trash3 = scene.add.sprite(midle_window, GLOBAL_HEIGHT * 0.4, trashKey).setOrigin(0.5, 0.5)
+        .setScale(global_scale * 0.5).setAlpha(1).setDepth(26);
+
+    var bg = scene.add.sprite(midle_window, 0, 'bg_tut').setOrigin(0.5, 0).setInteractive().setScale(global_scale * 0.5).setDepth(25)
+        .on("pointerup", function (pointer) {
+            activeGroup.getChildren().forEach(function (trash) {
+                trash.setVelocityY(speedTrash * DEVICE_SIZE_SPEED);
+            });
+            group.getChildren().forEach(function (trash) {
+                trash.setVelocityY((speedTrash + 350) * DEVICE_SIZE_SPEED);
+            });
+            bak_bottom.destroy();
+            bak_top.destroy();
+            textTop.destroy();
+            textBottom.destroy();
+            trash3.destroy();
+            bg.destroy();
+            isFirstGameTrainingDis = true;
+        });
 }
