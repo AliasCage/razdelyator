@@ -625,7 +625,7 @@ var MainSc = new Phaser.Class({
         if (scoreMultiplier === 10 && scoreMultiplierDis !== 3) {
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
-            var v = text_score.getBounds();
+            var v = score_bg.getBounds();
             multiplierScoreInput = this.add.text(v.x + v.width * 0.9, v.y, 'x3', {
                 font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
                 fill: "#fff",
@@ -635,7 +635,7 @@ var MainSc = new Phaser.Class({
         if (scoreMultiplier === 15 && scoreMultiplierDis !== 5) {
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
-            var v = text_score.getBounds();
+            var v = score_bg.getBounds();
             multiplierScoreInput = this.add.text(v.x + v.width * 0.9, v.y, 'x5', {
                 font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
                 fill: "#fff",
