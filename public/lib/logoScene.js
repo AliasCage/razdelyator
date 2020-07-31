@@ -200,7 +200,6 @@ var Logo = new Phaser.Class({
     create: function () {
         userName = localStorage.getItem('userName');
         userMail = localStorage.getItem('userMail');
-        debugger
         // isInputUserMail = userName != null && userMail != null
         // isFirstStartGame = userName === null && userMail === null
 
