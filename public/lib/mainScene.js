@@ -626,7 +626,7 @@ var MainSc = new Phaser.Class({
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
-            multiplierScoreInput = this.add.text(v.x + v.width * 0.9, v.y,, 'x3', {
+            multiplierScoreInput = this.add.text(v.x + v.width * 0.9, v.y, 'x3', {
                 font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
                 fill: "#fff",
             }).setOrigin(0.52, 0.24).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
@@ -636,7 +636,7 @@ var MainSc = new Phaser.Class({
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
-            multiplierScoreInput = this.add.text(v.x + v.width * 0.9, v.y,, 'x5', {
+            multiplierScoreInput = this.add.text(v.x + v.width * 0.9, v.y, 'x5', {
                 font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
                 fill: "#fff",
             }).setOrigin(0.52, 0.24).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
