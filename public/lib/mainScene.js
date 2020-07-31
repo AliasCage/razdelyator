@@ -272,12 +272,13 @@ var MainSc = new Phaser.Class({
                 createDialog.call(this);
             }, this);
 
-        score_bg = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT * 0.9, 'score_bg').setOrigin(0.5, 0.45).setScale(global_scale);
-        text_score = this.add.text(score_bg.x - score_bg.width * 0.83, score_bg.y - score_bg.height * 0.1 , player_score, {
-            font:   8 + 'vh Electronica-Normal',
+        score_bg = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT * 0.9, 'score_bg').setOrigin(0.5, 0.5).setScale(global_scale);
+        text_score = this.add.text(score_bg.x, score_bg.y, player_score, {
+            font: 4 * DEVICE_SIZE + 'vh Electronica-Normal',
             fill: "#fff",
-        }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setScale(DEVICE_SIZE/global_scale);
-
+        }).setOrigin(0.52, 0.24)
+            .setStroke('#ffa500', 5)
+            .setShadow(2, 2, "#333333", 2, true, true);
 
         this.physics.add.overlap(battary_case, group, function (s1, s2) {
             if (s2.type === 'acc') {
