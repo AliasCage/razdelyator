@@ -52,9 +52,9 @@ var nowScoreDifficulty;
 
 const intervalScoreDiff = 2200;
 const timerClear = 90000;
-const timerAuto = 45000;
-const timerOne = 45000;
-const timerSlow = 45000;
+const timerAuto = 20000;
+const timerOne = 20000;
+const timerSlow = 20000;
 
 const batary_case_speed = 4500;
 var batary_counter = -1;
@@ -275,9 +275,9 @@ var MainSc = new Phaser.Class({
         score_bg = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT * 0.9, 'score_bg').setOrigin(0.5, 0.45).setScale(global_scale);
 
         text_score = this.add.text(score_bg.x - score_bg.width / 2.3 * global_scale, score_bg.y - score_bg.height / 11 * global_scale, player_score, {
-            font: DEVICE_SIZE * 2.2 + 'vh Electronica-Normal',
+            font: DEVICE_SIZE * 4.5 + 'vh Electronica-Normal',
             fill: "#fff",
-        }).setStroke('#ffa500', 5).setScale(global_scale).setShadow(2, 2, "#333333", 2, true, true);
+        }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true);
 
 
         this.physics.add.overlap(battary_case, group, function (s1, s2) {
