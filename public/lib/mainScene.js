@@ -615,8 +615,8 @@ var MainSc = new Phaser.Class({
         if (scoreMultiplier === 5 && scoreMultiplierDis !== 2) {
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
-            var v = text_score.getBounds();
-            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height / 3, 'x2', {
+            var v = score_bg.getBounds();
+            multiplierScoreInput = this.add.text(v.x + v.width * 0.9, v.y, 'x2', {
                 font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
                 fill: "#fff",
             }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
@@ -626,20 +626,20 @@ var MainSc = new Phaser.Class({
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
-            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height / 3, 'x3', {
+            multiplierScoreInput = this.add.text(v.x + v.width * 0.9, v.y,, 'x3', {
                 font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
                 fill: "#fff",
-            }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
+            }).setOrigin(0.52, 0.24).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
             scoreMultiplierDis = 3;
         }
         if (scoreMultiplier === 15 && scoreMultiplierDis !== 5) {
             if (multiplierScoreInput)
                 multiplierScoreInput.destroy();
             var v = text_score.getBounds();
-            multiplierScoreInput = this.add.text(text_score.x + v.width, text_score.y - v.height / 3, 'x5', {
+            multiplierScoreInput = this.add.text(v.x + v.width * 0.9, v.y,, 'x5', {
                 font: DEVICE_SIZE * 3 + 'vh Electronica-Normal',
                 fill: "#fff",
-            }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
+            }).setOrigin(0.52, 0.24).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true).setVisible(true);
             scoreMultiplierDis = 5;
         }
         if (scoreMultiplier < 5 && multiplierScoreInput)
