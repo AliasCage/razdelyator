@@ -198,6 +198,12 @@ var Logo = new Phaser.Class({
     },
 
     create: function () {
+        userName = localStorage.getItem('userName');
+        userMail = localStorage.getItem('userMail');
+        debugger
+        // isInputUserMail = userName != null && userMail != null
+        // isFirstStartGame = userName === null && userMail === null
+
         if (soundpram === null) {
             soundpram = this.sound.add('m');
             soundpram.loop = true;

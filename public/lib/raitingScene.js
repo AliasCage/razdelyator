@@ -436,6 +436,9 @@ function saveResult(name, email, score) {
         isInputUserMail = true;
         userMail = email;
         userName = name;
+
+        localStorage.setItem('userName', userName);
+        localStorage.setItem('userMail', userMail);
     }
     var ref = database.ref("base");
     var postsRef = ref.child("raiting");
