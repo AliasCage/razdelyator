@@ -273,9 +273,8 @@ var MainSc = new Phaser.Class({
             }, this);
 
         score_bg = this.add.sprite(midle_window - (bg_width / 3), GLOBAL_HEIGHT * 0.9, 'score_bg').setOrigin(0.5, 0.45).setScale(global_scale);
-
-        text_score = this.add.text(score_bg.x - score_bg.width / 2.3 * global_scale, score_bg.y - score_bg.height / 11 * global_scale, player_score, {
-            font: DEVICE_SIZE * 4.5 + 'vh Electronica-Normal',
+        text_score = this.add.text(score_bg.x - score_bg.width * 0.83, score_bg.y - score_bg.height * 0.1 , player_score, {
+            font: DEVICE_SIZE/global_scale * 8.5 + 'vh Electronica-Normal',
             fill: "#fff",
         }).setStroke('#ffa500', 5).setShadow(2, 2, "#333333", 2, true, true);
 
